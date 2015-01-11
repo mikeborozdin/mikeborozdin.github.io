@@ -6,7 +6,7 @@ layout: default
 <div>
 	<h1><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h1>
 	{{ post.excerpt | remove: '<p>' | remove: '</p>' }}<a href="{{ post.url | prepend: site.baseurl }}" class="more">More...</a>
-	<div id="postFooter">{{ post.date | date: "%-d %B %Y" }}</div>
+	<div class="postFooter">{{ post.date | date: "%-d %B %Y" }}</div>
 </div>
 {% endfor %}
 
