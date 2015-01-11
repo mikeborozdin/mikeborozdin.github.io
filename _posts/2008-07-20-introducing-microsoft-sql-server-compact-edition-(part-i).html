@@ -1,0 +1,48 @@
+---
+layout: post
+title: "Introducing Microsoft SQL Server Compact Edition (Part I)"
+comments: true
+---
+<p><a href="http://www.microsoft.com/sql/editions/compact/default.mspx" target="_blank">Microsoft SQL Server Compact Edition</a> is an embeded database that allows you to integrate it in your destkop and mobile applications. It can be used in a variety of scenarios, just some examples:</p>
+<ul>
+<li>a single-user application that still stores its data in the SQL database</li>
+<li>a local cache of a remote SQL Server database,</li>
+<li>a mobile application that synchronizes its local compact database with a remote database from time to time.</li>
+</ul>
+<p>SQL Server Compact Edition takes about 1.5 MB on HDD and consumes about 5 MB of RAM. It&rsquo;s free to use and free to distribute with your application. <!-- more --><br /> <br /> The 3.5 version is shipped with Visual Studio 2008, however if you don&rsquo;t have it, you can download it here.<br /> <br /> In this part of the tutorial we will learn how to:</p>
+<ul>
+<li>Create a desktop application that interacts with SQL Server CE by using stronly-typed datasets</li>
+<li>Deploy a desktop application with emdeded SQL Server Compact Edition</li>
+<li>Use SQL queries with SQL Server Compact Edition</li>
+<li>Use LINQ with SQL Server Compact Edition</li>
+</ul>
+<h2>Desktop Application and DataSets</h2>
+<p>Create a new project, choose <span style="font-family: 'courier new', courier;">Windows Forms Application</span>. Then go to <span style="font-family: 'courier new', courier;">Project -&gt; Add Componen</span>t and choose <span style="font-family: 'courier new', courier;">Local Database</span>. <br /> <br /> <img src="/images/LocalDatabase.jpg" alt="" /><br /> <br /> We will be prompted to create a <span style="font-family: 'courier new', courier;">DataSet</span>, let&rsquo;s do that.<br /> <br /> Then find the newly created database in the <span style="font-family: 'courier new', courier;">Solution Explorer</span>, it must be called <span style="font-family: 'courier new', courier;">Database1.sdf</span> depending on the name you gave it, of course, double click on it, <span style="font-family: 'courier new', courier;">Server Explorer</span> gets expanded, let&rsquo;s create a table.<br /> <br /> <br /> <br /> <img src="/images/ProductsTable.jpg" alt="" /><br /> <br /> It looks exactly like if we were working with a regular SQL database.<br /> <br /> Now to <span style="font-family: 'courier new', courier;">Data Sources</span>, right-click on the only avaliable <span style="font-family: 'courier new', courier;">DataSet</span> and choose <span style="font-family: 'courier new', courier;">Configure DataSet with Wizard</span><br /> <br /> <img src="/images/DataSourceConfigure.jpg" alt="" /><br /> <br /> Add the only table. Then right-click on it, select <span style="font-family: 'courier new', courier;">Details</span> and drag the Products table on the form.<br /> <br /> <img src="/images/DataSetDetails.jpg" alt="" /><br /> <br /> You must get the form like this</p>
+<p>&nbsp;</p>
+<p><img src="/images/Form.jpg" alt="" /><br /> <br /> Compile the project and test it. It works :-)!</p>
+<p>&nbsp;</p>
+<h2>Deployment</h2>
+<p>Ok, now we are going to make an installer for our project that will also include the data file and the files necessary for SQL Server Compact Edition. <br /> Let&rsquo;s add the <span style="font-family: 'courier new', courier;">setup wizard </span>project to our solution. It is located it <span style="font-family: 'courier new', courier;">Other Project Types -&gt; Setup and Deployment -&gt; Setup Wizard</span></p>
+<p>&nbsp;</p>
+<p><img src="/images/SetupWizardProject.jpg" alt="" /><br /> <br /> Then we select <span style="font-family: 'courier new', courier;">Setup for Windows application</span> and <span style="font-family: 'courier new', courier;">Primary Output</span> for our project. We should include the <span style="font-family: 'courier new', courier;">Database file &ndash; Datase1.sdf</span> and the files necessary for running SQL Server Compact Edition. Open C:\Program Files\Microsoft SQL Server Compact Edition\3.5 and select all the DLLs.<br /> <br /> <img src="/images/SqlCeInstallFiles.jpg" alt="" /><br /> <br /> Click <span style="font-family: 'courier new', courier;">Finish</span> then. Build the application and the setup project and try to install it, it must be working.<br /> <br /> <span style="font-family: 'courier new', courier;">SQL Queries</span><br /> In the previous example we didn&rsquo;t write a single line of code. But in real project we have to. Let&rsquo;s see, how we canuse SQL with SQL Server Compact Edition. This time we are going to create a console application.<br /> Create or include the previously created SDF database. <br /> You have to add a reference to Compact Edition assembly that is called <span style="font-family: 'courier new', courier;">System.Data.SqlServerCe </span>and of course you have to add the necessary namespace. Executing SQL queries with Compact Edition is no harder than doing the same with SQL Server, you just have to use the classed that have &lsquo;Ce&rsquo; at the end.</p>
+<p>[code:c#]</p>
+<p>using System;<br /> using System.Collections.Generic;<br /> using System.Linq;<br /> using System.Text;<br /> using System.Data.SqlServerCe;<br /> <br /> namespace SqlCeConsole<br /> {<br /> &nbsp;&nbsp;&nbsp; class Program<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static void Main(string[] args)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SqlCeConnection con = new SqlCeConnection("Data Source=Db.sdf");<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; con.Open();<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SqlCeCommand comInsert = new SqlCeCommand
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+("INSERT INTO Products(Title, Category) VALUES('Ferrari F40', 'Sport cars')", con);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comInsert.ExecuteNonQuery();<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SqlCeCommand comS
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+elect = new SqlCeCommand("SELECT * FROM Products", con);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SqlCeDataReader reader = comSelect.ExecuteReader();<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while (reader.Read())<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine("{0} {1}", reader["Title"], reader["Category"]);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; con.Close();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp; }<br /> }</p>
+<p>[/code]</p>
+<h2>LINQ</h2>
+<p>You can use LINQ with SQL Server CE, as well, the main difference is that you cannot use the visual designer which generates an error when dragging CE tables, however you can use a command line utilily called <span style="font-family: 'courier new', courier;">SqlMetal</span>, just type:</p>
+<p><br /> <span style="font-family: 'courier new', courier;">SqlMetal Database1.sdf /dbml:Database1.dbml</span></p>
+<p><br /> Then include the generated file in your project and Visual Studio will easly pick it up, then you can write LINQ queries as usual.</p>
+<p>[code:c#]</p>
+<p>using System;<br /> using System.Collections.Generic;<br /> using System.Linq;<br /> using System.Text;<br /> using System.Data.SqlServerCe;<br /> <br /> namespace SqlCeConsole<br /> {<br /> &nbsp;&nbsp;&nbsp; class Program<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static void Main(string[] args)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Db db = new Db(@"Data source=Db.sdf");<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var result = from p in db.Products<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p;<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (var product in result)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(product.Title);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp; }<br /> }</p>
+<p>[/code]</p>
+<h2>Next Part</h2>
+<p>In the next part of the tutorial I'll show how to synchronize the data between SQL Server Compact Edition and SQL Server.</p>
+<h2>Resources&nbsp;</h2>
+<p><a href="http://www.microsoft.com/sql/editions/compact/default.mspx" target="_blank">Official Microsoft SQL Server Compact Edition Homepage</a></p>
+<p><a href="http://msdn.microsoft.com/en-us/sqlserver/bb204609.aspx" target="_blank">Developer resources</a></p>
+<p><a href="http://go.microsoft.com/fwlink/?linkid=66522" target="_blank">Compact Edition Books Online</a></p>
+<p>&nbsp;</p>

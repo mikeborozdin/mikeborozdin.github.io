@@ -1,0 +1,26 @@
+---
+layout: post
+title: "Syntax Highlighting In BlogEngine.NET"
+comments: true
+---
+<p>
+It is not obvious that BlogEngine.NET has a built-in syntax highlighting extension. I mean the current versions 1.3.1, I&#39;m not sure about the old versions though. Anyway you can find it in the extensions settings, it is enabled by default.
+</p>
+<p>
+So, if you need to paste a code snipped, just paste it in the text area and surround it with the [ code:&lt;language&gt;][/code ] tags
+</p>
+<p>
+&lt;language&gt; may has one of the following values:
+</p>
+<ul>
+	<li>c#</li>
+	<li>vb</li>
+	<li>js</li>
+	<li>html</li>
+	<li>xml</li>
+	<li>tsql</li>
+	<li>msh (Windows PowerShell script language)</li>
+</ul>
+<p>
+It can take some other parameters, like ln for toggling line numbers, however if you set this parameter your layout will get broken for some reasons.
+</p>

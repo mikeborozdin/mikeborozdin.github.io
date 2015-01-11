@@ -1,0 +1,16 @@
+---
+layout: post
+title: "Copying Databases with SQL Server Express Management Studio"
+comments: true
+---
+<p>Often you need to make a full copy of a database, for example, if you you want to change something and see how it goes without ruining a production database. And if you happen to use SQL Server Express edition you are not so fortunate because famous Copy Database Wizard does not seem to be unavailable in&nbsp; SQL Server Express Management Studio. There is a simply solution, however. It is using the backup and restore features. <!-- more --></p>
+<p>Just open SQL Server Management Studio Express, right-click on your database and choose <span style="font-family: 'Courier New';">Tasks-&gt;Back Up&hellip;</span></p>
+<p><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="image" src="/images/image_4.png" border="0" alt="image" width="567" height="344" /></p>
+<p>You can leave the default settings or, for instance, save a backup in a different location.</p>
+<p>After doing a copy step it is a about the time to do a paste step.</p>
+<p>Right Click on the Database node and choose <span style="font-family: 'Courier New';">Restore</span>.</p>
+<p><a href="/images/image_5.png"><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="image" src="/images/image_thumb_1.png" border="0" alt="image" width="233" height="181" /></a></p>
+<p>Select your source database in the <span style="font-family: 'Courier New';">From database</span> drop-down box and choose a destination in the <span style="font-family: 'Courier New';">To database</span><span style="font-family: Georgia;">, you can also type a name of a database you would like to create and it will be created automatically containing all the data from the source database.</span></p>
+<p><img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="image" src="/images/image_6.png" border="0" alt="image" width="704" height="632" /></p>
+<p>And voila, your database including all its data is copied and you can freely play with it without risking to break a functionality of your production database.</p>
+<p>Of course, there are other solutions but this one seems to be the best one so far. Indeed, if you Import and Data Wizard, then, your destination database will lack all the foreign keys for some reasons, while using generated SQL scripts can be tedious.</p>

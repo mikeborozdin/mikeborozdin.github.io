@@ -1,0 +1,95 @@
+---
+layout: post
+title: "Creating Linked Drop-Down Lists with the CascadingDropDown Control"
+comments: true
+---
+<p><strong><a href="/files/CascadingDropDown.zip">Download the project files</a></strong></p>
+<p>Creating dependant drop-down lists is a very common task, for example, when making a registration form, you usually have to add a country and a state fields, the contents of the state drop-down depends on the selected item in the country drop down field. Actually, it's not so difficult to implement that with the standard controls of ASP.NET. However if you don't want the page to be reloaded every time a user selects a value in the drop-down list, you should make use of AJAX. While you can use UpdatePanel for this task, it will be difficult if you have 3 or even linked drop-downs. Hopefully, you don't have to add a lot of UpdatePanels, instead you can pick up the CascadingDropDown Control from <a href="http://www.asp.net/ajax/ajaxcontroltoolkit/" target="_blank">ASP.NET AJAX Control Toolkit</a>. <!-- more --></p>
+<p><strong></strong><strong><a href="http://www.mikeborozdin.com/demos/CascadingDropDown/" target="_blank">You can see the demo here.</a></strong></p>
+<p>CascadingDropDown is an extender for the standard DropDown control that retrieves the data from a web service. In the example, we'll create 4 linked drop-downs - for the continent, for the country, for the territory and for the city.</p>
+<div>
+<pre class="csharpcode">Continent: <span class="kwrd">&lt;</span><span class="html">asp:DropDownList</span> <span class="attr">ID</span><span class="kwrd">="ddlContinent"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">cc1:CascadingDropDown</span> <span class="attr">ID</span><span class="kwrd">="cddContinent"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="ddlContinent"</span> 
+    <span class="attr">Category</span><span class="kwrd">="continent"</span> <span class="attr">ServicePath</span><span class="kwrd">="Helper.asmx"</span> <span class="attr">ServiceMethod</span><span class="kwrd">="GetContinents"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+Country: <span class="kwrd">&lt;</span><span class="html">asp:DropDownList</span> <span class="attr">ID</span><span class="kwrd">="ddlCountry"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">cc1:CascadingDropDown</span> <span class="attr">ID</span><span class="kwrd">="ccdCountry"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="ddlCountry"</span> 
+    <span class="attr">ParentControlID</span><span class="kwrd">="ddlContinent"</span> <span class="attr">Category</span><span class="kwrd">="country"</span> 
+    <span class="attr">ServicePath</span><span class="kwrd">="Helper.asmx"</span> <span class="attr">ServiceMethod</span><span class="kwrd">="GetCountries"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+Territory: <span class="kwrd">&lt;</span><span class="html">asp:DropDownList</span> <span class="attr">ID</span><span class="kwrd">="ddlTerritory"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">cc1:CascadingDropDown</span> <span class="attr">ID</span><span class="kwrd">="ccdTerritory"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="ddlTerritory"</span> 
+    <span class="attr">ParentControlID</span><span class="kwrd">="ddlCountry"</span> <span class="attr">Category</span><span class="kwrd">="territory"</span> 
+    <span class="attr">ServicePath</span><span class="kwrd">="Helper.asmx"</span> <span class="attr">ServiceMethod</span><span class="kwrd">="GetTerritories"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+City: <span class="kwrd">&lt;</span><span class="html">asp:DropDownList</span> <span class="attr">ID</span><span class="kwrd">="ddlCity"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">cc1:CascadingDropDown</span> <span class="attr">ID</span><span class="kwrd">="ccdCity"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="ddlCity"</span> 
+    <span class="attr">ParentControlID</span><span class="kwrd">="ddlTerritory"</span> <span class="attr">Category</span><span class="kwrd">="city"</span> 
+    <span class="attr">ServicePath</span><span class="kwrd">="Helper.asmx"</span> <span class="attr">ServiceMethod</span><span class="kwrd">="GetCities"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>I must explain some attributes we have here:</p>
+<p><strong>ParentControlID</strong> - the ID of the parent drop-down control</p>
+<p><strong>Category </strong>- the key of the collection we parse in a web service. I'll explain it below.</p>
+<p><strong>ServicePath</strong> - the path to a web service the control gets the data from</p>
+<p><strong>ServiceMethod</strong> - the name of the method the control invokes to retrieve the data</p>
+<p>Let's proceed to the web service now. First, we should mark it with <strong>ScriptService</strong> attribute:</p>
+<div>
+<pre class="csharpcode">[WebService(Namespace = <span class="str">"http://tempuri.org/"</span>)]
+[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+<span class="rem">// To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. </span>
+[System.Web.Script.Services.ScriptService]
+<span class="kwrd">public</span> <span class="kwrd">class</span> Helper : System.Web.Services.WebService</pre>
+</div>
+<p>&nbsp;</p>
+<p>Then, the methods we are going to invoke must have the following signature:</p>
+<p>&nbsp;</p>
+<div>
+<pre class="csharpcode">[WebMethod]
+<span class="kwrd">public</span> CascadingDropDownNameValue[] MethodName(<span class="kwrd">string</span> knownCategoryValues, <span class="kwrd">string</span> category)</pre>
+</div>
+<p>&nbsp;</p>
+<p>The parameters names should match as well.</p>
+<p><strong>knownCategoryValues</strong> - contains the values of the all chosen cascading-drop downs. It can be transformed to a collection by <strong>CascadingDropDown.ParseKnownCategoryValuesString()</strong> method, which return the <strong>StringDictionary </strong>collection, the keys of the collection math the <strong>Category</strong> attributes of <strong>CascadingDropDowns.</strong></p>
+<p><strong>category</strong> - contains the value of the <strong>Category</strong> atttribute of the <strong>CascadingDropDown</strong> that invokes the current method.</p>
+<p>Some sample methods:</p>
+<div>
+<pre class="csharpcode">[WebMethod]
+<span class="kwrd">public</span> CascadingDropDownNameValue[] GetContinents(<span class="kwrd">string</span> knownCategoryValues, <span class="kwrd">string</span> category)
+    {
+        CascadingDropDownNameValue[] continents = <span class="kwrd">new</span> CascadingDropDownNameValue[2];
+        continents[0] = <span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"North America"</span>, <span class="str">"North America"</span>);
+        continents[1] = <span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"Europe"</span>, <span class="str">"Europe"</span>);
+        <span class="kwrd">return</span> continents;
+    }
+
+[WebMethod]
+<span class="kwrd">public</span> CascadingDropDownNameValue[] GetCountries(<span class="kwrd">string</span> knownCategoryValues, <span class="kwrd">string</span> category)
+{
+    StringDictionary ddlData = CascadingDropDown.ParseKnownCategoryValuesString(knownCategoryValues<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"><!--mce:0--></script>);
+    <span class="kwrd">string</span> continent = ddlData[<span class="str">"continent"</span>];
+
+    List&lt;CascadingDropDownNameValue&gt; countries = <span class="kwrd">new</span> List&lt;CascadingDropDownNameValue&gt;();
+
+    <span class="kwrd">if</span> (continent == <span class="str">"North America"</span>)
+    {
+        countries.Add(<span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"United States"</span>, <span class="str">"United States"</span>));
+        countries.Add(<span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"Canada"</span>, <span class="str">"Canada"</span>));
+    }
+    <span class="kwrd">else</span> <span class="kwrd">if</span> (continent == <span class="str">"Europe"</span>)
+    {
+        countries.Add(<span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"United Kingdom"</span>, <span class="str">"United Kingdom"</span>));
+        countries.Add(<span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"France"</span>, <span class="str">"France"</span>));
+    }
+    <span class="kwrd">else</span>
+    {
+        countries.Add(<span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"N/A"</span>, <span class="str">"N/A"</span>));
+    }
+
+    <span class="kwrd">return</span> countries.ToArray();
+}</pre>
+</div>
+<p>&nbsp;</p>
+<p><strong>You can download the entire project <a href="/files/CascadingDropDown.zip">here</a>.</strong></p>
+<h2>Conclusion</h2>
+<p>CascadingDropDown is a very powerful AJAX enabled control that should be used when you have two or more linked drop-down lists. You can read more <a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/CascadingDropDown/CascadingDropDown.aspx" target="_blank">here</a> and <a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Walkthrough/CCDWithDB.aspx" target="_blank">there.</a></p>

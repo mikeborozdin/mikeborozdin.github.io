@@ -1,0 +1,83 @@
+---
+layout: post
+title: "Facebook Graph API and Its JavaScript SDK"
+comments: true
+---
+<p>Facebook has recently released a new tool for accessing its vast amount of data. The name of the tool is the Graph API. The Graph API allows you to literally interact with any Facebook object, including users, their photos, posts, groups, pages, as well as connections between object, i.e. listing people&rsquo;s friends, group members and page fans, etc. Moreover, this interaction isn&rsquo;t only single-directional, in fact you can also modify object, add and delete them. <!-- more --></p>
+<p>Technically, it&rsquo;s done by sending simple HTTP requests and getting responses in a format that is similar to JSON that is both readable by the machine and the human. So, for example, if you want to gather some information on a person with the ID of 56250462 you just need to retrieve this URL <a href="https://graph.facebook.com/562504622">https://graph.facebook.com/562504622</a>, eventually you will get a response like this:</p>
+<pre class="csharpcode">{
+   <span class="str">"id"</span>: <span class="str">"562504622"</span>,
+   <span class="str">"name"</span>: <span class="str">"Mike Borozdin"</span>,
+   <span class="str">"first_name"</span>: <span class="str">"Mike"</span>,
+   <span class="str">"last_name"</span>: <span class="str">"Borozdin"</span>,
+   <span class="str">"link"</span>: <span class="str">"http://www.facebook.com/mike.borozdin"</span>,
+   <span class="str">"birthday"</span>: <span class="str">"12/11/1986"</span>,
+   <span class="str">"hometown"</span>: {
+      <span class="str">"id"</span>: 108131085886116,
+      <span class="str">"name"</span>: <span class="str">"Saint Petersburg, Russia"</span>
+   },
+   <span class="str">"location"</span>: {
+      <span class="str">"id"</span>: 108131085886116,
+      <span class="str">"name"</span>: <span class="str">"Saint Petersburg, Russia"</span>
+   },</pre>
+<pre class="csharpcode">&nbsp;</pre>
+<p><!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --></p>
+<p>STOP! Actually, I was a little bit optimistic when I said you needed just to retrieve that URL. In fact, the URL isn&rsquo;t that simple and you also have to pass a token ID which identifies a user you are acting up who has granted a permission to your application. An access token can be obtained as soon as the authentication process is successfully finished, for this reason Facebook uses the o
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+Auth 2.0 protocol. However, you actually don&rsquo;t have to worry about implementing the authentication on your own, as well as you don&rsquo;t need to think about parsing a response. Instead you can use
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+one of the available SDKs released for a few languages and platforms.</p>
+<p>In this story I&rsquo;m only talking about the JavaScript SDK, because I believe it&rsquo;s the simplest way of starting to work with the Facebook Graph API because first of all you don&rsquo;t have to worry about obtaining JavaScript since it&rsquo;s available within any modern web browser, second you don&rsquo;t even need to install the SDK, instead you just reference it in a script tag.</p>
+<p>So, let&rsquo;s get started. But before we start writing some code, we should create a Facebook application and gets its application ID. Then we just create an HTML page where we can put a script tag loading the SDK.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">script</span> <span class="attr">type</span><span class="kwrd">="text/javascript"</span> <span class="attr">src</span><span class="kwrd">="http://connect.facebook.net/en_US/all.js"</span><span class="kwrd">&gt;&lt;/</span><span class="html">script</span><span class="kwrd">&gt;</span></pre>
+<p>And also put our application ID inside of a script tag in a place where it will definitely be executed first.</p>
+<pre class="csharpcode"><span class="rem">//the API key of the application, change it to yours</span>
+    FB.init({ apiKey: '**************** });</pre>
+<p>The next thing is perform the authentication, we are writing this function:</p>
+<pre class="csharpcode"><span class="kwrd">function</span> login() {
+        FB.login(handleLogin);
+    }</pre>
+<p>That gets invoked whenever a page loads (according to the documentation FB.login() can be only executed on some event), thus:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">body</span> <span class="attr">onload</span><span class="kwrd">="login();"</span><span class="kwrd">&gt;</span></pre>
+<p>When we execute FB.login() we pass it a name of the function responsible for handling the post log-in process, so we also must define that function.</p>
+<pre class="csharpcode"><span class="kwrd">function</span> handleLogin(response) {
+        <span class="rem">//if a user fails to log in...</span>
+        <span class="kwrd">if</span> (!response.session) {
+            <span class="kwrd">return</span>;
+        }
+         <span class="rem">//and now we can do everything</span></pre>
+<p>Yes, since now we can finally send requests to Facebook and get some data. To send a request we are just using FB.api() which first parameter is a request string and the second one is a callback function for processing the retrieved data.</p>
+<p>At the moment we just want to get some information of a logged-in user:</p>
+<pre class="csharpcode">FB.api(<span class="str">"/me?fields=name,picture"</span>, handleMe);</pre>
+<p>We even don&rsquo;t need to know his ID we can use &lsquo;me&rsquo; instead. Also, we can choose the fields we want to pull. If we don&rsquo;t select fields explicitly, then we&rsquo;ll get all the profile fields&hellip; excluding a picture.</p>
+<p>And our processing function should look like this:</p>
+<pre class="csharpcode"><span class="kwrd">function</span> handleMe(response) {
+        <span class="kwrd">var</span> divInfo = document.getElementById(<span class="str">"divInfo"</span>);
+
+        divInfo.innerHTML = <span class="str">"&lt;h1&gt;Me&lt;/h1&gt;"</span>;
+        divInfo.innerHTML += <span class="str">"Name: "</span> + response.name + <span class="str">"&lt;br /&gt;"</span>;
+        divInfo.innerHTML += <span class="str">"&lt;img src=\""</span> + response.picture + <span class="str">"\" /&gt;&lt;br /&gt;&lt;br /&gt;"</span>;
+    }</pre>
+<p>Providing we&rsquo;ve added a div with the ID of &lsquo;divInfo&rsquo; somewhere.</p>
+<p>In addition we also want to get a list of our friends, so we send another request:</p>
+<pre class="csharpcode">FB.api(<span class="str">"/me/friends?fields=name,picture"</span>, handleFriends);</pre>
+<pre class="csharpcode">And handle it respectively:
+<span class="kwrd">function</span> handleFriends(response) {
+        <span class="kwrd">var</span> divInfo = document.getElementById(<span class="str">"divInfo"</span>);
+
+        <span class="kwrd">var</span> friends = response.data;
+
+        divInfo.innerHTML += <span class="str">"&lt;h1&gt;My Friends&lt;/h1&gt;"</span>;
+
+        <span class="kwrd">for</span> (<span class="kwrd">var</span> i = 0; i &lt; friends.length; i++) {
+            divInfo.innerHTML += friends[i].name + <span class="str">"&lt;br /&gt;"</span>;
+            divInfo.innerHTML += <span class="str">"&lt;img src=\""</span> + friends[i].picture + <span class="str">"\" /&gt;&lt;br /&gt;&lt;br /&gt;"</span>;
+        }
+    }</pre>
+<p><strong>You can see this code in action </strong><a href="http://www.mikeborozdin.com/sonet/fbgraph/js/meandfriends.html"><strong>here</strong></a></p>
+<p>The other example includes getting some information on a group and listing all its members, it is also available <strong><a href="http://www.mikeborozdin.com/sonet/fbgraph/js/group.html">here</a></strong>.</p>
+<p>Moreover, we can also search for users and other object, an example of that goes <strong><a href="http://www.mikeborozdin.com/sonet/fbgraph/js/search.html">here</a></strong>, where we are looking for people by the name of Mike. It actually, shows only 25 people, but basically you can it also sends you a link to another 25 results and so on.</p>
+<h2>Conclusion and References</h2>
+<p>The Facebook Graph API is indeed an extremely useful tool for writing application that interact with Facebook, also it can be quite useful for analysing Facebook data, especially social interactions, I believe it must be really interesting to create a map of social connection of your friends or of some group.</p>
+<p>In addition, to the JavaScript API, there are also libraries for Python, PHP, iPhone and Android which should also be fully functional and are available at this page - <a href="http://developers.facebook.com/docs/">http://developers.facebook.com/docs/</a> &ndash; that is also a starting point for further studies.</p>
+<p>Also, there is a .NET SDK being currently in development, but it is also available for downloading at the Facebook GitHub repository - <a href="http://github.com/facebook">http://github.com/facebook</a></p>

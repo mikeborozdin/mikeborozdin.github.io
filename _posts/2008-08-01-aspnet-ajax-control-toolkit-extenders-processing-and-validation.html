@@ -1,0 +1,47 @@
+---
+layout: post
+title: "ASP.NET AJAX Control Toolkit Extenders: Processing And Validation"
+comments: true
+---
+<p>In <a href="http://www.mikeborozdin.com/post/Building-Rich-Internet-Applications-With-ASPNET-AJAX-Control-Toolkit.aspx" target="_blank">the previous article</a> I told you about ASP.NET AJAX Control Toolkit, I explained its purpose, listed the available controls and showed an example. However, I think some things should be explained a bit more detailed. Today I'm going to talk about the extenders controls, I already mentioned them in <a href="http://www.mikeborozdin.com/post/Building-Rich-Internet-Applications-With-ASPNET-AJAX-Control-Toolkit.aspx" target="_blank">the previous article</a>, but I can repeat. An extender is a control that is a based on an ASP.NET web control, but provides an additional client-side functionality. Slider is a good example of an extender, in looks like a real sliding control in desktop applications, but in fact it just extends the TextBox control. <!-- more --></p>
+<p>So, its value is actually stored in the TextBox that is linked with a slider by the <span style="font-family: 'Courier New'; color: #800000;">TargetControlID</span> attribute, thus when processing a form you should look for the value in the TextBox. Example:</p>
+<p><span style="font-family: 'Courier New'; color: #800000;">Default.aspx</span></p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">form</span> <span class="attr">id</span><span class="kwrd">="form1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:ScriptManager</span> <span class="attr">ID</span><span class="kwrd">="ScriptManager1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">asp:ScriptManager</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">div</span><span class="kwrd">&gt;</span>
+    <span class="asp">&lt;%</span>--The TextBox that contains the Slider <span class="kwrd">value</span>--<span class="asp">%&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:Label</span> <span class="attr">ID</span><span class="kwrd">="lblSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+
+    <span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="SliderExtender1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtSlider"</span>
+        <span class="attr">BoundControlID</span><span class="kwrd">="lblSlider"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span>
+    
+    <span class="kwrd">&lt;</span><span class="html">asp:Button</span> <span class="attr">ID</span><span class="kwrd">="btnSubmit"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">Text</span><span class="kwrd">="Submit"</span> <span class="attr">onclick</span><span class="kwrd">="btnSubmit_Click"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">form</span><span class="kwrd">&gt;</span></pre>
+<p><span style="font-family: 'Courier New'; color: #800000;">Default.aspx.cs</span></p>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> btnSubmit_Click(<span class="kwrd">object</span> sender, EventArgs e)
+{
+    <span class="rem">//We use TextBoxID.Text to access the Slider value</span>
+    Response.Write(txtSlider.Text); 
+}</pre>
+<p>The next important thing is validation. Alt
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+hough many extenders do help users to enter a correct value (i.e. sliders, numeric up-downs, mask edits, filtered text boxes), we still need to validate the input, because if JavaScript, for some reasons, is disabled, users will see a plain text box instead of a fancy control or some people can try to hack your application by putting incorrect values into the form. So, there is nothing difficult, just use plain ASP.NET validators. If the value should fall between 1 and 10, then add a RangeValidator and RequiredValidator to check if the value isn't empty.</p>
+<pre class="csharpcode"><span class="asp">&lt;%</span>--The TextBox that contains the Slider <span class="kwrd">value</span>--<span class="asp">%&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:Label</span> <span class="attr">ID</span><span class="kwrd">="lblSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+
+<span class="asp">&lt;%</span>-- The validator that checks the <span class="kwrd">value</span> range --<span class="asp">%&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:RequiredFieldValidator</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">ControlToValidate</span><span class="kwrd">="txtSlider"</span> 
+    <span class="attr">ErrorMessage</span><span class="kwrd">="The value shouldn't be empty"</span> <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;</span>
+<span class="asp">&lt;%</span>-- The validator that checks whether the <span class="kwrd">value</span> <span class="kwrd">is</span> empty --<span class="asp">%&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:RangeValidator</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">ControlToValidate</span><span class="kwrd">="txtSlider"</span> <span class="attr">Type</span><span class="kwrd">="Integer"</span> 
+    <span class="attr">MinimumValue</span><span class="kwrd">="1"</span> <span class="attr">MaximumValue</span><span class="kwrd">="10"</span> <span class="attr">ErrorMessage</span><span class="kwrd">="The value should be between 1 and 10"</span> 
+    <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;</span>
+
+<span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="SliderExtender1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtSlider"</span>
+    <span class="attr">BoundControlID</span><span class="kwrd">="lblSlider"</span> <span class="attr">Minimum</span><span class="kwrd">="1"</span> <span class="attr">Maximum</span><span class="kwrd">="10"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span></pre>

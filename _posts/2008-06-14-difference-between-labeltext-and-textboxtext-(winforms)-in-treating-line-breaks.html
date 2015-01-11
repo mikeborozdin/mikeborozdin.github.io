@@ -1,0 +1,17 @@
+---
+layout: post
+title: "Difference Between Label.Text And TextBox.Text (WinForms) In Treating Line Breaks"
+comments: true
+---
+<p>I had a small project recently that outputted the results of some calculations to the label on the form, I replaced the label with a textbox and noticed that instead of the line breaks I had in the label I got a bunch of non-printed characters. <!-- more --> I had the following code that worked fine for the label:</p>
+<p>[code:c#]</p>
+<p>myLabel.Text += "\nNew Line";</p>
+<p>[/code]</p>
+<p><br /> However as I said it didn&rsquo;t work properly for the textbox, however this one did work:</p>
+<p>[code:c#]</p>
+<p>myTextBox.Text += "\r\nNew line";</p>
+<p>[/code]</p>
+<p><br /> This is good and it also works with the Label control, however you can do it better by using <a href="http://msdn.microsoft.com/en-us/library/system.environment.newline.aspx" target="_blank">Environment.NewLine</a> which represents the new line string on the current system:</p>
+<p>[code:c#]</p>
+<p>myTextBox.Text += Environment.NewLine + "New line";</p>
+<p>[/code]</p>

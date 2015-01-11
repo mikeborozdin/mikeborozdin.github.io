@@ -1,0 +1,10 @@
+---
+layout: post
+title: "Getting BlogEngine.NET To Work With The Local Time Zones: Part II (in case JavaScript is disabled)"
+comments: true
+---
+<p>In the article called "<a href="/post/Getting-BlogEngineNET-To-Work-With-The-Local-Time-Zones.aspx" target="_blank">Getting BlogEngine.NET To Work With The Local Time Zones</a>" I described how to convert the times of the posts to the local time zones of users relying solely on JavaScript. However I got a complaint that if JavaScript is disabled for some reasons, then no date and time are displayed. <!-- more --></p>
+<p><br /> It can be fixed, I&rsquo;ll explain how, but in this case &ndash; if JavaScript is disabled, the time will be in GMT, so just put the following code to <span style="font-family: 'courier new', courier;">PostView.ascx</span> that basically outputs the time in GMT and if JavaScript is enabled it replaces a GMT time with a local time.</p>
+<p>[code:html]</p>
+<p>&lt;span id="postDate_&lt;%=Post.Id %&gt;" class="pubDate"&gt; on<br /> &nbsp;&nbsp;&nbsp; &lt;%=Post.DateCreated.ToLongDateString() + " " + Post.DateCreated.ToShortTimeString() %&gt; GMT<br /> &lt;/span&gt;<br /> &lt;script type="text/javascript"&gt;<br /> &nbsp;&nbsp;&nbsp; $("postDate_&lt;%=Post.Id %&gt;").firstChild.nodeValue = "on " + ConvertToLocalDate('&lt;%=Post.DateCreated.ToLongDateString() + " " + Post.DateCreated.ToShortTimeString() %&gt;'); <br /> &lt;/script&gt;</p>
+<p>[/code]</p>

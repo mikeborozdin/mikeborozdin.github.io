@@ -1,0 +1,41 @@
+---
+layout: post
+title: "Using Microsoft Synchronization Services For ADO.NET (Introducing Microsoft SQL Server Compact Edition (Part II))"
+comments: true
+---
+<p>In the <a href="/post/Introducing-Microsoft-SQL-Server-Compact-Edition-(Part-I).aspx" target="_blank">previous part of the tutorial</a> we learnt how to use SQL Server Compact Edition in our application. In this part we are going to learn how to synchronize the data between Compact Edition and a regular verson of SQL Server.</p>
+<p><br /> Visual Studio 2008 has built-in Synchronization Services that we&rsquo;ll be using in our project. <!-- more --></p>
+<p><br /> Create a new Windows Forms Application. In Server Explorer create a new database; create a table with just two fields:</p>
+<ul>
+<li>ID</li>
+<li>SampleColumn</li>
+</ul>
+<p>Then, go to <span style="font-family: 'courier new', courier;">Project-&gt;Add Component-&gt;Data-&gt;Local Database Cache</span></p>
+<p><img src="/images/LocalDatabaseCache.jpg" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp; Find the newly created database and choose the only table. Click &lsquo;Ok&rsquo;.&nbsp; When it will ask you to create a DataSet, just click &lsquo;Cancel&rsquo;, we won&rsquo;t use any dataset
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+s in this project. As you can see it adds to field to our table, one is responsible for the last created item and the other one for the last update item. Hopefully, it also provides the SQL scripts for undoing these changes.</p>
+<p>It&rsquo;s necessary to make the synchonization bi-directional, so that it allows us to syncrhonize in both directions. Unfortunately it cannot be done in the design mode, so we have to write some code. Right-click on the .sync file -&gt; View Code, it will create a new file containing a partial class. Add this piece of code:</p>
+<p>[code:c#]</p>
+<p>namespace SyncServices1 {<br /> &nbsp;&nbsp;&nbsp; public partial class LocalDataCache2SyncAgent {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; partial void OnInitialized(){<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SampleTable.SyncDirection = Microsoft.Synchronization.Data.SyncDirection.Bidirectional; // if the table is called SampleTable<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp; }<br /> }</p>
+<p>[/code]</p>
+<p>Then, let&rsquo;s make a very simple form. Place two ListBoxes, one will be for the remote data and one for the local. Place a button as well that will trigger a syncrhonization process. Put also a textbox and a button that will be used for inserting data.</p>
+<p>&nbsp; <img src="/images/FormDesign.jpg" alt="" /></p>
+<p><br /> Now add some the code that will retrieve the data from the remote database and fill the approprate list, do the same for the local data.</p>
+<p>[code:c#]</p>
+<p>using (SqlConnection con = new SqlConnection("Data Source=(local);Initial Catalog=SyncServices1;Integrated Security=True;"))<br /> {<br /> <br /> &nbsp;&nbsp;&nbsp; con.Open();<br /> &nbsp;&nbsp;&nbsp; SqlCommand comSelect = new SqlCommand("SELECT SampleColumn FROM SampleTable", con);<br /> <br /> <br /> &nbsp;&nbsp;&nbsp; SqlDataReader reader = comSelect.ExecuteReader();<br /> <br /> &nbsp;&nbsp;&nbsp; listServer.Items.Clear();<br /> &nbsp;&nbsp;&nbsp; while (reader.Read())<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; listServer.Items.Add(reader["SampleColumn"].ToString());<br /> &nbsp;&nbsp;&nbsp; }<br /> <br /> &nbsp;&nbsp;&nbsp; con.Close();<br /> }</p>
+<p>[/code]</p>
+<p>Then, go to the design view of the *.sync file, hit the &lsquo;code&rsquo; button&rsquo; and copy the code. Add this code to the button OnClick event. It updates the databases only, so we have to add some code to update the view (form) of our application, the do to section hints at that.</p>
+<p>[code:c#]</p>
+<p>private void btnSync_Click(object sender, EventArgs e)<br /> {<br /> &nbsp;&nbsp;&nbsp; LocalDataCache2SyncAgent syncAgent = new LocalDataCache2SyncAgent();<br /> &nbsp;&nbsp;&nbsp; Microsoft.Synchronization.Data.SyncStatistics syncStats = syncAgent.Synchronize();<br /> <br /> &nbsp;&nbsp;&nbsp; FillServerList();<br /> &nbsp;&nbsp;&nbsp; FillLocalList();<br /> }</p>
+<p>[/code]</p>
+<p><br /> So, let&rsquo;s add some sample data to our remote server. Then, compile the project. See that the left box has the data, while the right one is empty, hit the &lsquo;Sync&rsquo; button, and they will become synchonized.</p>
+<p><br /> Now, add some code that will handle inserting data in our local database.</p>
+<p><br /> Let&rsquo;s add some text and click the &lsquo;Sync&rsquo; button, so that the server will also get updated.</p>
+<h1>Conclususion</h1>
+<p>Microsoft Synchronization Services for ADO.NET is a great tool when you need to develop occasionally connected applications that require data synchronization. In the tutorial we saw how it's easy to peform such a synchronization.</p>
+<h1>Resources</h1>
+<p><a href="http://msdn.microsoft.com/sync" target="_blank">Microsoft Sync Framework Developer Center </a></p>
+<p><a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=02989F70-49AA-43D7-81B8-A651120F8D65&amp;displaylang=en" target="_blank">Microsoft Synchronization Services for ADO.NET Books Online</a></p>
+<p>&nbsp;</p>

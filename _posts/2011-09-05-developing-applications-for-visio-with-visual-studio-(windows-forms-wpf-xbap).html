@@ -1,0 +1,320 @@
+---
+layout: post
+title: "Developing Applications for Visio with Visual Studio (VSTO, Windows Forms, WPF, XBAP)"
+comments: true
+---
+<p>This tutorial demonstrates how to extend the Visio functionality by writing an Visio add-in with VSTO, creating a standalone application with both Windows Forms and WPF, and finally by building a browse application with WPF (XBAP). <!-- more --></p>  <p>Visio is a conventional tool for drawing various diagrams. However, sometimes we are not satisfied with its default functionality and want to extend it. There are thousands of reason why one may want to extend the Visio functionality, starting from creating a code generator that will automatically write code based on a UML diagram or will create a database (it is also possible to do a reverse operation and draw diagrams based on your class hierarchy or database schema) to analysing workflow diagrams or supply chains.</p>  <p>Technically there are three ways of extending the Visio functionality.</p>  <ul>   <li>Visio Add-in </li>    <li>Standalone desktop application featuring a Visio control </li>    <li>Web application hosting a Visio control </li> </ul>  <p>This tutorial covers all three approaches describing their pros and cons.</p>  <p>There are some prerequisites to this tutorial which are:</p>  <ul>   <li>Visual Studio 2010 </li>    <li>Visio 2010 </li> </ul>  <p>However, you can try using Visio 2007 and Visual Studio 2008, I just haven’t tested my code for those versions.</p>  <p>In this tutorial we will cover how to write a simply application that just lists all the shapes that are present in a diagram. For this reason we also draw a small diagram that illustrates the process of applying for a bank account and receiving a credit card.</p>  <p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_7.png" width="643" height="325" /></p>  <h1>Visio Add-In</h1>  <p>The first approach of extending the Visio functionality is writing an add-in for it. Visual Studio provides tools for extending Microsoft Office applications that are called VSTO (Visual Studio Tools for Office). However, their set of features for Visio is somewhat limited. The main restriction is inability to embed a user interface in Visio by using panes that are available for Word and Excel add-ins. Of course, it is possible to create our own windows, but having a window over Visio is not the best usability decision, because it already looks as a standalone application and not Visio.</p>  <p>Anyway, in order to create a Visio add-in you have to launch Visio Studio, create a new project and choose Visual C# –&gt; Office –&gt; 2010 –&gt; Visio 2010 Add-in .</p>  <p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_8.png" width="903" height="605" /></p>  <p>&#160;</p>  <p>This will generate some dummy code for you. Our next step is adding interaction between our add-in and a user. This can be accomplished by adding a Ribbon to our application. You have to navigate to Project-&gt;Add Component-&gt;Office-&gt;Ribbon (Visual Designer).</p>  <p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_9.png" width="852" height="575" /></p>  <p>After adding a Ribbon it’s time to drop some control to it. If you open the Toolbox you will see a list of Ribbon controls.</p>  <p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_10.png" width="296" height="437" /></p>  <p>We just need to drop a button that will open a new window which will contain a ListBox for displaying shapes. Having places a button onto the Ribbon you just have to create a new Form (let’s call it FormListShapes) and to insert a ListBox (lstShapes).</p>  <p>Then we go back to the Ribbon and to the newly created button and add a click handler that shows a window.</p>  <div class="csharpcode">   <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> btnListShapes_Click(<span class="kwrd">object</span> sender, RibbonControlEventArgs e)</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    FormListShapes formListShapes = <span class="kwrd">new</span> FormListShapes();</pre>
+
+  <pre><span class="lnum">   4:  </span>    formListShapes.Show();</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>}</pre>
+</div>
+
+<p>Now we switch back to the Form and finally put some code that will display all the present shapes in a diagram.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">using</span> Visio = Microsoft.Office.Interop.Visio;</pre>
+
+  <pre><span class="lnum">   2:  </span><span class="rem">//...</span></pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span><span class="kwrd">public</span> FormListShapes()</pre>
+
+  <pre><span class="lnum">   4:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>    InitializeComponent();</pre>
+
+  <pre><span class="lnum">   6:  </span>&#160;</pre>
+
+  <pre class="alt"><span class="lnum">   7:  </span>    <span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> Globals.ThisAddIn.Application.ActivePage.Shapes)</pre>
+
+  <pre><span class="lnum">   8:  </span>    {</pre>
+
+  <pre class="alt"><span class="lnum">   9:  </span>        lstShapes.Items.Add(shape.Text + <span class="str">&quot; (&quot;</span> + shape.Name + <span class="str">&quot;)&quot;</span>);</pre>
+
+  <pre><span class="lnum">  10:  </span>    }</pre>
+
+  <pre class="alt"><span class="lnum">  11:  </span>}</pre>
+</div>
+
+<p>Okay, this piece of code requires a few explanations. We iterate through each shape in a currently open page and display its caption (shape.Text) and a shape type (shape.Name) in parentheses. Please, also pay attention at line 7 that makes use of class Globals that is automatically generated by Visual Studio and is meant to provide access to the Visio object from other parts of the appliation. You can get more information on this class on <a href="http://msdn.microsoft.com/en-us/library/bhczd18c(v=VS.100).aspx" target="_blank">MSDN</a>.</p>
+
+<p>Please, note that we will cover the Visio API in next tutorials, when we will speak about its object model, advanced diagram analysis, on the fly diagram creation and so on.</p>
+
+<h1>Using Visio in Standalone Desktop Applications</h1>
+
+<p>Although writing a Visio add-in seems to be an obvious idea when it is necessary to extend its functionality, it is not always the best choice. Firstly, as it is shown above, there are some limitations when it comes to designing a convenient UI. In order to add any control to any other place besides the Ribbon, one has to create separate window that already gives a feeling of having a standalone application rather than a Visio add-in. Secondly, there are cases when you have a sophisticated application that requires a just little bit of interaction with Visio, then it is pretty natural to embed Visio in that application instead of writing an add-in for that.</p>
+
+<p>Fortunately, Visual Studio is capable of handling that task. Moreover, you can use both Windows Forms and WPF. We will start with Windows Forms, but later you will see that embedding Visio in a WPF application is not any harder.</p>
+
+<h2>Embedding Visio in a Windows Forms Application</h2>
+
+<p>I hope we can easily skip that part that tells how to create a Windows Forms application and we can proceed with adding a Vision control to a newly created form.</p>
+
+<p>Obviously, you won’t find anything related to Visio in the Toolbox. Anyway, you still open the Toolbox, right-click and then select ‘Choose Items’.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_11.png" width="309" height="309" /></p>
+
+<p>Switch to the COM Components tab and find Microsoft Office Visio 14.0 Drawing Control.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_12.png" width="673" height="483" /></p>
+
+<p>After doing that you will see a new control in the Toolbox, just drag-n-drop to the form you will see something like the following:</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_13.png" width="734" height="639" /></p>
+
+<p>Unlike a Visio add-in when you can open a diagram and Visio and then run an add-in, if you embed Visio in your application you have to write code in order to open a diagram. It is just sufficient to specify a value of the Src property of a Visio control to open a diagram.</p>
+
+<pre class="csharpcode">axDrawingControl1.Src = <span class="str">&quot;Some Diagram.vsd&quot;</span>;</pre>
+
+<p>However, we do no want to hardcode a path to a diagram, instead we will provide a dialog for choosing a Visio diagram to open.</p>
+
+<p>So, just think about the way you want to open the dialog. I just created added a main menu with the ‘Open’ item.</p>
+
+<p>Then, drop an OpenFileDialog onto you form and set its Filter property to ‘Visio Diagrams|*.vsd;*.vdx’, so that users cannot open any other file types.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_14.png" width="299" height="431" /></p>
+
+<p>Finally, we can add some code that will open a chosen diagram for us.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> openToolStripMenuItem_Click(<span class="kwrd">object</span> sender, EventArgs e)</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    <span class="kwrd">if</span> (dlgOpenDiagram.ShowDialog() == System.Windows.Forms.DialogResult.OK)</pre>
+
+  <pre><span class="lnum">   4:  </span>    {</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>        axDrawingControl1.Src = dlgOpenDiagram.FileName;</pre>
+
+  <pre><span class="lnum">   6:  </span>    }</pre>
+
+  <pre class="alt"><span class="lnum">   7:  </span>}</pre>
+</div>
+
+<p>If you compile and run the application now, you will see a form list that (after you open a diagram, of course):</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_15.png" width="679" height="566" /></p>
+
+<p>Okay, it looks good! So, now we just want to list any shape that is present in a diagram, like we did for a Visio add-in before. Thus, drop a ListBox onto the form.</p>
+
+<p>We will populate that ListBox as soon as you open a diagram. How does the application know if you open a diagram? Obviously, via some kind of event.</p>
+
+<p>There is an event called DocumentOpened that is fired every time a new diagram is opened in a control. The thing we need to do is just to subscribe to that event. So, just add the following code to your form constructor.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">public</span> Form1()</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    InitializeComponent();</pre>
+
+  <pre><span class="lnum">   4:  </span>&#160;</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span><strong>    axDrawingControl1.DocumentOpened += <span class="kwrd">new</span> AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(axDrawingControl1_DocumentOpened);</strong></pre>
+
+  <pre><span class="lnum">   6:  </span>}</pre>
+</div>
+
+<p>If you wonder about the axDrawingControl1_DocumentOpened() method, then it is automatically generated by Visual Studio, if you just press ‘Tab’ twice after typing ‘axDrawingControl1.DocumentOpened’. So, you don’t have to worry about going through a documentation to find a method signature.</p>
+
+<p>Now, you can add code that lists Visio shapes to that event handler.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> axDrawingControl1_DocumentOpened(<span class="kwrd">object</span> sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    <span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> axDrawingControl1.Window.Application.ActivePage.Shapes)</pre>
+
+  <pre><span class="lnum">   4:  </span>    {</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>        lstShapes.Items.Add(shape.Text + <span class="str">&quot; (&quot;</span> + shape.Name + <span class="str">&quot;)&quot;</span>);</pre>
+
+  <pre><span class="lnum">   6:  </span>    }</pre>
+
+  <pre class="alt"><span class="lnum">   7:  </span>}</pre>
+</div>
+
+<p>The code looks basically similar to the same for a Visio add-in, with the only exception that instead of referencing Globals, you just point to your Visio control and its Window.Application.</p>
+
+<p>As a result after compiling the application you should see something like this.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_16.png" width="897" height="509" /></p>
+
+<h2>Embedding Visio in a WPF Application</h2>
+
+<p>That Visio control that we added into a Windows Forms application is, in fact, an ActiveX control, that might be pretty evident because it is located in the COM Components tab. However, WPF does not support ActiveX controls directly. But there is always a workaround.</p>
+
+<p>You can place a WindowsFormHost control onto your WPF window and that control can host any Windows Forms control. Pretty convenient.</p>
+
+<p>Thus, just add WindowsFormHost to the Toolbox. It is located in the WPF Components tab.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_17.png" width="673" height="483" /></p>
+
+<p>And then just place this control onto a form.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">&lt;</span><span class="html">StackPanel</span><span class="kwrd">&gt;</span></pre>
+
+  <pre><span class="lnum">   2:  </span>    <span class="kwrd">&lt;</span><span class="html">WindowsFormsHost</span> <span class="attr">Name</span><span class="kwrd">=&quot;host&quot;</span> <span class="kwrd">/&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span><span class="kwrd">&lt;/</span><span class="html">StackPanel</span><span class="kwrd">&gt;</span></pre>
+</div>
+
+<p>Next steps, however, are bit less obvious. We have to add a Visio control, but we can’t just drag-n-drop it, like we did before. Visual Studio WPF designer just does not support ActiveX objects. So, we have to add a control programmatically, but first we have to add all the necessary references.</p>
+
+<p>Go to the Solution Explorer, right-click on ‘References’ and press ‘Add Reference’, then switch to the COM tab and find Microsoft Visio Type Library.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_18.png" width="817" height="609" /></p>
+
+<p>This will add a reference to the DLL containing classes related to Visio. However, it doesn’t contain the control itself. So, we have to add yet another reference that can be a bit tricky. Basically, we should look for AxInterop.Microsoft.Office.Interop.VisOcx.dll. There is a <a href="http://msdn.microsoft.com/en-us/library/ms742735.aspx" target="_blank">tutorial</a> saying to create a separate project for Windows Forms Control Library where you have to drag-n-drop that Visio ActiveX control and then reference that project. It’s one way to go. The other way is just to directly reference that DLL from an old project. Please, note those AxIntertop DLL are automatically created by Visual Studio once you drop a control.</p>
+
+<p>So you can add a reference to a DLL created in the Windows Forms project. So, open the Add Reference open and go to the Browse tab and navigate to the ‘bin/Debug/’ folder of the Windows Forms project and choose AxInterop.Microsoft.Office.Interop.VisOcx.dll.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_19.png" width="817" height="609" /></p>
+
+<p>Okay, the preparatory steps are done. We can finally add a Visio control. This time, however, it’s done solely programmatically.</p>
+
+<p>First of all, import the necessary namespaces:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">using</span> AxMicrosoft.Office.Interop.VisOcx;</pre>
+
+  <pre><span class="lnum">   2:  </span><span class="kwrd">using</span> Visio = Microsoft.Office.Interop.Visio;</pre>
+</div>
+
+<p>Then, add a Visio control to the WindowsFormHost:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">public</span> <span class="kwrd">partial</span> <span class="kwrd">class</span> MainWindow : Window</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    <span class="kwrd">private</span> AxDrawingControl visioControl = <span class="kwrd">new</span> AxDrawingControl();</pre>
+
+  <pre><span class="lnum">   4:  </span>&#160;</pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>    <span class="kwrd">public</span> MainWindow()</pre>
+
+  <pre><span class="lnum">   6:  </span>    {</pre>
+
+  <pre class="alt"><span class="lnum">   7:  </span>        InitializeComponent();</pre>
+
+  <pre><span class="lnum">   8:  </span>&#160;</pre>
+
+  <pre class="alt"><span class="lnum">   9:  </span>        <span class="kwrd">this</span>.host.Child = <span class="kwrd">this</span>.visioControl;</pre>
+
+  <pre><span class="lnum">  10:  </span>    }</pre>
+</div>
+
+<p>We mark the control as a field of our class, so that it can be accessed from its methods.</p>
+
+<p>The next steps are pretty obvious we set a source of a diagram, add event handlers, populate a ListBox, etc. However, it is advisable to set event handlers not in the constructor, but in the Window_Loaded event when the Visio control is known to be fully loaded.</p>
+
+<p>So we set the event of Loaded.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">&lt;</span><span class="html">Window</span> <span class="attr">x:Class</span><span class="kwrd">=&quot;VisioWpf.MainWindow&quot;</span></pre>
+
+  <pre>        <span class="attr">xmlns</span><span class="kwrd">=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;</span></pre>
+
+  <pre class="alt">        <span class="attr">xmlns:x</span><span class="kwrd">=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;</span></pre>
+
+  <pre>        <span class="attr">Title</span><span class="kwrd">=&quot;MainWindow&quot;</span> <span class="attr">Height</span><span class="kwrd">=&quot;650&quot;</span> <span class="attr">Width</span><span class="kwrd">=&quot;525&quot;</span> <span class="attr">Loaded</span><span class="kwrd">=&quot;Window_Loaded&quot;</span><span class="kwrd">&gt;</span></pre>
+</div>
+
+<p>And handle it:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> Window_Loaded(<span class="kwrd">object</span> sender, RoutedEventArgs e)</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    <span class="kwrd">this</span>.visioControl.DocumentOpened += <span class="kwrd">new</span> EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);</pre>
+
+  <pre><span class="lnum">   4:  </span>}</pre>
+</div>
+
+<p>Then, for filling in a ListBox we can use fancy WPF binding:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_DocumentOpened(<span class="kwrd">object</span> sender, EVisOcx_DocumentOpenedEvent e)</pre>
+
+  <pre><span class="lnum">   2:  </span>{</pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>    lstShapes.ItemsSource = <span class="kwrd">this</span>.visioControl.Window.Application.ActivePage.Shapes;</pre>
+
+  <pre><span class="lnum">   4:  </span>}</pre>
+</div>
+<!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } -->
+
+<div class="csharpcode">
+  <pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">&lt;</span><span class="html">ListBox</span> <span class="attr">Name</span><span class="kwrd">=&quot;lstShapes&quot;</span><span class="kwrd">&gt;</span></pre>
+
+  <pre><span class="lnum">   2:  </span>    <span class="kwrd">&lt;</span><span class="html">ListBox.ItemTemplate</span><span class="kwrd">&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">   3:  </span>        <span class="kwrd">&lt;</span><span class="html">DataTemplate</span><span class="kwrd">&gt;</span></pre>
+
+  <pre><span class="lnum">   4:  </span>            <span class="kwrd">&lt;</span><span class="html">StackPanel</span> <span class="attr">Orientation</span><span class="kwrd">=&quot;Horizontal&quot;</span><span class="kwrd">&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">   5:  </span>                <span class="kwrd">&lt;</span><span class="html">TextBlock</span> <span class="attr">Text</span><span class="kwrd">=&quot;{Binding Path=Text}&quot;</span><span class="kwrd">/&gt;</span></pre>
+
+  <pre><span class="lnum">   6:  </span>                <span class="kwrd">&lt;</span><span class="html">TextBlock</span> <span class="attr">Text</span><span class="kwrd">=&quot; (&quot;</span><span class="kwrd">/&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">   7:  </span>                <span class="kwrd">&lt;</span><span class="html">TextBlock</span> <span class="attr">Text</span><span class="kwrd">=&quot;{Binding Path=Name}&quot;</span><span class="kwrd">/&gt;</span></pre>
+
+  <pre><span class="lnum">   8:  </span>                <span class="kwrd">&lt;</span><span class="html">TextBlock</span> <span class="attr">Text</span><span class="kwrd">=&quot;)&quot;</span><span class="kwrd">/&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">   9:  </span>            <span class="kwrd">&lt;/</span><span class="html">StackPanel</span><span class="kwrd">&gt;</span></pre>
+
+  <pre><span class="lnum">  10:  </span>        <span class="kwrd">&lt;/</span><span class="html">DataTemplate</span><span class="kwrd">&gt;</span></pre>
+
+  <pre class="alt"><span class="lnum">  11:  </span>    <span class="kwrd">&lt;/</span><span class="html">ListBox.ItemTemplate</span><span class="kwrd">&gt;</span></pre>
+
+  <pre><span class="lnum">  12:  </span><span class="kwrd">&lt;/</span><span class="html">ListBox</span><span class="kwrd">&gt;</span></pre>
+</div>
+
+<h1>Embedding Visio in a Web Application</h1>
+
+<p>Yes, it is also possible to embed Visio in a web application, or more precisely in a browser application. I believe those of you are pretty much familiar with WPF can guess that it is done with WPF Browser Applications (XBAP). That’s right.</p>
+
+<p>I need to give a quick remark that there are some other ways of using Visio on the web. Of course, you can use a free Visio Web Viewer control that, however, has a somewhat limited API. You can even embed a fully-fledged Visio control in an HTML page and try to interact with it via JavaScript, however your UI capabilities will be limited.</p>
+
+<p>So, the best way to go is to create a WPF Browser Application (XBAP). There is one important consideration though. Since, embedded Visio is an ActiveX control, an XBAP application containing it will require running in the full trust mode that grants access to your machine to a browser application. This mode is enabled by default in Internet Explorer for intranet websites, which are a common location for such applications. In order to use it on the Web you can either alter your IE security settings, so that it allows running XBAP application in full trust for every website, which is obviously not secure, or just to add your website to the trusted zone.</p>
+
+<p>Marking a WPF Browser application as a full trust one is the first thing you should do after creating a project. Right-click on your project in the Solution Explorer, press ‘Properties’ and go to ‘Security’ and set ‘This is a full trust application’.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_20.png" width="896" height="422" /></p>
+
+<p>&#160;</p>
+
+<p>I won’t show you the source code here, because it is exactly the same as for a regular WPF application, except for some points where instead of Window you are using Page. You can still find the source code in the ZIP file I provide below.</p>
+
+<p>Anyway, you should see something like that.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_21.png" width="877" height="548" /></p>
+
+<h1>Conclusion</h1>
+
+<p>There are multiple reasons for extending Visio functionality. Also there are many ways of doing that. Although writing a Visio add-in often seems to be a reasonable idea, it is not always the case because of its limited UI capabilities. At the same time, it can be easily sorted out by writing a standalone desktop application that can be created with both Windows Forms and with powerful Windows Presentation Foundation.</p>
+
+<p>Furthermore, if you want to ease deployment of your application and making it available to users immediately, you should consider an option of creating it as a browser application with XBAP.</p>
+
+<h1>Next Chapters</h1>
+
+<p><a href="http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx" target="_blank">Analysing Parent-Child Relations in Visio</a></p>
+
+<p><a href="http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx">Understanding Visio Event Model</a></p>
+
+<p>This is only the first article of the series. Next articles will focus more on the Visio object model that allows analysing diagrams and creating new ones programmatically. The Visio API is the same, no matter which you decide to create your application with, so those chapters will be useful for any case.</p>
+
+<p>Stay tuned!</p>
+
+<h1>Download Source Code</h1>
+
+<p><a href="/files/Visio.zip">Visio.zip (496.48 kb)</a></p>

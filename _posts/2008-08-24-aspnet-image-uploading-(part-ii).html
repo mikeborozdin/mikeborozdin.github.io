@@ -1,0 +1,37 @@
+---
+layout: post
+title: "ASP.NET Image Uploading (part II)"
+comments: true
+---
+<p>In the <a href="http://www.mikeborozdin.com/post/ASPNET-Image-Uploading-(part-I).aspx" target="_blan&lt;mce:script type=">previous tutorial</a> I showed how to handle image uploads, how to validate some things and finally how to resize images retaining their proportions. This time I'll show you how to prevent uploading of files which size exceeds the defined limit. Well, this is not difficult to implement,&nbsp; however there are some pitfalls I'll tell you about later. <!-- more --></p>
+<p>Let's create a validator that will check if the size of an uploaded file is greater than the limit you set. We use a&nbsp; CustomValidator for this.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:CustomValidator</span> <span class="attr">ID</span><span class="kwrd">="valFileSize"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ErrorMessage</span><span class="kwrd">="The image exceeds 10 MB"</span> 
+    <span class="attr">onservervalidate</span><span class="kwrd">="valFileSize_ServerValidate"</span> <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>The method that actually performs the validation looks like this one:</p>
+<p>&nbsp;</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> valFileSize_ServerValidate(<span class="kwrd">object</span> source, ServerValidateEventArgs args)
+{
+    <span class="kwrd">if</span> (IsValid)
+    {
+        <span class="kwrd">int</span> maxSize = 5 * 1024 * 1024;
+        <span class="kwrd">if</span> (fileImage.PostedFile.ContentLength &gt; maxSize)
+        {
+            args.IsValid = <span class="kwrd">false</span>;
+        }
+    }
+}</pre>
+</div>
+<p>Why do we check if the page is valid in the validation method? We check it, because the file size validation has sense only if there is an uploaded file and this file is an image. We should ensure that the validator that checks the file size is executed after all other validators, in order to make sure we should just put the corresponding CustomValidator after the other ones. On the other hand, we can have other fields on the form that we also want to validate and those fields are not connected to file uploading, in this case we can use a boolean field that will indicate whether file uploading is correct or not.</p>
+<p>Well, if you run the web site and upload an image that is larger than 4 MB, you are likely to get a server error. This error is caused by uploading a file which size is larger than the maximum allowed size that is usually set to 4 MB. In order to extend that amount, you must correct Web.config, basically you need to set the <strong>maxRequestLength</strong> attribute of the <strong>httpRuntime</strong> element.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">httpRuntime</span> <span class="attr">maxRequestLength</span><span class="kwrd">="20480"</span><span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>In this example the maximum uploaded file size is set to 20 MB, because you set the value in KB, so 20480 = 20 * 1024.</p>
+<p>You may also want to to set the value of the executionTimeout which will allow longer uploads.</p>
+<p>However, you still cannot prevent a server from displaying an error if an uploaded file is larger than the value in Web.config, so it's recommended to set a deliberately large value and validate the file size programatically.</p>

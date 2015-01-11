@@ -1,0 +1,33 @@
+---
+layout: post
+title: "Static Page Methods Instead of Web Services in ASP.NET AJAX Control Toolkit"
+comments: true
+---
+<p>As you may already know, it is required to create a web service to make use of some ASP.NET AJAX Control Toolkit controls. However, you can use static methods of your pages instead, you just have to mark them with the <strong>[System.Web.Services.WebMethod]</strong> attribute and not set the <strong>ServicePath</strong> parameter in the ACT controls. <!-- more --></p>
+<p>In the example from <a href="http://www.mikeborozdin.com/post/Creating-Linked-Drop-Down-Lists-with-the-CascadingDropDown-Control.aspx" target="_blank">my article on CascadingDropDown</a> we used a web service for populating the drop-down lists, now we'll use static methods instead, we can just copy-paste the methods from the web service to the code-behind file of the page and remove the <strong>ServicePath</strong> parameters from the controls.</p>
+<p>Extract from Default.aspx.cs</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">public</span> <span class="kwrd">partial</span> <span class="kwrd">class</span> _Default : System.Web.UI.Page 
+{
+    <span class="kwrd">protected</span> <span class="kwrd">void</span> Page_Load(<span class="kwrd">object</span> sender, EventArgs e)
+    {
+
+    }
+
+    [System.Web.Services.WebMethod]
+    <span class="kwrd">public</span> <span class="kwrd">static</span> CascadingDropDownNameValue[] GetContinents(<span class="kwrd">string</span> knownCategoryValues, <span class="kwrd">string</span> category)
+    {
+        CascadingDropDownNameValue[] continents = <span class="kwrd">new</span> CascadingDropDownNameValue[2];
+        continents[0] = <span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"North America"</span>, <span class="str">"North America"</span>);
+        continents[1] = <span class="kwrd">new</span> CascadingDropDownNameValue(<span class="str">"Europe"</span>, <span class="str">"Europe"</span>);
+        <span class="kwrd">return</span> continents;
+    }</pre>
+<pre class="csharpcode">&nbsp;</pre>
+<pre class="csharpcode"><span style="font-family: 'Trebuchet MS';">Extract from Default.aspx</span></pre>
+<div>
+<pre class="csharpcode"><span class="asp">&lt;%</span>--No ServicePath attribute here--<span class="asp">%&gt;</span>
+<span class="kwrd">&lt;</span><script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"><!--mce:0--></script><span class="html">cc1:CascadingDropDown</span> <span class="attr">ID</span><span class="kwrd">="cddContinent"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="ddlContinent"</span> 
+    <span class="attr">Category</span><span class="kwrd">="continent"</span> <span class="attr">ServiceMethod</span><span class="kwrd">="GetContinents"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>If you don't need to expose the methods consumed by the ACT controls, then you can use static methods instead of web services.</p>
+</div>

@@ -1,0 +1,68 @@
+---
+layout: post
+title: "Creating a Simple Ad Rotation User Control with LINQ to XML"
+comments: true
+---
+<p><a href="/files/AdRotator.zip"><strong>Download files</strong></a></p>
+<p>Although there is a built-in control for advertisement rotation in ASP.NET, it is capable of showing image ads only. However, in the real life you often have to deal with the ads that require some JavaScript code, for instance, you want to put there AdSense code or want to use Flash banners instead of images. Thus, if you want to rotate complex ads, you have to develop your own control.</p>
+<p>In this particular tutorial I'll show you how to create a very simple, but rather functional user control that will randomly show an ad from an XML file <!-- more --> of the following format:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">Advertisements</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">Ad</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">Html</span><span class="kwrd">&gt;</span>
+            <span class="kwrd">&lt;!</span>[CDATA[
+                Some HTML code
+            ]]<span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;/</span><span class="html">Html</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">Ad</span><span class="kwrd">&gt;</span>
+    
+    <span class="kwrd">&lt;</span><span class="html">Ad</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">Html</span><span class="kwrd">&gt;</span>
+            <span class="kwrd">&lt;!</span>[CDATA[
+                Some other HTML code
+            ]]<span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;/</span><span class="html">Html</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">Ad</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">Advertisements</span><span class="kwrd">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>Well, as you can see, it's very very simple, there is even no NavigateUrl element, but we don't even need, because we can always put a link into the HTML element, besides usually we use something similar to AdSense, so there is no need defining the URL.</p>
+<p>The control will accept have only one attribute - <strong>AdvertisementFile</strong> - which points to an XML file with ads. So, to ad a control, you just have to place a similar code:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">uc1:HtmlAdRotator</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">AdvertisementFile</span><span class="kwrd">="~/App_Data/ads.xml"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>Let's start creating it. We should add a new user control to our web site, then put a &lt;div&gt; that will hold the content of advertisements.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">div</span> <span class="attr">id</span><span class="kwrd">="adContent"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>In the code-behind we define the only attribute the user control has, please note that we use a neat feature of C# 3.0 that simplifies creation of properties. In the Page_Load() method we extract the data from the specified XML file and pick-up a random ad from there. We use LINQ to XML for XML file parsing.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">using</span> System;
+<span class="kwrd">using</span> System.Collections.Generic;
+<span class="kwrd">using</span> System.Linq;
+<span class="kwrd">using</span> System.Web;
+<span class="kwrd">using</span> System.Web.UI;
+<span class="kwrd">using</span> System.Web.UI.WebControls;
+<span class="kwrd">using</span> System.Xml.Linq;
+
+<span class="kwrd">public</span> <span class="kwrd">partial</span> <span class="kwrd">class</span> HtmlAdRotator : System.Web.UI.UserControl
+{
+    <span class="kwrd">public</span> <span class="kwrd">string</span> AdvertisementFile { get; set; }
+    
+    <span class="kwrd">protected</span> <span class="kwrd">void</span> Page_Load(<span class="kwrd">object</span> sender, EventArgs e<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"><!--mce:0--></script>)
+    {
+        XDocument xAds = XDocument.Load(Server.MapPath(AdvertisementFile));
+
+        var ads = from a <span class="kwrd">in</span> xAds.Descendants(<span class="str">"Ad"</span>)
+                  select (<span class="kwrd">string</span>)a.Element(<span class="str">"Html"</span>);
+
+        Random rand = <span class="kwrd">new</span> Random();
+        var ad = ads.ElementAt(rand.Next(ads.Count()));
+        adContent.InnerHtml = ad;
+    }
+}</pre>
+</div>
+<p>So, with ASP.NET you can easily build your own control suits your needs in a few minutes, while LINQ to XML helps you to extract the data in a very elegant way.</p>
+<p><a href="/files/AdRotator.zip"><strong>Download files</strong></a></p>

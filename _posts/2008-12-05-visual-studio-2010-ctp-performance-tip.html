@@ -1,0 +1,8 @@
+---
+layout: post
+title: "Visual Studio 2010 CTP Performance Tip"
+comments: true
+---
+<p>Visual Studio 2010 CTP has been available for some time already. So, I guess many of you have already used a chance to give a new version of the famous IDE a try. If you haven&rsquo;t downloaded it, well I think it&rsquo;s quite sensible thing to get it. It&rsquo;s likely to be released at the end of the next year, so you will have a plenty of time to learn all the new features and become a real guru of .NET 4.0 and Visual Studio 2010.</p>
+<p>Anyway, the current CTP is shipped as a Virtual PC image that means you cannot expect it run ultra fast. Moreover, the Virtual PC image is packaged with a lot of things that you may need when experiencing the new IDE, I mean they included Team Foundation Server, SQL Server 2008 Enterprise, Office 2007 and Windows Sharepoint Services that are running by default. Wow, that&rsquo;s a lot and it consumes a lot of memory. But sometimes you don&rsquo;t need those things at all, for instance, you just want to learn the new features of C# 4.0. Thus, it&rsquo;s sensible to get rid of unnecessary services, you can always enable them later. So, go to <strong>Start &ndash;&gt; Administrative Tools &ndash;&gt; Services</strong> and simply stop and disable automatic running of the services you don&rsquo;t need.</p>
+<p>Personally, I disabled TFS, SQL Server, WSS, IIS, Tablet Input services. Eventually the memory consumption of my virtual machine dropped from about 1 GB to less than 500 MBs.</p>

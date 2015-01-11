@@ -1,0 +1,54 @@
+---
+layout: post
+title: "WPF DataGrid CheckBox Single Click Checking/Unchecking"
+comments: true
+---
+<p>WPF DataGrid has a very annoying behaviour of forcing users to click twice on a checkbox in order to check or uncheck it. There are a number of solutions proposing handling mouse preview events and switching a DataGrid into the edit mode manually. The problem with such solutions is that the require writing quite a lot of extra code that seems to be an overkill for such a minor, yet irritating problem. I propose a better option, to use a <span style="font-family: 'Courier New';">DataGridTemplateColumn</span> instead of <span style="font-family: 'Courier New';">DataGridCheckBoxColumn</span>.</p>
+<p>Indeed, you can easily place a CheckBox inside a DataGridTemplateColumn, bind it to a corresponding property and it will be checkable/uncheckable with a single click. <!-- more --></p>
+<p>XAML:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">DataGrid</span> <span class="attr">Name</span><span class="kwrd">="dgProducts"</span> <span class="attr">AutoGenerateColumns</span><span class="kwrd">="False"</span> <span class="attr">CurrentCellChanged</span><span class="kwrd">="dgProducts_CurrentCellChanged"<span style="color: #000000;">&gt;</span></span>
+    <span class="kwrd">&lt;</span><span class="html">DataGrid.Columns</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">DataGridTextColumn</span> <span class="attr">Header</span><span class="kwrd">="Name"</span> <span class="attr">Binding</span><span class="kwrd">="{Binding Path=Name}"</span><span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">DataGridTextColumn</span> <span class="attr">Header</span><span class="kwrd">="Price"</span> <span class="attr">Binding</span><span class="kwrd">="{Binding Path=Price}"</span><span class="kwrd">/&gt;</span>
+        <strong><span class="kwrd">&lt;</span><span class="html">DataGridTemplateColumn</span> <span class="attr">Header</span><span class="kwrd">="In Stock"</span><span class="kwrd">&gt;</span>
+            <span class="kwrd">&lt;</span><span class="html">DataGridTemplateColumn.CellTemplate</span><span class="kwrd">&gt;</span>
+                <span class="kwrd">&lt;</span><span class="html">DataTemplate</span><span class="kwrd">&gt;</span>
+                    <span class="kwrd">&lt;</span><span class="html">CheckBox</span> <span class="attr">IsChecked</span><span class="kwrd">="{Binding Path=IsInStock}"</span><span class="kwrd">&gt;</span>
+                <span class="kwrd">&lt;/</span><span class="html">DataTemplate</span><span class="kwrd">&gt;</span>
+            <span class="kwrd">&lt;/</span><span class="html">DataGridTemplateColumn.CellTemplate</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;/</span><span class="html">DataGridTemplateColumn</span><span class="kwrd">&gt;</span></strong>
+    <span class="kwrd">&lt;/</span><span class="html">DataGrid.Columns</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">DataGrid</span><span class="kwrd">&gt;</span></pre>
+<p>Code-behind:</p>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">public</span> <span class="kwrd">partial</span> <span class="kwrd">class</span> MainWindow : Window</pre>
+<pre><span class="lnum">   2:  </span>    {</pre>
+<pre class="alt"><span class="lnum">   3:  </span>        ProductsEntities db = <span class="kwrd">new</span> ProductsEntities();</pre>
+<pre><span class="lnum">   4:  </span>&nbsp;</pre>
+<pre class="alt"><span class="lnum">   5:  </span>        <span class="kwrd">public</span> MainWindow()</pre>
+<pre><span class="lnum">   6:  </span>        {</pre>
+<pre class="alt"><span class="lnum">   7:  </span>            InitializeComponent();</pre>
+<pre><span class="lnum">   8:  </span>&nbsp;</pre>
+<pre class="alt"><span class="lnum">   9:  </span>            var products = from p <span class="kwrd">in</span> <span class="kwrd">this</span>.db.Products</pre>
+<pre><span class="lnum">  10:  </span>                           select p;</pre>
+<pre class="alt"><span class="lnum">  11:  </span>&nbsp;</pre>
+<pre><span class="lnum">  12:  </span>            dgProducts.ItemsSource = products;</pre>
+<pre class="alt"><span class="lnum">  13:  </span>        }</pre>
+<pre><span class="lnum">  14:  </span>&nbsp;</pre>
+<pre class="alt"><span class="lnum">  15:  </span>        <span class="kwrd">private</span> <span class="kwrd">void</span> dgProducts_CurrentCellChanged(<span class="kwrd">object</span> sender, EventArgs e)</pre>
+<pre><span class="lnum">  16:  </span>        {</pre>
+<pre class="alt"><span class="lnum">  17:  </span>            <span class="kwrd">this</span>.db.SaveChanges();</pre>
+<pre><span class="lnum">  18:  </span>        }</pre>
+<pre class="alt"><span class="lnum">  19:  </span>}</pre>
+</div>
+<p>However, this piece of code still has a problem, in order to send update to a database user must edit any other column after modifying a checkbox. But it&rsquo;s pretty easy to overcome this issue, first of all, we have to put <span style="font-family: 'Courier New';">UpdateSourceTrigger=&rdquo;PropertyChanged&rdquo;</span> to the binding section of a checkbox and then handle its <span style="font-family: 'Courier New';">Click</span> event.</p>
+<p>XAML:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">CheckBox</span> <span class="attr">IsChecked</span><span class="kwrd">="{Binding Path=IsInStock, <strong>UpdateSourceTrigger=PropertyChanged}"</strong></span><strong> <span class="attr">Click</span><span class="kwrd">="CheckBox_Click"</span></strong><span class="kwrd"><strong>/</strong>&gt;</span></pre>
+<p>Code-Behind:</p>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:  </span><span class="kwrd">private</span> <span class="kwrd">void</span> CheckBox_Click(<span class="kwrd">object</span> sender, RoutedEventArgs e)</pre>
+<pre><span class="lnum">   2:  </span>{</pre>
+<pre class="alt"><span class="lnum">   3:  </span>    MessageBox.Show(<span class="str">"click"</span>);</pre>
+<pre><span class="lnum">   4:  </span>    <span class="kwrd">this</span>.db.SaveChanges();</pre>
+<pre class="alt"><span class="lnum">   5:  </span>}</pre>
+</div>

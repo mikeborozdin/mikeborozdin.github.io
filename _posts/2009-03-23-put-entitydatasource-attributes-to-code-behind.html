@@ -1,0 +1,38 @@
+---
+layout: post
+title: "Put EntityDataSource Attributes to Code-Behind"
+comments: true
+---
+<p>The EntityDataSource control is a very powerful one. It allows you to rapidly create database driven application. You don&rsquo;t have to manually write code for extracting, modification and deleting records from the database. Moreover since this code is backed by Entity Framework, you are not tied up with a particular database schema and can easily change it or even choose other database application.</p>
+<p>However when working with EntityDataSource sometimes I feel like I using plain old SqlDataSource and simply have too much unnecessary code in my .aspx files. <!-- more --> For instance, you may end up have code like this one:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:EntityDataSource</span> <span class="attr">ID</span><span class="kwrd">="EntityDataSource1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ConnectionString</span><span class="kwrd">="name=NorthwindEntities"</span> 
+    <span class="attr">DefaultContainerName</span><span class="kwrd">="NorthwindEntities"</span> <span class="attr">EnableDelete</span><span class="kwrd">="True"</span> 
+    <span class="attr">EnableInsert</span><span class="kwrd">="True"</span> <span class="attr">EnableUpdate</span><span class="kwrd">="True"</span> <span class="attr">EntitySetName</span><span class="kwrd">="Products"</span> <span class="attr">Include</span><span class="kwrd">="Categories, Suppliers"</span> <span class="attr">AutoGenerateWhereClause</span><span class="kwrd">="true"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">WhereParameters</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:QueryStringParameter</span> <span class="attr">Type</span><span class="kwrd">="Int32"</span> <span class="attr">Name</span><span class="kwrd">="CategoryID"</span> <span class="attr">QueryStringField</span><span class="kwrd">="CategoryID"</span> <span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:QueryStringParameter</span> <span class="attr">Type</span><span class="kwrd">="Int32"</span> <span class="attr">Name</span><span class="kwrd">="SupplierID"</span> <span class="attr">QueryStringField</span><span class="kwrd">="SupplierID"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">WhereParameters</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">asp:EntityDataSource</span><span class="kwrd">&gt;</span></pre>
+<p>That certainly isn&rsquo;t cool at all. Because it simply shouldn&rsquo;t be in an .aspx file, not only because it breaks application layers, but simply because it inconvenient. It clutters .aspx files which should be templates only. What if a designer meets code like this? What if accidently change something?</p>
+<p>Instead it&rsquo;s reasonable to move all these lines of code to code-behind.</p>
+<p>So, in your .aspx file you just leave this declaration:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:EntityDataSource</span> <span class="attr">ID</span><span class="kwrd">="dsProducts"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span></pre>
+<p>&nbsp;</p>
+<p>While put all the attribute assignments to code-behind:</p>
+<pre class="csharpcode">NorthwindEntities db = <span class="kwrd">new</span> NorthwindEntities();
+
+dsProducts.ConnectionString = db.Connection.ConnectionString;
+dsProducts.DefaultContainerName = <span class="str">"NorthwindEntities"</span>;
+dsProducts.EntitySetName = <span class="str">"Products"</span>;
+dsProducts.Include = <span class="str">"Categories, Suppliers"</span>;
+
+dsProducts.EnableUpdate = <span class="kwrd">true</span>;
+dsProducts.EnableInsert = <span class="kwrd">true</span>;
+dsProducts.EnableDelete = <span class="kwrd">true</span>;
+dsProducts.AutoGenerateWhereClause = <span class="kwrd">true</span>;
+
+dsProducts.WhereParameters.Add(<span class="kwrd">new</span> QueryStringParameter(<span class="str">"CategoryID"</span>, TypeCode.Int32, <span class="str">"CategoryID"</span>));
+dsProducts.WhereParameters.Add(<span class="kwrd">new</span> QueryStringParameter(<span class="str">"SupplierD"</span>, TypeCode.Int32, <span class="str">"SupplierID"</span>));</pre>
+<p>&nbsp;</p>
+<p>In fact, the same technique applies to any other data source control, like LinqDataSource or even ObjectDataSource.</p>

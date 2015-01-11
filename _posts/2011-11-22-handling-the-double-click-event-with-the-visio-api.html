@@ -1,0 +1,63 @@
+---
+layout: post
+title: "Handling the Double-Click Event with the Visio API"
+comments: true
+---
+<p>I have already covered the Visio event model in <a href="http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx" target="_blank">one of the previous posts</a>. Unfortunately, not every event can be handled in that easy way. For instance, the double-click event requires a totally different approach.</p>
+<p>In order to handle the <span style="font-family: 'Courier New';">double-click</span> on a shape you have to use <span style="font-family: 'Courier New';">ShapeSheet </span><!-- more --><span style="font-family: 'Courier New';"> </span>that was briefly mentioned <a href="http://www.mikeborozdin.com/post/Reading-and-Writing-Visio-Shape-Information-with-C.aspx" target="_blank">before</a>. The <span style="font-family: 'Courier New';">ShapeSheet</span> contains the <span style="font-family: 'Courier New';">EventDblClick</span> property. We can handle it if we assign the VBA code that executes <span style="font-family: 'Courier New';">QUEUEMARKEREVENT</span> function that can pass the control back to C#. Then, we just handle the <span style="font-family: 'Courier New';">MarkerEvent</span> in Visio.</p>
+<p>&nbsp;</p>
+<div class="csharpcode">
+<pre class="alt"><span class="kwrd">public</span> <span class="kwrd">partial</span> <span class="kwrd">class</span> Form1 : Form</pre>
+<pre>{</pre>
+<pre class="alt">    <span class="kwrd">public</span> Form1()</pre>
+<pre>    {</pre>
+<pre class="alt">        InitializeComponent();</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">        <span class="rem">//don't forget to add this line in order to be able to hande the double-click event</span></pre>
+<pre>        <span class="kwrd">this</span>.visioControl.Window.Application.MarkerEvent +=&nbsp;</pre>
+<pre><span class="kwrd">new</span> Visio.EApplication_MarkerEventEventHandler(Application_MarkerEvent);</pre>
+<pre class="alt">        <span class="kwrd">this</span>.visioControl.DocumentOpened +=&nbsp;</pre>
+<pre class="alt"><span class="kwrd">new</span> AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);</pre>
+<pre>    }</pre>
+<pre class="alt">&nbsp;</pre>
+<pre>    <span class="kwrd">private</span> <span class="kwrd">void</span> Application_MarkerEvent(Visio.Application app, <span class="kwrd">int</span> SequenceNum, <span class="kwrd">string</span> ContextString)</pre>
+<pre class="alt">    {</pre>
+<pre>        <span class="rem">//make sure that it is a double-click</span></pre>
+<pre class="alt">        <span class="kwrd">if</span> (ContextString != <span class="kwrd">null</span> &amp;&amp; ContextString.Contains(<span class="str">"/cmd=DoubleClick"</span>))</pre>
+<pre>        {</pre>
+<pre class="alt">            <span class="kwrd">string</span> sourceTag = <span class="str">"/source="</span>;</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">            MessageBox.Show(<span class="str">"DoubleClick at ShapeID: "</span> + ContextString.Substring(ContextString.IndexOf(sourceTag) +&nbsp;</pre>
+<pre class="alt">sourceTag.Length));</pre>
+<pre>        }</pre>
+<pre class="alt">    }</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">    <span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_DocumentOpened(<span class="kwrd">object</span> sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)</pre>
+<pre>    {</pre>
+<pre class="alt">        <span class="rem">//iterate through all the shapes and assign a handler for the DoubleClick event</span></pre>
+<pre>        <span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> <span class="kwrd">this</span>.visioControl.Window.Application.ActivePage.Shapes)</pre>
+<pre class="alt">        {</pre>
+<pre>            shape.Cells[<span class="str">"EventDblClick"</span>].Formula = <span class="str">"=QUEUEMARKEREVENT(\"/cmd=DoubleClick /source="</span> + shape.ID + <span class="str">"\")"</span>;</pre>
+<pre class="alt">        }</pre>
+<pre>    }</pre>
+<pre class="alt">&nbsp;</pre>
+<pre>    <span class="kwrd">private</span> <span class="kwrd">void</span> openToolStripMenuItem_Click(<span class="kwrd">object</span> sender, EventArgs e)</pre>
+<pre class="alt">    {</pre>
+<pre>        <span class="kwrd">if</span> (openDiagramDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)</pre>
+<pre class="alt">        {</pre>
+<pre>            <span class="kwrd">this</span>.visioControl.Src = openDiagramDialog.FileName;</pre>
+<pre class="alt">        }</pre>
+<pre>    }</pre>
+<pre class="alt">}</pre>
+</div>
+<p>&nbsp;</p>
+<p>As you can see when executing VBA&rsquo;s <span style="font-family: 'Courier New';">QUEUEMARKEREVENT()</span> we can use an arbitrary string as its argument where we can pass any value. In the example above, we pass <span style="font-family: 'Courier New';">&lsquo;cmd=DoubleClick&rsquo;</span> as a code for the event and <span style="font-family: 'Courier New';">&lsquo;/source=&rsquo;</span> for passing a shape ID, so that we know which shape was double-clicked.</p>
+<h2>Project Files</h2>
+<p><a href="/files/VisioShapeDoubleClick1.zip">VisioShapeDoubleClick1.zip (103.40 kb)</a></p>
+<h2>References</h2>
+<p>Please, refer to these pages to get additional information on:</p>
+<ul>
+<li><a href="http://msdn.microsoft.com/en-us/library/ff765486.aspx" target="_blank">Application.MarkerEvent Event</a> </li>
+<li><a href="http://msdn.microsoft.com/en-us/library/gg144579.aspx" target="_blank">ShapeSheet</a> </li>
+<li><a href="http://msdn.microsoft.com/en-us/library/aa140366(office.10).aspx" target="_blank">Using the QueueMarkerEvent Add-on in Visio Solutions</a> </li>
+</ul>

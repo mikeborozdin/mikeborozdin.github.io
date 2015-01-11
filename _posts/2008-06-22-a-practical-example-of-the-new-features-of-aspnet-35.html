@@ -1,0 +1,103 @@
+---
+layout: post
+title: "A Practical Example Of Using The New Features Of ASP.NET 3.5"
+comments: true
+---
+<p>This tutorial doesn&rsquo;t cover the theoretical basics of the new features and controls, instead it concentrates on the practical example of using the new features. This tutorial covers the following features:</p>
+<ul>
+<li>LINQ (Language Integrated Query) for the data manipulations</li>
+<li>ListView control for presenting the data</li>
+<li>LinqDataSource for binding data</li>
+<li>DataPager for pagination</li>
+<li>ASP.NET AJAX for getting rid of the unncecesassary page reloads</li>
+</ul>
+<div><!-- more --></div>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>Visual Studio 2008</li>
+<li>SQL Server</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Project </strong></p>
+<p>Our project is quite s
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+imply, it's just a guestbook, but it's good for demonstrating the cool features of ASP.NET 3.5 and .NET 3.5 in action.</p>
+<p><br /> <br /> <img src="/images/guestbook.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>So, just open Visual Studio and create a new C# website.<br /> <br /> <strong>Database design</strong><br /> We need to create a database when the comments will be stored. We&rsquo;ll just create a database with a single table that will keep the comments posted by the authors. We can create it in Server Explorer without leaving Visual Studio.</p>
+<p>&nbsp;</p>
+<p><img src="/images/tableCommentsDesign1.png" alt="" /><br /> <br /> Don&rsquo;t forget to set the Id field as an identity.<br /> Let&rsquo;s populate the database as well, so that we&rsquo;ll have some data to display, just execute these queries:</p>
+<p>[code:tsql]</p>
+<p>INSERT INTO Comments<br /> (Author, Text)<br /> VALUES('John', 'ASP.NET 3.5 rocks!');<br /> <br /> INSERT INTO Comments<br /> (Author, Text)<br /> VALUES('Mary', 'ASP.NET 3.5 is so cool!');</p>
+<p>[/code]</p>
+<p><strong>LINQ</strong></p>
+<p>Then, we need to create a LINQ To SQL class that will be using for the data manipulations (retrieving and inserting). We open Website-&gt;Add New Item and choose LINQ To SQL Classes</p>
+<p>&nbsp;</p>
+<p><img src="/images/addNewItem.png" alt="" /><br /> <br /> <br /> Then we open Server Explorer and drag and drop our table on the workspace.<br /> &nbsp;<br /> <img src="/images/linqToSqlDesign.png" alt="" /><br /> <br /> Now we just save this file and go futher, we can view the generated code though located in App_Code\Comments.dbml\Comments.designer.cs</p>
+<p><strong>LinqDataSource </strong></p>
+<p>Ok, it&rsquo;s a time for create your webform that will hold all the content. Actually, it is already created by Visual Studio, we just have to add some content there.<br /> We are going to start with a data source, open Toolbox, expand the data section and find LinqDataSource there.&nbsp;</p>
+<p>&nbsp;</p>
+<p><img src="/images/toolbox.png" alt="" /><br /> <br /> Drag it to the webform.&nbsp; You will get the following code:</p>
+<p>[code:html]</p>
+<p>&lt;asp:LinqDataSource ID="LinqDataSource1" runat="server"&gt;<br /> &lt;/asp:LinqDataSource&gt;</p>
+<p>[/code]</p>
+<p><br /> Give it a more appopriate name, something like dsComments. Now switch to the Design view, click on the LinqDataSource we&rsquo;ve just added and select Configure Data Source.</p>
+<p>&nbsp;</p>
+<p><img src="/images/configureDataSource.png" alt="" /><br /> <br /> Choose the only avaliable data context object and click Next.<br /> <br /> <img src="/images/chooseDataContext.png" alt="" /><br /> &nbsp;<br /> Then leave everything by default by click on the Order By button. And choose Id and the Descending order.<br /> <br /> <img src="/images/orderBy.png" alt="" /><br /> &nbsp;<br /> Click Ok and finish, switch to the Source view and look at the code we get:</p>
+<p>[code:html]</p>
+<p>&lt;asp:LinqDataSource ID="dsComments" runat="server"<br /> &nbsp;&nbsp;&nbsp; ContextTypeName="CommentsDataContext" EnableInsert="True" OrderBy="Id desc"<br /> &nbsp;&nbsp;&nbsp; TableName="Comments"&gt;<br /> &lt;/asp:LinqDataSource&gt;</p>
+<p>[/code]</p>
+<p>&nbsp;</p>
+<p>Pretty simple, I would say.</p>
+<p><strong>ListView </strong></p>
+<p>It&rsquo;s time to add the ListView control. It&rsquo;s a new data bound control that enables you to have a full control of the rendered HTML code. It&rsquo;s also located in the Data section of Toolbox. Drag it and rename it to lvComments, also don&rsquo;t forget to assign a data source to it. You must get the following code:</p>
+<p>[code:html]</p>
+<p>&lt;asp:ListView ID="lvComments" runat="server" DataSourceID="dsComments"&gt;<br /> &lt;/asp:ListView&gt;</p>
+<p>[/code]</p>
+<p><br /> Then, we have to add the &lt;LayoutTemplate&gt; that will be the root template</p>
+<p>[code:html]</p>
+<p>&lt;asp:ListView ID="lvComments" runat="server" DataSourceID="dsComments"&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;LayoutTemplate&gt;<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;h1&gt;ASP.NET Guestbook&lt;/h1&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div id="itemPlaceholder" runat="server"&gt;&lt;/div&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/LayoutTemplate&gt;<br /> &lt;/asp:ListView&gt;</p>
+<p>[/code]</p>
+<p>&nbsp;</p>
+<p>Please, note the we have the div tag with id="itemPlaceholder" runat="server". They denote that ListView content will be placed in the place of that div, itemPlaceholder is the default ID of the content placeholder.</p>
+<p>To display out data we should add the &lt;ItemTemplate&gt; element and place some content there</p>
+<p>[code:html]</p>
+<p>&lt;ItemTemplate&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;div&gt;<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;b&gt;&lt;%# Eval("Author") %&gt;&lt;/b&gt; says&lt;br /&gt;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;%# Eval("Text") %&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/div&gt;<br /> &lt;/ItemTemplate&gt;</p>
+<p>[/code]</p>
+<p><br /> It&rsquo;s simply and has nothing new if you worked with other data bound controls. Let&rsquo;s add the separator element to separate the posts:</p>
+<p>[code:html]</p>
+<p>&lt;ItemSeparatorTemplate&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;hr /&gt;<br /> &lt;/ItemSeparatorTemplate&gt;&nbsp;</p>
+<p>[/code]</p>
+<p><br /> Compile the website, you should you see a very simply webpage with just two comments by Mary and John that we added in the very beginning. It&rsquo;s cool, but what about enabling users to post comments? It also can be done by using LinqDataSource and ListView.</p>
+<p>First, add EnableInsert=&rdquo;True&rdquo; attribute to the LinqDataSource. Second, we need to add the insert item template to the ListView.</p>
+<p>[code:html]</p>
+<p>&lt;InsertItemTemplate&gt;<br /> &nbsp;&nbsp;&nbsp; Name:&lt;br /&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;asp:TextBox ID="txtBox" runat="server" Text='&lt;%# Bind("Author") %&gt;' /&gt;&lt;br /&gt;<br /> &nbsp;&nbsp;&nbsp; Text:&lt;br /&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;asp:TextBox ID="txtText" runat="server" Text='&lt;%# Bind("Text") %&gt;'<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TextMode="MultiLine" /&gt;&lt;br /&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;asp:Button runat="server" CommandName="Insert" Text="Post" /&gt;&lt;br /&gt;<br /> &lt;/InsertItemTemplate&gt; &nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<p>[/code]</p>
+<p><br /> Pay attetion at two things &ndash; data binding in the input controls and the CommandName attribute in the button. If you compile the website right now, you won&rsquo;t see see the post form because you should define its position first, to do that add InsertItemPosition="FirstItem" to the ListView attributes, you can set it to LastItem however.</p>
+<p>Now compile the project and try posting some comments. It&rsquo;s working that is good.</p>
+<p><strong>DataPager</strong></p>
+<p>It&rsquo;s time to add a pagination and see another new control in action. It is called DataPager. Add the following code to the LayoutTemlate of the ListView:</p>
+<p>[code:html]</p>
+<p>&lt;asp:DataPager runat="server" PagedControlID="lvComments" PageSize="5"&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;Fields&gt;<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;asp:NumericPagerField /&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/Fields&gt;<br /> &lt;/asp:DataPager&gt;&nbsp;</p>
+<p>[/code]</p>
+<p>I suppose it&rsquo;s pretty self-explanatory, PagedControlID defined the control we want to page, PageSize sets the number of entries per page. &lt;asp:NumericPagerField /&gt; says that we want to have the list of the page numbers. Compile it and try it in the browser.</p>
+<p><br /> I guess you noticed that it has an ugly postback in its URL. You can easily get rid of it by adding the QueryStringField attribute to the DataPager and of course by setting its value ;-).</p>
+<p>[code:html]</p>
+<p>&lt;asp:DataPager runat="server" PagedControlID="lvComments" PageSize="5" <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; QueryStringField="page"&gt;</p>
+<p>[/code]</p>
+<p>It looks much better now and you can send the link to the 10th page of your guestbook to a friend.</p>
+<p><strong>ASP.NET AJAX </strong></p>
+<p><br /> At the final stage, let&rsquo;s add some AJAX, so that the page doesn&rsquo;t reload each time you post a comment. Visual Studio 2008 has a built-in ASP.NET AJAX library which is extremely easy in use.</p>
+<p><br /> Open Toolbox, expand AJAX Extensions and drop ScriptManager to the page. ScriptManager is a control that loads all the nec
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+essary JavaScript libraries needed for ASP.NET AJAX. If you forget to add ScriptManager, you&rsquo;ll get an error.</p>
+<p><br /> So, we don&rsquo;t want the whole page to be updated when posting a comment, we just want to update our ListView, so we are surrounding the ListView with UpdatePanel.</p>
+<p>[code:html]</p>
+<p>&lt;asp:UpdatePanel runat="server"&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;ContentTemplate&gt;<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;% List View code %&gt;<br /> &nbsp;&nbsp;&nbsp; &lt;/ContentTemplate&gt;<br /> &lt;/asp:UpdatePanel&gt;</p>
+<p>[/code]</p>
+<p><br /> Compile the website and post a comment, notice that the page doesn&rsquo;t get reloaded this time.</p>
+<p><strong>Conclusion </strong></p>
+<p>There are a lot of cool features in ASP.NET that help you make your applications much faster than in ASP.NET 2.0. We have build a guestbook without writing a line of C# code. Of course this tutorial wasn't mean to cover all the features of ASP.NET 3.5, it doesn't cover the basics things, however you can find them on <a href="http://msdn.microsoft.com/">MSDN</a> and on <a href="http://www.asp.net">ww.asp.net</a>.</p>
+<p><strong>Code </strong></p>
+<p><a rel="enclosure" href="/files/35NewFeatures.zip">35NewFeatures.zip (5.80 kb)</a></p>
