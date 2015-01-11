@@ -11,11 +11,17 @@ set -e
 
 bundle install
 
+echo "Building a Jekyll site"
+
 # build site with jekyll, by default to `_site' folder
 bundle exec jekyll build
 
+echo "Removing old files"
+
 # cleanup
 rm -rf ../mikeborozdin.github.io.master
+
+echo "Cloning a git repo"
 
 #clone `master' branch of the repository using encrypted GH_TOKEN for authentification
 git clone https://${GH_TOKEN}@github.com/mikeborozdin/mikeborozdin.github.io.git ../mikeborozdin.github.io.master
