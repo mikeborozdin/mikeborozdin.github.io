@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Working with Google Maps API in ASP.NET</title>
+  <meta name="description" content="Recently I have been working on a project where I needed to make use of some geographical data and I decided to use Google Maps for that. So, in this particu...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/working-with-google-maps-api-in-aspnet">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Working with Google Maps API in ASP.NET</h1>
+  </header>
+
+  <article class="post-content">
+    <p>Recently I have been working on a project where I needed to make use of some geographical data and I decided to use Google Maps for that. So, in this particular tutorial I will explain how one can start working with the Google Maps API in ASP.NET.</p>
+<p>Basically, the following topic will be covered:</p>
+<ul>
+<li>How to find a place on the map by address </li>
+<li>How to let a user choose a place on the map and retrieve its coordinates and save them in a database.&nbsp;</li>
+</ul>
+<div><!-- more --></div>
+<h2>What is Google Maps API?</h2>
+<p>But first we need to learn some basic of working with Google Maps. As a matter of fact when integrating Google Maps in your application you have
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+to use the Google Maps API, which is in fact just a set of JavaScript functions. As a result you don&rsquo;t interact directly with the Google Maps API in ASP.NET, I mean server-side, but instead you place your code to client-side and work with JavaScript.</p>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" src="/images/WindowsLiveWriter/WorkingwithGoogleMapsAPIinASP.NET/4AEC0C9E/image.png" border="0" alt="image" width="179" height="240" /></p>
+<p>&nbsp;</p>
+<p>So, the Google Maps can be used with any server-side technology/language, like ASP.NET, PHP, Ruby on Rails, Python and etc., but this tutorial is about ASP.NET.</p>
+<h2>Getting
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+Google Maps API Key</h2>
+<p>The first important step of getting started with the Google Maps API is obtaining the Google Maps API Key. Don&rsquo;t worry it is free of charge and you receive the key immediately after filling in a form <a href="http://code.google.com/apis/maps/signup.html" target="_blank">here</a>.</p>
+<h2>Creating a Simple Map</h2>
+<p>Okay, now it&rsquo;s the right time to open Visual Studio and create a new web site.</p>
+<p>Then, add the following code to the <strong>&lt;head&gt;</strong> tag:</p>
+<p>&nbsp;</p>
+<pre class="csharpcode">&lt;script src=<span class="str">"http://maps.google.com/maps?file=api&amp;amp;v=2&amp;amp;key=&lt;YOUR_API_KEY&gt;&amp;sensor=false"</span>
+        type=<span class="str">"text/javascript"</span>&gt;&lt;/script&gt;
+&lt;script type=<span class="str">"text/javascript"</span>&gt;
+    <span class="kwrd">function</span> initialize() {
+        <span class="kwrd">if</span> (GBrowserIsCompatible()) {
+            <span class="kwrd">var</span> map = <span class="kwrd">new</span> GMap2(document.getElementById(<span class="str">"map"</span>));
+            map.setCenter(<span class="kwrd">new</span> GLatLng(51.5, -0.1), 10);
+            map.setUIToDefault();
+        }
+    }</pre>
+<p>Don&rsquo;t forget to change &lt;YOUR_API_KEY&gt; to an appropriate value. As you can see we have just one function called initialize() that creates a new instance of the map object. We also pass the object &ndash; a div &ndash; that will be a map container. Then, we invoke the <strong>setCenter()</strong> method that receives two arguments &ndash;coordinates and a zoom level. The <strong>setUIToDefault()</strong> method just adds the UI manipulators, if you remove or comment that line, you will receive a bare map without any UI controls.</p>
+<p>Also, you need to add some code that will run the <strong>initialize()</strong> function and the HTML code for the map container.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">body</span> <span class="attr">onload</span><span class="kwrd">="initialize()"</span> <span class="attr">onunload</span><span class="kwrd">="GUnload()"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">form</span> <span class="attr">id</span><span class="kwrd">="form1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">div</span> <span class="attr">id</span><span class="kwrd">="map"</span> <span class="attr">style</span><span class="kwrd">="width: 500px; height: 500px"</span><span class="kwrd">&gt;&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">form</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">body</span><span class="kwrd">&gt;</span></pre>
+<p><!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --></p>
+<p>The code is pretty self-explanatory, it just adds the handlers for the <strong>onLoad </strong>and <strong>onUnLoad</strong> events of the page and also we put a div that will contain the map, you can adjust its width and height in order to get a bigger or a smaller map.</p>
+<p>After compiling this page you should see a map similar to this one:</p>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" src="/images/WindowsLiveWriter/WorkingwithGoogleMapsAPIinASP.NET/6D80254C/image.png" border="0" alt="image" width="240" height="239" /></p>
+<p><strong>Finding a place by its address</strong></p>
+<p>Well, it was pretty simple, but in real life project you usually have to find a place on the maps by its address. This is also possible with the Google Maps API. All you have to do is to make use of the <strong>GClientGeocoder</strong> class and its method called getLatLang() that accepts two parameters:</p>
+<ul>
+<li>address &ndash; the address to look for </li>
+<li>function &ndash; a callback function with one parameter point that posses the coordinates of the found place </li>
+</ul>
+<p>So, if we want to find a house where Sherlock Holmes lived we have to write the following code:</p>
+<pre class="csharpcode">&lt;script type=<span class="str">"text/javascript"</span>&gt;
+        <span class="kwrd">var</span> map;
+        <span class="kwrd">var</span> geocoder;
+        <span class="kwrd">function</span> initialize() {
+            <span class="kwrd">if</span> (GBrowserIsCompatible()) {
+                map = <span class="kwrd">new</span> GMap2(document.getElementById(<span class="str">"map"</span>));
+                map.setCenter(<span class="kwrd">new</span> GLatLng(51.5, -0.1), 10);
+                map.setUIToDefault();
+
+                geocoder = <span class="kwrd">new</span> GClientGeocoder();
+
+                showAddress(<span class="str">"221B Baker Street, London, United Kingdom"</span>);
+            }
+        }
+        <span class="kwrd">function</span> showAddress(address) {
+            geocoder.getLatLng(
+                address,
+                <span class="kwrd">function</span> (point) {
+                    <span class="kwrd">if</span> (!point) {
+                        alert(address + <span class="str">" not found"</span>);
+                    }
+                    <span class="kwrd">else</span> {
+                        map.setCenter(point, 15);
+                        <span class="kwrd">var</span> marker = <span class="kwrd">new</span> GMarker(point);
+                        map.addOverlay(marker);
+                        marker.openInfoWindow(address);
+                    }
+                }
+            );
+        }
+        &lt;/script&gt;</pre>
+<p>Also, we create a map overlay that will contain the address information, for this purpose we create an instance of the <strong>GMarker</strong> class and use the <strong>openInfoWindow()</strong> method.</p>
+<h2>User Interaction with Map</h2>
+<p>Okay, but what if we want to let user enter an address in a form and find its on the map? No problems! Just add the necessary field and write an event-handler.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">script</span> <span class="attr">type</span><span class="kwrd">="text/javascript"</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">var</span> map;
+        <span class="kwrd">var</span> geocoder;
+        <span class="kwrd">function</span> initialize() {
+            <span class="kwrd">if</span> (GBrowserIsCompatible()) {
+                map = <span class="kwrd">new</span> GMap2(document.getElementById(<span class="str">"map"</span>));
+                map.setCenter(<span class="kwrd">new</span> GLatLng(51.5, -0.1), 10);
+                map.setUIToDefault();
+
+                geocoder = <span class="kwrd">new</span> GClientGeocoder();
+            }
+        }
+        <span class="kwrd">function</span> showAddress() {
+            <span class="kwrd">var</span> txtAddress = document.getElementById(<span class="str">"&lt;%=txtAddress.ClientID %&gt;"</span>);
+            <span class="kwrd">var</span> address = txtAddress.value;
+            
+            geocoder.getLatLng(
+                address,
+                <span class="kwrd">function</span> (point) {
+                    <span class="kwrd">if</span> (!point) {
+                        alert(address + <span class="str">" not found"</span>);
+                    }
+                    <span class="kwrd">else</span> {
+                        map.setCenter(point, 15);
+                        <span class="kwrd">var</span> marker = <span class="kwrd">new</span> GMarker(point);
+                        map.addOverlay(marker);
+                        marker.openInfoWindow(address);
+                    }
+                }
+            );
+        }
+        <span class="kwrd">&lt;/</span><span class="html">script</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">head</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">body</span> <span class="attr">onload</span><span class="kwrd">="initialize()"</span> <span class="attr">onunload</span><span class="kwrd">="GUnload()"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">form</span> <span class="attr">id</span><span class="kwrd">="form1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">div</span><span class="kwrd">&gt;</span>
+            <span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtAddress"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+            <span class="kwrd">&lt;</span><span class="html">input</span> <span class="attr">type</span><span class="kwrd">="button"</span> <span class="attr">value</span><span class="kwrd">="Find"</span> <span class="attr">onclick</span><span class="kwrd">="showAddress();"</span> <span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+    
+        <span class="kwrd">&lt;</span><span class="html">div</span> <span class="attr">id</span><span class="kwrd">="map"</span> <span class="attr">style</span><span class="kwrd">="width: 500px; height: 500px"</span><span class="kwrd">&gt;&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">form</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">body</span><span class="kwrd">&gt;</span></pre>
+<h2>Letting Users to Manually Select a Place on the Map</h2>
+<p>Well, finding a place by its address is certainly cool, but we can add yet another level of interactivity to our map. Basically, we can let users to use manually choose a place on the map by just dragging a marker.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">script</span> <span class="attr">type</span><span class="kwrd">="text/javascript"</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">var</span> map;
+        <span class="kwrd">var</span> geocoder;
+        <span class="kwrd">function</span> initialize() {
+            <span class="kwrd">if</span> (GBrowserIsCompatible()) {
+                map = <span class="kwrd">new</span> GMap2(document.getElementById(<span class="str">"map"</span>));
+                <span class="kwrd">var</span> center = <span class="kwrd">new</span> GLatLng(51.5, -0.1);
+                map.setCenter(center, 10);
+                map.setUIToDefault();
+
+                <span class="kwrd">var</span> marker = <span class="kwrd">new</span> GMarker(center, { draggable: <span class="kwrd">true</span> });
+                map.addOverlay(marker);
+                marker.openInfoWindow(<span class="str">"Drag the marker to a specific position"</span>);
+
+                GEvent.addListener(marker, <span class="str">"dragstart"</span>, <span class="kwrd">function</span>() {
+                    map.closeInfoWindow();
+                });
+
+                GEvent.addListener(marker, <span class="str">"dragend"</span>, <span class="kwrd">function</span>() {
+                    <span class="kwrd">var</span> hdnLat = document.getElementById(<span class="str">"&lt;%=hdnLat.ClientID %&gt;"</span>);
+                    <span class="kwrd">var</span> hdnLng = document.getElementById(<span class="str">"&lt;%=hdnLng.ClientID %&gt;"</span>);
+
+                    hdnLat.value = <span class="kwrd">this</span>.getLatLng().lat();
+                    hdnLng.value = <span class="kwrd">this</span>.getLatLng().lng();
+
+                    marker.openInfoWindow(<span class="str">"New position has been set"</span>);
+                });
+            }
+        }
+        <span class="kwrd">&lt;/</span><span class="html">script</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">head</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">body</span> <span class="attr">onload</span><span class="kwrd">="initialize()"</span> <span class="attr">onunload</span><span class="kwrd">="GUnload()"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">form</span> <span class="attr">id</span><span class="kwrd">="form1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:HiddenField</span> <span class="attr">ID</span><span class="kwrd">="hdnLat"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:HiddenField</span> <span class="attr">ID</span><span class="kwrd">="hdnLng"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">div</span> <span class="attr">id</span><span class="kwrd">="map"</span> <span class="attr">style</span><span class="kwrd">="width: 500px; height: 500px"</span><span class="kwrd">&gt;&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:Button</span> <span class="attr">ID</span><span class="kwrd">="btnSubmit"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">Text</span><span class="kwrd">="Submit"</span> 
+            <span class="attr">onclick</span><span class="kwrd">="btnSubmit_Click"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">form</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">body</span><span class="kwrd">&gt;</span></pre>
+<p>&nbsp;</p>
+<p>If you look at the HTML code, then you will notice that we have added to hidden field that will contain the coordinates of a chosen place, so the first field is for keeping the latitude and the second one is for keeping the longitude. This time when creating a marker we set its options and one of the option is &ldquo;<strong>draggable: true&rdquo;</strong>, so it lets users to drag the marker over the map. Then, we should add event handlers, the main event is &ldquo;<strong>dragend</strong>&rdquo;. It occurs ever time a user place a marker on a new place. As a result, in its event handler we receive the coordinates of a new position and save them in the hidden fields.</p>
+<p>Also, we wrote an event handler for the &ldquo;<strong>dragstart</strong>&rdquo; event, just to close the info window while dragging the marker.</p>
+<p>In a real world application there would be some server-side code that would place the received coordinates into a database, but in this particular case, we will just output them:</p>
+<p>&nbsp;</p>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> btnSubmit_Click(<span class="kwrd">object</span> sender, EventArgs e)
+{
+    Response.Write(<span class="str">"Latitude: "</span> + hdnLat.Value + <span class="str">" Longitude: "</span> + hdnLng.Value);
+}</pre>
+<p>&nbsp;</p>
+<h2>Passing the Coordinates from Server-Side to Google Maps</h2>
+<p>Now, what if we have the coordinates stores somewhere in the database and want to point to that place on the map? Well, it&rsquo;s still not difficult. We just have to pass the values from server-side to JavaScript.</p>
+<pre class="csharpcode">&lt;script type=<span class="str">"text/javascript"</span>&gt;
+        <span class="kwrd">var</span> map;
+        <span class="kwrd">function</span> initialize() {
+            <span class="kwrd">if</span> (GBrowserIsCompatible()) {
+                map = <span class="kwrd">new</span> GMap2(document.getElementById(<span class="str">"map"</span>));
+                
+                <span class="kwrd">var</span> lat = &lt;asp:Literal ID=<span class="str">"ltrLat"</span> runat=<span class="str">"server"</span> /&gt;;
+                <span class="kwrd">var</span> lng = &lt;asp:Literal ID=<span class="str">"ltrLng"</span> runat=<span class="str">"server"</span> /&gt;;
+                
+                <span class="kwrd">var</span> center = <span class="kwrd">new</span> GLatLng(lat, lng);
+                
+                map.setCenter(center, 10);
+                map.setUIToDefault();
+                
+                <span class="kwrd">var</span> marker = <span class="kwrd">new</span> GMarker(center);
+                map.addOverlay(marker);
+                marker.openInfoWindow(<span class="str">"Here"</span>);
+            }
+        }
+        &lt;/script&gt;</pre>
+<p>The easiest way to achieve this is to use the ASP.NET Literal controls that doesn&rsquo;t generate any tags around their values.</p>
+<p>Since, those Literal controls are outside of the form tag, we have to use the <strong>FindControl()</strong> method to access them in code-behind:</p>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> Page_Load(<span class="kwrd">object</span> sender, EventArgs e)
+{
+    Literal ltrLat = (Literal)FindControl(<span class="str">"ltrLat"</span>);
+    Literal ltrLng = (Literal)FindControl(<span class="str">"ltrLng"</span>);
+    
+    ltrLat.Text = <span class="str">"51"</span>;
+    ltrLng.Text = <span class="str">"0"</span>;
+}</pre>
+<h2>Conclusion</h2>
+<p>In this tutorial we have covered the basics of working with the Google Maps API. We have learnt how to add a map on a page, how to use geo coding for finding a place by its address on the map. We have also got to know how we can let users interact with a map by dragging a marker and how to receive the marker coordinates and store them on server-side. Finally, we have learnt how to pass the coordinates stored on server-side to the Google Maps API and point to that place on a map.</p>
+<p>Also, in this tutorial version 2 of the API was covered, however the 3rd version is currently in Google Labs.</p>
+<h2><strong>Resources</strong></h2>
+<p>The main resource for the developers willing to work with the Google Maps API is certainly the <a href="http://code.google.com/apis/maps/" target="_blank">Google Code reference</a> page.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>28 July 2009</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

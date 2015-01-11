@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Data Manipulations with Entity Framework</title>
+  <meta name="description" content="When learning a new ORM one of the most important and interesting thing is to get to know how you can manipulate data with that tool.Thus, this particular th...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/data-manipulations-with-entity-framework">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Data Manipulations with Entity Framework</h1>
+  </header>
+
+  <article class="post-content">
+    <p>When learning a new ORM one of the most important and interesting thing is to get to know how you can manipulate data with that tool.Thus, this particular thing is explained in this tutorial.</p>
+<p>There are two ways of accessing data with the Entity Framework:</p>
+<ul>
+<li>Entity SQL </li>
+<li>LINQ to SQL </li>
+</ul>
+<p>We will be using the latter in this tutorial. <!-- more --></p>
+<p>But first you need to create a project and genera
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+te a model. You can actually create any project you like, however I use the Console Project type in the examples. Second, you need to generate a model, so you go to <strong>Project &ndash;&gt; Add Component</strong> and choose <strong>ADO.NET Entity Data Model</strong></p>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" src="/images/WindowsLiveWriter/DataManipulationswithEntityFramework_1876/image_3.png" border="0" alt="image" width="687" height="418" /></p>
+<p>The next operations are quite obvious, you choose the database, select the tables (<strong>Employees</strong>, <strong>Territories</strong> and <strong>EmployeeTerritories</strong>). In the end you should get a graphical representation of the data model. As I have already <a href="http://www.mikeborozdin.com/post/Getting-Intrigued-by-Entity-Framework.aspx" target="_blank">written</a> you will get just two entities instead of three. Anyway, I suggest the you rename some properties and entities, so that it looks like this:</p>
+<p><img style="border-right-width: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" title="image" src="/images/WindowsLiveWriter/DataManipulationswithEntityFramework_1876/image_6.png" border="0" alt="image" width="644" height="615" /></p>
+<p>&nbsp;</p>
+<h2>Retrieving Data</h2>
+<p>That&rsquo;s how you can retrieve the data:</p>
+<div>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:</span> NorthwindEntities objectContext = <span class="kwrd">new</span> NorthwindEntities();</pre>
+<pre class="alteven"><span class="lnum">   2:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">   3:</span> var result = from e <span class="kwrd">in</span> objectContext.Employees</pre>
+<pre class="alteven"><span class="lnum">   4:</span>              <span class="kwrd">where</span> e.EmployeeID == 6</pre>
+<pre class="alt"><span class="lnum">   5:</span>              select e;</pre>
+<pre class="alteven"><span class="lnum">   6:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">   7:</span> Employee employee = result.First();</pre>
+<pre class="alteven"><span class="lnum">   8:</span> employee.Territories.Load();</pre>
+<pre class="alt"><span class="lnum">   9:</span> Console.WriteLine(employee.LastName);</pre>
+<pre class="alteven"><span class="lnum">  10:</span> <span class="kwrd">foreach</span> (Territory territory <span class="kwrd">in</span> employee.Territories)</pre>
+<pre class="alt"><span class="lnum">  11:</span> {</pre>
+<pre class="alteven"><span class="lnum">  12:</span>     Console.WriteLine(territory.TerritoryDescription);</pre>
+<pre class="alt"><span class="lnum">  13:</span> }</pre>
+</div>
+</div>
+<p>If you have some experience with LINQ to SQL, then you won&rsquo;t find anything new in this code, except for one thing, I&rsquo;ll explain below. Basically, you create an instance of object context and perform a query. However, there is one difference between Entity Framework and LINQ to SQL, when working with Entity Framework, you have to explicitly load the data from from the linked tables. Pay attention to line 8, where such an operation is performed. At the same time, you can include related table in a LINQ query:</p>
+<div>
+<pre class="csharpcode">var result = from e <span class="kwrd">in</span> objectContext.Employees.Include(<span class="str">"Territories"</span>)
+             <span class="kwrd">where</span> e.EmployeeID == 6
+             select e;</pre>
+</div>
+<p>Please, note that you specify the name of the entities set in the Include() method, don&rsquo;t confuse it with the name of the corresponding table.</p>
+<h2>Adding Data</h2>
+<p>Adding new data isn&rsquo;t difficult as well. You simply create a new object and then add it and save the changes.</p>
+<div>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:</span> NorthwindEntities objectContext = <span class="kwrd">new</span> NorthwindEntities();</pre>
+<pre class="alteven"><span class="lnum">   2:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">   3:</span> Employee employee = <span class="kwrd">new</span> Employee { FirstName = <span class="str">"John"</span>, LastName = <span class="str">"Doe"</span> };</pre>
+<pre class="alteven"><span class="lnum">   4:</span> objectContext.AddToEmployees(employee);</pre>
+<pre class="alt"><span class="lnum">   5:</span>&nbsp; </pre>
+<pre class="alteven"><span class="lnum">   6:</span> objectContext.SaveChanges();</pre>
+</div>
+</div>
+<h2>Modifying and Removing Data</h2>
+<p>However, if you want to modify or remove an object, the object must be attached to the data context, this means that you either retrieve it from a storage or explicitly attach it to the object context by calling the AttachTo() method:</p>
+<div>
+<div class="csharpcode">
+<pre class="alt"><span class="lnum">   1:</span> NorthwindEntities objectContext = <span class="kwrd">new</span> NorthwindEntities();</pre>
+<pre class="alteven"><span class="lnum">   2:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">   3:</span> Employee employee = <span class="kwrd">new</span> Employee { EmployeeID = 1};</pre>
+<pre class="alteven"><span class="lnum">   4:</span> objectContext.AttachTo(<span class="str">"Employees"</span>, employee);</pre>
+<pre class="alt"><span class="lnum">   5:</span> employee.FirstName = <span class="str">"John"</span>;</pre>
+<pre class="alteven"><span class="lnum">   6:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">   7:</span> Employee employeeToDelete = <span class="kwrd">new</span> Employee { EmployeeID = 10 };</pre>
+<pre class="alteven"><span class="lnum">   8:</span> objectContext.AttachTo(<span class="str">"Employees"</span>, employeeToDelete);</pre>
+<pre class="alt"><span class="lnum">   9:</span> objectContext.DeleteObject(employeeToDelete);</pre>
+<pre class="alteven"><span class="lnum">  10:</span>&nbsp; </pre>
+<pre class="alt"><span class="lnum">  11:</span> objectContext.SaveChanges();</pre>
+</div>
+</div>
+<p>In the following tutorials I&rsquo;ll explain some fundamentals of the Entity Framework that one should be aware of when developing with the Entity Framework.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>1 October 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

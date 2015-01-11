@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Getting BlogEngine.NET To Work With The Local Time Zones</title>
+  <meta name="description" content="I noticed that the times of posts and comments were displayed in my local time zone. It must be very confusing for the users, especially if those times were ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/getting-blogenginenet-to-work-with-the-local-time-zones">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Getting BlogEngine.NET To Work With The Local Time Zones</h1>
+  </header>
+
+  <article class="post-content">
+    <p>I noticed that the times of posts and comments were displayed in my local time zone. It must be very confusing for the users, especially if those times were the times of the comments they posted.</p>
+<p><br /> The first idea that came to my mind was just to use the GMT time zone. I set up the time zone offset in the blog settings, changed the templates, basically, I just put &ldquo;GMT&rdquo; after the time.</p>
+<p><br /> Anyway that still wasn&rsquo;t good enough. I wanted the times of the posts and comments to be displayed in the local time zones of my readers. <!-- more --></p>
+<p>Since it&rsquo;s not possible to get the time zone offset of the user in ASP.NET without interacting with JavaScript, I decided to solve the problem in pure JavaScript. I just wrote a function that converted the string that represents the date and the time in GMT to the date and time of the local time zone of the user.</p>
+<p>[code:js]</p>
+<p>function ConvertToLocalDate(gmtDate)<br /> {<br /> &nbsp;&nbsp;&nbsp; gmtDate = gmtDate.substr(gmtDate.indexOf(",", 0) + 1);<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; var days = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Saturday");<br /> &nbsp;&nbsp;&nbsp; var months = new Array("January", "February", "March", "April", "May", "June", "July", "August",<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "September", "November", "December");&nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; var localDate = new Date();<br /> &nbsp;&nbsp;&nbsp; localDate.setTime(Date.parse(gmtDate) - localDate.getTimezoneOffset() * 60 * 1000);<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; var sLocalDate = days[localDate.getDay()] + ", ";<br /> &nbsp;&nbsp;&nbsp; sLocalDate += months[localDate.getMonth()] + " ";<br /> &nbsp;&nbsp;&nbsp; sLocalDate += localDate.getDate() + ", ";<br /> &nbsp;&nbsp;&nbsp; sLocalDate += localDate.getFullYear() + " ";<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; var hours = localDate.getHours(); <br /> &nbsp;&nbsp;&nbsp; var amPm = "AM";<br /> &nbsp;&nbsp;&nbsp; if (hours &gt;= 12) <br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; amPm = "PM";<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (hours &gt;= 13) <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hours -= 12;<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; if (hours &lt; 10)<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hours = "0" + hours.toString();<br /> &nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; var minutes = localDate.getMinutes();<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; if (minutes &lt; 10) <br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; minutes = "0" + minutes.toString();<br /> &nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; sLocalDate += hours + ":" + minutes + " " + amPm;<br /> &nbsp;&nbsp; &nbsp;<br /> &nbsp;&nbsp;&nbsp; return sLocalDate;<br /> }</p>
+<p>[/code]</p>
+<p><br /> I placed this function in blog.js. Then I changed PostView.aspx and CommentView.aspx. I replaced:</p>
+<p>[code:html]</p>
+<p>&lt;%=Post.DateCreated.ToLongDateString() + " " + Post.DateCreated.ToShortTimeString() %&gt;</p>
+<p>[/code]</p>
+<p>with</p>
+<p>[code:html]</p>
+<p>&lt;script type="text/javascript"&gt;<br /> &nbsp;&nbsp;&nbsp; document.write(ConvertToLocalDate('&lt;%=Post.DateCreated.ToLongDateString() + " " + Post.DateCreated.ToShortTimeString() %&gt;'));<br /> &lt;/script&gt;</p>
+<p>[/code]</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>19 June 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

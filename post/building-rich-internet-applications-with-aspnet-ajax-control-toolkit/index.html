@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Building Rich Internet Applications With ASP.NET AJAX Control Toolkit</title>
+  <meta name="description" content="IntroductionNowadays web isn't a web as it was 10 years ago. Web isn't a collection of static pages anymore. Actually, there was JavaScript and DHTML, but st...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/building-rich-internet-applications-with-aspnet-ajax-control-toolkit">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Building Rich Internet Applications With ASP.NET AJAX Control Toolkit</h1>
+  </header>
+
+  <article class="post-content">
+    <h1>Introduction</h1>
+<p>Nowadays web isn't a web as it was 10 years ago. Web isn't a collection of static pages anymore. Actually, there was JavaScript and DHTML, but still web sites were far behind desktop applications in terms of interactivity. After the invention of AJAX it became possible to build really interactive web applications
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+that are nearly the same as desktop applications except they are run in a browser.</p>
+<p>Writing AJAX JavaScript code is a pretty routine task, so it's sensible to use a library that already has the necessary functionality. While Visual Studio 2008 has built-in ASP.NET AJAX 1.0 library, it doesn't contain many useful things we need when we are writing rich Internet applications.</p>
+<h1>ASP.NET AJAX Control Toolkit</h1>
+<p>ASP.NET AJAX Control Toolkit or simply ACT is a thing that can help to write rich Internet applications. Basically, it's set a of useful interactive web controls that we usually find in desktop applications, but missing in web applications. These controls include sliders, pop-up calendars, modal dialogs and many others. We don't have to write any JavaScript code to use them in our applications, we just need to use ACT controls that are very similar to ordinary ASP.NET controls.</p>
+<p>ACT is run both by Microsoft and community, so everybody can take part in the creation of the decent AJAX toolkit. <!-- more --></p>
+<h1>Installation</h1>
+<p>The installation isn't difficult, but still worth mentioning.</p>
+<p>First, you need to download the kit, go to their <a href="http://www.codeplex.com/AjaxControlToolkit/Release/ProjectReleases.aspx?ReleaseId=11121" target="_blank">CodePlex page</a> and choose the appropriate package. After downloading unpack the contents of the archive somewhere. Open Visual Studio, expand Toolbox, right-click, choose "Add Tab", name it "AJAX Control Toolkit", then right-click again within the space of the newly created tab and select "Choose Items...", click "Browse", open the folder where you extracted the contents of the archive, open "SampleWebsite\Bin\AjaxControlToolkit.dll". The tab must become populated with the controls. If you drag any control to a web form, the necessary assemblies will be copied to the "Bin" folder of the web site and the ACT assembly will also got registered on the page.</p>
+<h1>Controls</h1>
+<p>ACT provides two type
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+s of controls:</p>
+<ul>
+<li>Web controls </li>
+<li>Extenders </li>
+</ul>
+<p><strong>Web controls</strong> are just ordinary ASP.NET controls with some enhanced client-side functionality</p>
+<p><strong>Extenders</strong> are controls built on top of the existing ASP.NET controls with an additional client-side functionality, for example, many controls, for instance Slider, use TextBox and store their value in it.</p>
+<p>The full list of controls is:</p>
+<ul>
+<li>Numeric controls      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Slider/Slider.aspx" target="_blank">Slider</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/NumericUpDown/NumericUpDown.aspx" target="_blank">Numeric up-down</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Rating/Rating.aspx" target="_blank">Rating</a> </li>
+</ul>
+</li>
+<li>Dialogs      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/PopupControl/PopupControl.aspx" target="_blank">Pop-up</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ModalPopup/ModalPopup.aspx" target="_blank">Modal dialog</a> </li>
+</ul>
+</li>
+<li>Text input      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/AutoComplete/AutoComplete.aspx" target="_blank">Autocomplete</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/FilteredTextBox/FilteredTextBox.aspx" target="_blank">Filtered</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/MaskedEdit/MaskedEdit.aspx" target="_blank">Mask edit</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/PasswordStrength/PasswordStrength.aspx" target="_blank">Password strength</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/TextBoxWatermark/TextBoxWatermark.aspx" target="_blank">Watermarked text box</a> </li>
+</ul>
+</li>
+<li>Drop down      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/CascadingDropDown/CascadingDropDown.aspx" target="_blank">Cascading drop down</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ListSearch/ListSearch.aspx" target="_blank">Searchable drop down</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/DropDown/DropDown.aspx" target="_blank">Styled drop down</a> </li>
+</ul>
+</li>
+<li>Validation      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ValidatorCallout/ValidatorCallout.aspx" target="_blank">Error pop-up</a> </li>
+</ul>
+</li>
+<li>Panels and tabs      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Accordion/Accordion.aspx" target="_blank">Accordion</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/CollapsiblePanel/CollapsiblePanel.aspx" target="_blank">Collapsible panel</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/DragPanel/DragPanel.aspx" target="_blank">Drag panel</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Tabs/Tabs.aspx" target="_blank">Tabs</a> </li>
+</ul>
+</li>
+<li>Buttons and check boxes      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ConfirmButton/ConfirmButton.aspx" target="_blank">Confirm button</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/MutuallyExclusiveCheckBox/MutuallyExclusiveCheckBox.aspx" target="_blank">Mutually exclusive check box</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ToggleButton/ToggleButton.aspx" target="_blank">Toggle button</a> </li>
+</ul>
+</li>
+<li>Styling      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/DropShadow/DropShadow.aspx" target="_blank">Drop shadow</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/RoundedCorners/RoundedCorners.aspx" target="_blank">Rounded corners</a> </li>
+</ul>
+</li>
+<li>Images      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Animation/Animation.aspx" target="_blank">Slide show</a> </li>
+</ul>
+</li>
+<li>CAPCTHA      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/NoBot/NoBot.aspx" target="_blank">No bot</a> </li>
+</ul>
+</li>
+<li>Animation      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Animation/Animation.aspx" target="_blank">Animation</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/UpdatePanelAnimation/UpdatePanelAnimation.aspx" target="_blank">UpdatePanel animation</a> </li>
+</ul>
+</li>
+<li>Misc      
+<ul>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/Calendar/Calendar.aspx" target="_blank">Calendar</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/ReorderList/ReorderList.aspx" target="_blank">Re-orderable list</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/HoverMenu/HoverMenu.aspx" target="_blank">Hover menu</a> </li>
+<li><a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/AlwaysVisibleControl/AlwaysVisibleControl.aspx" target="_blank">Always visible control</a> </li>
+</ul>
+</li>
+</ul>
+<h1>An Example</h1>
+<p>Enough with the theory, let's do something practical, for example, let's try the Slider control.</p>
+<p>Drag Slider from Toolbox onto your page.</p>
+<p>Since, Slider is an extender and it extends TextBox, you should add a TextBox and add the <span style="font-family: 'Courier New';">TargetControlID</span> attribute to the Slider:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+
+<span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="SliderExtender1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtSlider" </span><span class="kwrd">/&gt;</span></pre>
+<p>Don't forget to add ScriptManager to the page, because the page won't compile without it. You can compile it now and drag the slider. Unfortunately, it doesn't show the current value. You need to add a bound control, add Label next to the TextBox and set the BoundControlID of the SliderExtender:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:Label</span> <span class="attr">ID</span><span class="kwrd">="lblSlider"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+
+<span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="SliderExtender1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtSlider"</span> 
+    <span class="attr">BoundControlID</span><span class="kwrd">="lblSlider"</span> <span class="kwrd">/&gt;</span></pre>
+<p>Now when sliding it you can see the value.</p>
+<p>You can set the minimum value with the Mininum attribute, the maximum value with the Maximum attribue and the number of steps with the Steps attribute.</p>
+<h1>Conclusion</h1>
+<p>If you need to add some rich functionality to your web application, then you should consider using ASP.NET AJAX Control Toolkit that is still in its community sandbox, however as many projects that were marked as beta it can be shipped with the new versions of Visual Studio and become an integrated part of the further .NET Framework releases.</p>
+<p>I recommend you to check <a href="http://www.asp.net/AJAX/AjaxControlToolkit/Samples/" target="_blank">this page</a> where you can find all the examples and the documentation of every control available in the kit.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>30 July 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

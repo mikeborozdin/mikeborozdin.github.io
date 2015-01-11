@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Introducing SQL Server CE 4.0 CTP</title>
+  <meta name="description" content="   What SQL Server CE 4.0 means for ASP.NET developers    Where to get and how to install    How do I create my tables?!!   When I came across a story on the...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/introducing-sql-server-ce-40-ctp">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Introducing SQL Server CE 4.0 CTP</h1>
+  </header>
+
+  <article class="post-content">
+    <ul>   <li>What SQL Server CE 4.0 means for ASP.NET developers</li>    <li>Where to get and how to install</li>    <li>How do I create my tables?!!</li> </ul>  <p>When I came across a <a href="http://weblogs.asp.net/scottgu/archive/2010/06/30/new-embedded-database-support-with-asp-net.aspx" target="_blank">story</a> on the newest version of SQL Server CE by Scott Guthrie, as well as a <a href="http://blogs.msdn.com/b/sqlservercompact/archive/2010/07/07/introducing-sql-server-compact-4-0-the-next-gen-embedded-database-from-microsoft.aspx" target="_blank">blog post</a> in the SQL Server CE team blog, I was amazed that it was possible to run on a web server for ASP.NET application in the Medium Trust mode without any installation. This literally means that finally one can use SQL for storing data even though their hosting plan, for example, doesn’t allow having a SQL Server database. <!-- more --> For instance, I must admit that I store all my blogs posts in XML files simply because I decided to get a cheaper hosting account, while SQL Server CE 4.0 should allow me to store my data in a relational database. This can possibly attract casual web developer who are lurking for cheap solutions and simple tools a problem that is also solved by WebMatrix, but it is actually a completely different story and my present post isn’t about that marketing stuff.</p>  <h2></h2>  <h2>Installation</h2>  <p>Anyway, I decided to get my hands onto this version of the database. Lucky enough there is already a CTP version available and ready for <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=0d2357ea-324f-46fd-88fc-7364c80e4fdb&amp;displaylang=en" target="_blank"><strong>download</strong></a>. The setup is pretty small – just 2 megabytes and the entire installation process just takes a few minute that is exceptionally well for a database server, albeit a compact one.</p>  <p>After the installation I didn’t manage to find any new items in the Program menu, so I headed straight to the directory it was installed to. It contained nothing more than DLL files and not a very useful readme file.</p>  <h2></h2>  <h2>How Do I Create Tables?</h2>  <p>However, it was a right time to finally try it in action. But it was also a time of frustration because I realised that I didn’t know how to create a database and tables because the CTP simply lacks any tools for that. Fortunately, I came with a workaround. </p>  <p><em><strong>In order to create a database it is just enough to create an empty .sdf file</strong></em>, well the same actually goes to any other version of SQL Server CE, but what’s then? Well, of course you can’t use SQL Management Studio or Visual Studio Server Explorer because they simply don’t support the newest version. But you can just create tables programmatically from C#.</p>  <h2></h2>  <h2>Creating Tables Programmatically</h2>  <p>Just launch Visual Studio 2010 and create a new console project. Then, don’t forget to add a reference to a SQL Server CE assembly, go to Solution Explorer –&gt; References –&gt; Right Click –&gt; Add Reference –&gt; Browse –&gt; and then look up for a file called “System.Data.SqlServerCe.dll” in either the ‘Desktop’ or the ‘Private’ subfolder of the directory where you’ve installed SQL Server CE.</p>  <p>And then just copy-paste the following code that should be pretty self-explanatory.</p>  <pre class="csharpcode"><span class="kwrd">using</span> System;
+<span class="kwrd">using</span> System.Data.SqlServerCe;
+
+<span class="kwrd">namespace</span> SqlCe4Test
+{
+    <span class="kwrd">class</span> Program
+    {
+        <span class="kwrd">static</span> <span class="kwrd">void</span> Main(<span class="kwrd">string</span>[] args)
+        {
+            <span class="rem">//Establishing a connection with our database</span>
+            SqlCeConnection conn = <span class="kwrd">new</span> SqlCeConnection(<span class="str">@&quot;DataSource=C:\C#\SqlCe4Test\db.sdf&quot;</span>);
+            conn.Open();
+
+            <span class="rem">//Creating a table</span>
+            SqlCeCommand cmdCreate = <span class="kwrd">new</span> SqlCeCommand(<span class="str">&quot;CREATE TABLE Products (Id int IDENTITY(1,1), Title nchar(50), PRIMARY KEY(Id))&quot;</span>, conn);
+            cmdCreate.ExecuteNonQuery();
+
+            <span class="rem">//Inserting some data...</span>
+            SqlCeCommand cmdInsert = <span class="kwrd">new</span> SqlCeCommand(<span class="str">&quot;INSERT INTO Products (Title) VALUES ('Some Product #1')&quot;</span>, conn);
+            cmdInsert.ExecuteNonQuery();
+
+            <span class="rem">//Making sure that our data was inserted by selecting it</span>
+            SqlCeCommand cmdSelect = <span class="kwrd">new</span> SqlCeCommand(<span class="str">&quot;SELECT Id, Title FROM Products&quot;</span>, conn);
+            SqlCeDataReader reader = cmdSelect.ExecuteReader();
+            reader.Read();
+            Console.WriteLine(<span class="str">&quot;Id: {0} Title: {1}&quot;</span>, reader[<span class="str">&quot;Id&quot;</span>], reader[<span class="str">&quot;Title&quot;</span>]);
+            reader.Close();
+
+            conn.Close();
+        }
+    }
+}</pre>
+<style type="text/css">
+
+
+
+
+
+.csharpcode, .csharpcode pre
+{
+	font-size: small;
+	color: black;
+	font-family: consolas, "Courier New", courier, monospace;
+	background-color: #ffffff;
+	/*white-space: pre;*/
+}
+.csharpcode pre { margin: 0em; }
+.csharpcode .rem { color: #008000; }
+.csharpcode .kwrd { color: #0000ff; }
+.csharpcode .str { color: #006080; }
+.csharpcode .op { color: #0000c0; }
+.csharpcode .preproc { color: #cc6633; }
+.csharpcode .asp { background-color: #ffff00; }
+.csharpcode .html { color: #800000; }
+.csharpcode .attr { color: #ff0000; }
+.csharpcode .alt 
+{
+	background-color: #f4f4f4;
+	width: 100%;
+	margin: 0em;
+}
+.csharpcode .lnum { color: #606060; }</style>
+
+<h2>More Things to Come</h2>
+
+<p>That I was just a post on how to get started with SQL Server CE 4.0 and to avoid that moment of frustration when you don’t know to even create a table. In next posts I will cover topics like using SQL Server CE 4.0 for ASP.NET applications, show if it’s possible to use it with LINQ and the Entity Framework, as well as talk about some other stuff.</p>
+
+<h2>If You are Interested in SQL Server CE for Non-Web Reasons</h2>
+
+<p>Then, you may be also interested in the tutorials I wrote about CE 3.5:</p>
+
+<p><a href="http://www.mikeborozdin.com/post/Using-Microsoft-Synchronization-Services-For-ADONET-(Introducing-Microsoft-SQL-Server-Compact-Edition-(Part-II)).aspx" target="_blank">Using Microsoft Synchronization Services For ADO.NET (Introducing Microsoft SQL Server Compact Edition (Part II))</a></p>
+
+<p><a href="http://www.mikeborozdin.com/post/Introducing-Microsoft-SQL-Server-Compact-Edition-(Part-I).aspx" target="_blank">Introducing Microsoft SQL Server Compact Edition (Part I)</a></p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>12 September 2010</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

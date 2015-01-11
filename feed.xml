@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mike Borozdin&#39;s Blog</title>
+    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 11 Jan 2015 10:04:09 +0000</pubDate>
+    <lastBuildDate>Sun, 11 Jan 2015 10:04:09 +0000</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Practical Functional Programming in JavaScript</title>
+        <description>&lt;p&gt;JavaScript is a multi-paradigm language with rich functional programming capabilities. Functional programming does not have to be difficult or hugely theoretical. Quite the opposite &amp;ndash; it can help you to solve the most common programming challenges in a more concise and elegant fashion.&lt;/p&gt;  
+
+&lt;p&gt;In this video I focus on working with arrays in JavaScript. Normally, when dealing with arrays a developer would write a for loop and mutate a variable or two. However, JavaScript already comes with functions, such as, &lt;code&gt;every()&lt;/code&gt;, &lt;code&gt;filter()&lt;/code&gt;, &lt;code&gt;map()&lt;/code&gt;, &lt;code&gt;reduce()&lt;/code&gt;, etc. that help you to write better code for array operations. &lt;!-- more --&gt;.
+
+&lt;p&gt;I also demonstrate how you can combine those functions together in order to encapsulate complex data operations . We analyse performance of some operations and show how certain issues can be solved by using 3rd party libraries, such as &lt;a href=&quot;http://danieltao.com/lazy.js/&quot;&gt;lazy.js&lt;/a&gt; and &lt;a href=&quot;https://github.com/facebook/immutable-js&quot;&gt;Immutable.js&lt;/a&gt; Finally, I illustrate how functional programming can become only better in EcmaScript 6.&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/hWWr2fex2Tc&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+</description>
+        <pubDate>Sun, 16 Nov 2014 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/practical-functional-programming-in-javascript</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/practical-functional-programming-in-javascript</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Joy and Benefits of Codefest</title>
+        <description>&lt;p&gt;I have already &lt;a href=&quot;http://ncredinburgh.com/blog/posts/information-sharing-in-software-development&quot;&gt;blogged&lt;/a&gt; about the ways to share expertise and knowledge inside your organisation However, there is one more way. That’s something we call a codefest or hackathon. Codefest is an opportunity to work for two days on any project you like using any technology of your choice. Also, it’s a chance to work with people you don’t have on your project. This blog post is available &lt;a href=&quot;http://ncredinburgh.com/blog/posts/joy-and-benefits-of-codefest&quot; target=&quot;_blank&quot;&gt;on my company’s blog&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 23 Sep 2014 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/joy-and-benefits-of-codefest</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/joy-and-benefits-of-codefest</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Information Sharing in Software Development</title>
+        <description>&lt;p&gt;Where IT organisations have heterogeneous technical environments it is not always possible to know what your colleagues are working on and which challenges they are facing. This blog post will discuss various ways to share information in an IT organisation. The article was written for company’s blog &lt;a href=&quot;http://ncredinburgh.com/blog/posts/information-sharing-in-software-development&quot; target=&quot;_blank&quot;&gt;where you can read it now&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Tue, 23 Sep 2014 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/information-sharing-in-software-development</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/information-sharing-in-software-development</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>A Code Review Is More Useful Than You Think</title>
+        <description>&lt;p&gt;Recently, I came across a situation which once again proved the immense value in having code reviews. I was working on a tricky part of an application that involved substantial design work. As part of our &#39;Definition of Done&#39;, I had to submit my code for a peer review. The review turned out to be invaluable - after all, it&#39;s always useful to get the second pair of eyes to look at your work.&lt;/p&gt;  &lt;p&gt;I wrote this article for my &lt;a class=&quot;more&quot; href=&quot;http://ncredinburgh.com/blog/posts/a-code-review-is-more-useful-than-you-think&quot;&gt;company’s blog where&lt;/a&gt; you can read it now.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 08 Jun 2014 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/a-code-review-is-more-useful-than-you-think</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/a-code-review-is-more-useful-than-you-think</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>My Agile Journey</title>
+        <description>&lt;p&gt;There can be debates whether the Agile Software Development processes have become mainstream or not, but most of the software development houses are trying to adopt the Agile practices. Yet, coming from academia or, say, a less agile environment, such practices can be misunderstood.&lt;/p&gt;  &lt;p&gt;In this post, I am going to tell how I have become an avid agile practitioner and what has helped in that glorious journey. &lt;!-- more --&gt; My journey started in December 2011 when I finished my Master’s got my first full time job as a Software Developer at &lt;a href=&quot;http://www.cloudreach.com/&quot; target=&quot;_blank&quot;&gt;Cloudreach Limited&lt;/a&gt;. Of course, I had a couple of internships under my belt, and was running this blog, but I clearly didn’t have any experience of working in a team on commercial software. I must admit though I was still interested not only programming languages and technologies, but also in processes. Yet, I only had, say, some textbook knowledge, and was slightly scared to write tests before code. I remember though that while working on some university project I was saying to myself that I must write some unit tests, or otherwise, my code would become a buggy mess.&lt;/p&gt;  &lt;p&gt;The times they are a changing. Now, I can’t allow myself to write a piece of code without writing a test first. So, I’ll try to list the thing which have helped to become comfortable to Agile, and which I have noticed on my journey.&lt;/p&gt;  &lt;h2&gt;Proper Mentorship Helps. Yet, You Must Be Open For New Things.&lt;/h2&gt;  &lt;p&gt;First of all, I would hardly be able to embrace Agile without the help of my more experienced colleagues. Thank you guys! Of course, one can read books, and various online resources, but it’s crucial to be able to ask someone a question, and check whether you are on a right track or not. In total, I was assisted in the following ways:&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;A training project that can give a developer a kick start with the Agile, as well as with some new technology. Since, it’s just a training project it eliminates all possible stress and allows focusing on learning new things &lt;/li&gt;    &lt;li&gt;Code reviews are an efficient way of learning from your peers, and also getting to know other parts of the application. So, try to get your code reviewed, and use a chance to review someone else’s code. I wrote a bit on the benefits of code reviews and the ways of conducting them in &lt;a href=&quot;http://devblog.cloudreach.co.uk/2012/08/asynchronous-code-reviews-as-efficient.html&quot; target=&quot;_blank&quot;&gt;this article&lt;/a&gt;. &lt;/li&gt;    &lt;li&gt;Regular catch-ups with a more experienced colleague. In other words, try to get a mentor who works with you and observes your progress. Also, don’t view mentorship as a one-way process. A good mentor will be keen to get your feedback and react accordingly. &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;The last, but not the least, be open to new things. People can be naturally resistant to changes, and it’s essential to keep that in mind when thinking about the customer, yet, yourself should not be discouraged from doing something in a new way.&lt;/p&gt;  &lt;h2&gt;Scrum Is Easy To Understand&lt;/h2&gt;  &lt;p&gt;Just recently I came across an &lt;a href=&quot;http://java.dzone.com/articles/why-scrum-won&quot; target=&quot;_blank&quot;&gt;article&lt;/a&gt; which said that Scrum had achieved its solid position today mainly due to its simplicity. Thinking retrospectively, I would say that this is indeed true. Moreover, this is one of the factors that has helped to adopt the agile quite easily.&lt;/p&gt;  &lt;p&gt;Moreover, things like daily stand-ups and sprint retrospectives allow you to know what everyone is doing, and have your say if something does not go very well.&lt;/p&gt;  &lt;h2&gt;Don’t Be Scared of Test-Driven Development&lt;/h2&gt;  &lt;p&gt;Writing tests before code might sound strange at first, but it’s indeed worth doing that. It not only makes your code more reliable, but also dramatically improves its maintainability. Indeed, the book that assisted me in embracing TDD was called ‘&lt;a href=&quot;http://www.growing-object-oriented-software.com/&quot; target=&quot;_blank&quot;&gt;Growing Object-Oriented Software Guided By Tests’&lt;/a&gt;. There is a popular argument against TDD which says that it slows down development. In fact, it speeds it up. Try writing a complex application that interacts with a few external system with no tests – it will fail to work at first, and you will struggle to debug it.&lt;/p&gt;  &lt;p&gt;Finally, don’t focus on testing method per se, put emphasis on testing behaviour of your application and its parts. Adopt &lt;a href=&quot;http://dannorth.net/introducing-bdd/&quot; target=&quot;_blank&quot;&gt;Behaviour-Driven Development&lt;/a&gt;, and pair it with &lt;a href=&quot;http://rubylearning.com/blog/2010/10/05/outside-in-development/&quot; target=&quot;_blank&quot;&gt;Outside-in Development.&lt;/a&gt;&lt;/p&gt;  &lt;p&gt;I also gave a &lt;a href=&quot;http://vimeo.com/46619279&quot; target=&quot;_blank&quot;&gt;talk&lt;/a&gt; in Glasgow, UK, and wrote a &lt;a href=&quot;http://devblog.cloudreach.co.uk/2012/05/behaviour-driven-development-in-net.html&quot; target=&quot;_blank&quot;&gt;blog post&lt;/a&gt; about Outside-In Behaviour Driven Development.&lt;/p&gt;  &lt;h2&gt;It’s More About Techniques Rather Than Underlying Tools&lt;/h2&gt;  &lt;p&gt;Indeed, you can work with a programming language whose limitation doesn’t allow for having a generic mocking framework. Is it a reason not to use mock objects in your tests? Not all! After all, it doesn’t take a lot of time to write mock objects by hand. Once again, the benefits of doing that will hugely outweigh that little time you spend on it.&lt;/p&gt;  &lt;h2&gt;Transfer Your Knowledge As You Go&lt;/h2&gt;  &lt;p&gt;There is no better way to ensure that you understand a concept than explaining it to someone else. Feel free to tell about your Agile successes to fellow developers. Don’t be afraid to blog, and speak at public events. You will not only improve your understanding of the Agile methodology, but spread the word about it. Needless to say, it will also help you to build up your professional reputation.&lt;/p&gt;  &lt;h2&gt;It’s A Never Ending Journey&lt;/h2&gt;  &lt;p&gt;Having called myself ‘an avid Agile practitioner’ in the beginning of the article, I believe there are still tons to be learnt. After all, we should try to learn something every day.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 20 Jan 2013 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/my-agile-journey</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/my-agile-journey</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Handling the Double-Click Event with the Visio API</title>
+        <description>&lt;p&gt;I have already covered the Visio event model in &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;one of the previous posts&lt;/a&gt;. Unfortunately, not every event can be handled in that easy way. For instance, the double-click event requires a totally different approach.&lt;/p&gt;
+&lt;p&gt;In order to handle the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;double-click&lt;/span&gt; on a shape you have to use &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet &lt;/span&gt;&lt;!-- more --&gt;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt; &lt;/span&gt;that was briefly mentioned &lt;a href=&quot;http://www.mikeborozdin.com/post/Reading-and-Writing-Visio-Shape-Information-with-C.aspx&quot; target=&quot;_blank&quot;&gt;before&lt;/a&gt;. The &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet&lt;/span&gt; contains the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;EventDblClick&lt;/span&gt; property. We can handle it if we assign the VBA code that executes &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;QUEUEMARKEREVENT&lt;/span&gt; function that can pass the control back to C#. Then, we just handle the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;MarkerEvent&lt;/span&gt; in Visio.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;div class=&quot;csharpcode&quot;&gt;
+&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;partial&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; Form1 : Form&lt;/pre&gt;
+&lt;pre&gt;{&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Form1()&lt;/pre&gt;
+&lt;pre&gt;    {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        InitializeComponent();&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//don&#39;t forget to add this line in order to be able to hande the double-click event&lt;/span&gt;&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.MarkerEvent +=&amp;nbsp;&lt;/pre&gt;
+&lt;pre&gt;&lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_MarkerEventEventHandler(Application_MarkerEvent);&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.DocumentOpened +=&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);&lt;/pre&gt;
+&lt;pre&gt;    }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_MarkerEvent(Visio.Application app, &lt;span class=&quot;kwrd&quot;&gt;int&lt;/span&gt; SequenceNum, &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; ContextString)&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//make sure that it is a double-click&lt;/span&gt;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (ContextString != &lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt; &amp;amp;&amp;amp; ContextString.Contains(&lt;span class=&quot;str&quot;&gt;&quot;/cmd=DoubleClick&quot;&lt;/span&gt;))&lt;/pre&gt;
+&lt;pre&gt;        {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; sourceTag = &lt;span class=&quot;str&quot;&gt;&quot;/source=&quot;&lt;/span&gt;;&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;            MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&quot;DoubleClick at ShapeID: &quot;&lt;/span&gt; + ContextString.Substring(ContextString.IndexOf(sourceTag) +&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;sourceTag.Length));&lt;/pre&gt;
+&lt;pre&gt;        }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
+&lt;pre&gt;    {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//iterate through all the shapes and assign a handler for the DoubleClick event&lt;/span&gt;&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
+&lt;pre&gt;            shape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;EventDblClick&quot;&lt;/span&gt;].Formula = &lt;span class=&quot;str&quot;&gt;&quot;=QUEUEMARKEREVENT(\&quot;/cmd=DoubleClick /source=&quot;&lt;/span&gt; + shape.ID + &lt;span class=&quot;str&quot;&gt;&quot;\&quot;)&quot;&lt;/span&gt;;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
+&lt;pre&gt;    }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; openToolStripMenuItem_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EventArgs e)&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (openDiagramDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
+&lt;pre&gt;            &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Src = openDiagramDialog.FileName;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
+&lt;pre&gt;    }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;As you can see when executing VBA&amp;rsquo;s &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;QUEUEMARKEREVENT()&lt;/span&gt; we can use an arbitrary string as its argument where we can pass any value. In the example above, we pass &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;&amp;lsquo;cmd=DoubleClick&amp;rsquo;&lt;/span&gt; as a code for the event and &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;&amp;lsquo;/source=&amp;rsquo;&lt;/span&gt; for passing a shape ID, so that we know which shape was double-clicked.&lt;/p&gt;
+&lt;h2&gt;Project Files&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;/files/VisioShapeDoubleClick1.zip&quot;&gt;VisioShapeDoubleClick1.zip (103.40 kb)&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;p&gt;Please, refer to these pages to get additional information on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff765486.aspx&quot; target=&quot;_blank&quot;&gt;Application.MarkerEvent Event&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/gg144579.aspx&quot; target=&quot;_blank&quot;&gt;ShapeSheet&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/aa140366(office.10).aspx&quot; target=&quot;_blank&quot;&gt;Using the QueueMarkerEvent Add-on in Visio Solutions&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 22 Nov 2011 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/handling-the-double-click-event-with-the-visio-api</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/handling-the-double-click-event-with-the-visio-api</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Reading and Writing Visio Shape Information with C#</title>
+        <description>&lt;p&gt;Often, you want to either to read or put some additional information regarding shapes in your diagram. For instance, you have an application for drawing a layout of your office. Obviously, every piece of equipment or furniture your have has some information, such as its name, code and any other information related to facility management. There are two ways of reading/writing such kind of information. The first one is to make use of Visio custom properties, while the second one is to store that kind of information in a database. The former is relatively simple, as it doesn&amp;rsquo;t require to have any additional layer, such as database. At the same time, the latter is more versatile, as it allows integrating Visio application with other business application by querying a database. In the tutorial we cover the first option, that is using custom properties of Visio. &lt;!-- more --&gt;&lt;/p&gt;
+&lt;p&gt;When drawing diagrams in Visio you often can assign custom properties to shapes by right-clicking and choosing &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Properties&lt;/span&gt;&lt;span style=&quot;font-family: Georgia;&quot;&gt;. For instance, during a creation of an &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Office Layout&lt;/span&gt; diagram you can see the following dialog.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img style=&quot;display: block; float: none; margin-left: auto; margin-right: auto;&quot; title=&quot;image&quot; src=&quot;/images/image_25.png&quot; alt=&quot;image&quot; width=&quot;838&quot; height=&quot;524&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The dialog prompts to enter such information as&amp;nbsp; length, depth, ID, name, product number and any other information that makes sense for furniture and office equipment.&lt;/p&gt;
+&lt;p&gt;For sure, the Visio API provides tools for reading and writing such pieces of information. In the &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;previous tutorial&lt;/a&gt; I briefly mentioned that every &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Shape&lt;/span&gt; object holds a property of the type of &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Cell&lt;/span&gt; that keeps shape&amp;rsquo;s properties, as well as additional properties. In order to access one of them you should refer to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Shape.Cell[&amp;lsquo;PropertyName&amp;rsquo;].&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Usually, property names slightly differ from those ones displayed in the user-friendly Visio dialog. It doesn&amp;rsquo;t impose a serious problem, however, because their names can be looked up in the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet Data Window&lt;/span&gt;. The window is accessible on right-clicking a shape and choosing &amp;lsquo;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Show ShapeSheet&amp;rsquo;&lt;/span&gt;. If you can&amp;rsquo;t see that window, then you must enable the Developer mode, which can be done by going to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;File-&amp;gt;Options-&amp;gt;Advanced&lt;/span&gt; and ticking &amp;lsquo;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Run in developer mode&amp;rsquo;&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img style=&quot;display: inline;&quot; title=&quot;image&quot; src=&quot;/images/image_26.png&quot; alt=&quot;image&quot; width=&quot;841&quot; height=&quot;526&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The window shows a whole cell of available properties including some general ones linked to a shape appearance and a position in a diagram to more customised one located in the &amp;lsquo;Shape Data&amp;rsquo; section where you can spot properties like &amp;lsquo;Prop.Department&amp;rsquo;, &amp;lsquo;Prop.Name&amp;rsquo; and so on.&lt;/p&gt;
+&lt;p&gt;We will create a simple application that will display a few properties in a form on selecting a shape. Modification of those properties will be also preserved. Moreover, we will allow user to save a modified diagram.&lt;/p&gt;
+&lt;p&gt;&lt;img style=&quot;display: inline;&quot; title=&quot;image&quot; src=&quot;/images/image_27.png&quot; alt=&quot;image&quot; width=&quot;817&quot; height=&quot;510&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The basics of creating applications for Visio are given &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;, while &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;another tutorial&lt;/a&gt; explains how to track if a shape has been selected in a diagram, as well as how to handle some other events.&lt;/p&gt;
+&lt;p&gt;So, when handling the SelectionChanged event we must extract and display values of custom properties we are interested in.&lt;/p&gt;
+&lt;div class=&quot;csharpcode&quot;&gt;
+&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_SelectionChanged(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_SelectionChangedEvent e)&lt;/pre&gt;
+&lt;pre&gt;{&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    Visio.Shape selectedShape = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Selection.PrimaryItem;&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//we bind only if we have selected a shape, not in case if we have deselected it&lt;/span&gt;&lt;/pre&gt;
+&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (selectedShape != &lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt;)&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+&lt;pre&gt;        Binding bindingId = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        bindingId.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.ID&quot;&lt;/span&gt;];&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//we update a source, in our case, a Prop.ID everytime we type in something in a textbox&lt;/span&gt;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        bindingId.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//we specify a converter that removes trailing and leading quotes when displaying values&lt;/span&gt;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//and enquotes values when saving them&lt;/span&gt;&lt;/pre&gt;
+&lt;pre&gt;        bindingId.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        tbId.SetBinding(TextBox.TextProperty, bindingId);&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        Binding bindingName = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
+&lt;pre&gt;        bindingName.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.Name&quot;&lt;/span&gt;];&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        bindingName.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
+&lt;pre&gt;        bindingName.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        tbName.SetBinding(TextBox.TextProperty, bindingName);&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        Binding bindingDepartment = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
+&lt;pre&gt;        bindingDepartment.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.Department&quot;&lt;/span&gt;];&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        bindingDepartment.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
+&lt;pre&gt;        bindingDepartment.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        tbDepartment.SetBinding(TextBox.TextProperty, bindingDepartment);&lt;/pre&gt;
+&lt;pre&gt;    }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, &quot;Courier New&quot;, courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --&gt;
+&lt;p&gt;Okay, it is clear that we have a WPF application because of having bindings. However, they do not make things any more complicated. Basically, we refer to a selected shape by pointing to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Window.Selection.PrimaryItem&lt;/span&gt;. Well, in case there are multiple items in a selection we display information only on the first one. Then, provided we have three different text boxes for three different properties we specify bindings for those properties (&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.ID&lt;/span&gt;, &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.Name&lt;/span&gt;, and &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.Department&lt;/span&gt;). Each &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Cell&lt;/span&gt; object contains a property, &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Formula&lt;/span&gt;, that has a corresponding value, so we put in as a binding path. Since, that property, Formula, is surrounded by quotes, we remove them when showing data and put them back by using a converter called VisioCellFormulaConverter.&lt;/p&gt;
+&lt;div class=&quot;csharpcode&quot;&gt;
+&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; VisioCellFormulaConverter : IValueConverter&lt;/pre&gt;
+&lt;pre&gt;{&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; Convert(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;, Type targetType, &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; parameter, System.Globalization.CultureInfo culture)&lt;/pre&gt;
+&lt;pre&gt;    {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; result;&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!&lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt;.IsNullOrEmpty(&lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString()))&lt;/pre&gt;
+&lt;pre&gt;        {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; sValue = &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString();&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;            result = sValue.Substring(1, sValue.Length - 2);&lt;/pre&gt;
+&lt;pre&gt;        }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;else&lt;/span&gt;&lt;/pre&gt;
+&lt;pre&gt;        {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;            result = &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt;.Empty;&lt;/pre&gt;
+&lt;pre&gt;        }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; result;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
+&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; ConvertBack(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;, Type targetType, &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; parameter, System.Globalization.CultureInfo culture)&lt;/pre&gt;
+&lt;pre&gt;    {&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;str&quot;&gt;&quot;\&quot;&quot;&lt;/span&gt; + &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString() + &lt;span class=&quot;str&quot;&gt;&quot;\&quot;&quot;&lt;/span&gt;;&lt;/pre&gt;
+&lt;pre&gt;    }&lt;/pre&gt;
+&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You can find the rest of the source code, as well, as the sample diagram here.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/files/VisioShapeProperties.zip&quot;&gt;VisioShapeProperties.zip (484.76 kb)&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/reading-and-writing-visio-shape-information-with-c</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/reading-and-writing-visio-shape-information-with-c</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Understanding Visio Event Model</title>
+        <description>&lt;p&gt;In the previous chapters we have already seen an important Visio event, DocumentOpened, which is triggered each time you open a new diagram. However, the Visio API supports tons of other events and some of them are necessary for building sophisticated applications around Visio. Provided you have an application with an embedded Visio control and users can use the application to modify diagrams. Obviously, you want to keep track of such changes and, say, record them in a database. Visio events allows you to receive notifications every time such a change occurs. &lt;!-- more --&gt;&lt;/p&gt;  &lt;h1&gt;SelectionChanged&lt;/h1&gt;  &lt;p&gt;However, we postpone fancy diagram editing to a later stage. Instead we’ll start with a simple yet rather important event that fires when a user selects or deselects shape in a diagram.&lt;/p&gt;  &lt;p&gt;The event is called &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SelectionChanged&lt;/span&gt; and you write down the following code in order to handle it:&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Window_Loaded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RoutedEventArgs e)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.SelectionChanged += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_SelectionChangedEventHandler(visioControl_SelectionChanged);&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;While the handler itself may look in the following way:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_SelectionChanged(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_SelectionChangedEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;You have selected &amp;quot;&lt;/span&gt; + e.window.Selection.Count.ToString() + &lt;span class=&quot;str&quot;&gt;&amp;quot; shape(s)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;Which are/is&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;            &lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; e.window.Selection)&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+
+  &lt;pre&gt;        MessageBox.Show(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here we receive a parameter &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;e&lt;/span&gt; of type &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;EvisOcx_SelectionChangedEvent&lt;/span&gt; that allows as to get access to a current object of class &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection&lt;/span&gt; that was already mentioned in the &lt;a href=&quot;http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx&quot; target=&quot;_blank&quot;&gt;previous tutorial&lt;/a&gt;. As a result we can always get a number of selected shapes and iterate through them. It is clear that is a user drops a selection that object will contain no shapes at all.&lt;/p&gt;
+
+&lt;h1&gt;ShapeAdded&lt;/h1&gt;
+
+&lt;p&gt;This event is triggered by adding new shapes into a diagram. Although it hasn’t been shown yet, but it is possible incorporate a Visio window for adding shapes in your application.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/images/image_24.png&quot;&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_thumb_2.png&quot; width=&quot;249&quot; height=&quot;420&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Moreover, this is not the only trigger for the event. Every time you paste something into a diagram including already present the event is fired. So, you can try it now without having to draw that shapes window.&lt;/p&gt;
+
+&lt;pre class=&quot;csharpcode&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.ShapeAdded += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_ShapeAddedEventHandler(visioControl_ShapeAdded);&lt;/pre&gt;
+
+&lt;p&gt;I wrote the following event handler that simply outputs a name of a newly added or pasted shape:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_ShapeAdded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_ShapeAddedEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;You have added a new shape which is &amp;quot;&lt;/span&gt; + e.shape.Name);&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As with &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SelectionChanged &lt;/span&gt;the second parameter of the handler contains useful information about the event, in particular you can access a newly added shape.&lt;/p&gt;
+
+&lt;h1&gt;Detecting Shape Movements, Resizing, and etc.&lt;/h1&gt;
+
+&lt;p&gt;The Visio API doesn’t have an event, like ShapeMoved or ShapeResized. Instead, there is an event called CellChanged that consumes almost every event related to changing the way a shape looks. Each shape has a property, Cell, that contains data about a shape’s size, fill colour, line colour, coordinates, and etc. This data is represented as as spread sheet, where &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Cell.Name&lt;/span&gt; refers to a property name (e.g. Width), while &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Cell.Formula&lt;/span&gt; holds its values. You can find more information about that on &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff768297.aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt;. Obviously, when moving a shape around a diagram this property changes. Moreover, the event can fire a few times depending on how many properties have been changed.&lt;/p&gt;
+
+&lt;p&gt;If we want to detect a movement we are interested only in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;PinX&lt;/span&gt; and &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;PinY&lt;/span&gt; that represent the centre of rotation of a shape.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.CellChanged += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_CellChangedEventHandler(Application_CellChanged);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_CellChanged(Visio.Cell cell)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (cell.Name == &lt;span class=&quot;str&quot;&gt;&amp;quot;PinX&amp;quot;&lt;/span&gt; || cell.Name == &lt;span class=&quot;str&quot;&gt;&amp;quot;PinY&amp;quot;&lt;/span&gt;)&lt;/pre&gt;
+
+  &lt;pre&gt;    {&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        MessageBox.Show(cell.Shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot; has been moved&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Moreover, it is also possible to check which shape has been really moved by accessing &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;cell.Shape&lt;/span&gt;.&lt;/p&gt;
+
+&lt;h1&gt;Shape Caption Change&lt;/h1&gt;
+
+&lt;p&gt;Often, it is useful to track when a user changes a shape caption (or &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.Text&lt;/span&gt; in the API terminology). There is a convenient event, &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ShapeExitedTextEdit&lt;/span&gt;, that, as the title suggests, fires when a user exists a textbox for editing a caption.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.ShapeExitedTextEdit += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_ShapeExitedTextEditEventHandler(visioControl_ShapeExitedTextEdit);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_ShapeExitedTextEdit(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_ShapeExitedTextEditEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(e.shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;&#39;s text has been chaged&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;BeforeShapeDelete&lt;/h1&gt;
+
+&lt;p&gt;Finally, if you feel you some shape in your diagram is not needed anymore, you can easily delete it and most importantly handle that event.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.BeforeShapeDelete += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_BeforeShapeDeleteEventHandler(Application_BeforeShapeDelete);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_BeforeShapeDelete(Visio.Shape shape)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot; has been deleted&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Source Code&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/VisioEventModelTutorial.zip&quot;&gt;VisioEventModelTutorial.zip (76.63 kb)&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;The Visio event model allows you to build rich interaction between your application and a hosted Visio control. You can freely allow users to edit diagrams in your application and the application itself will be notified about every change.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Sep 2011 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/understanding-visio-event-model</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/understanding-visio-event-model</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Analysing Parent-Child Relations in Visio</title>
+        <description>&lt;p&gt;This is the second part of the &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;Developing for Visio series&lt;/a&gt;. Today, we’ll speak about how to analyse programmatically parent-child relationships in Visio diagrams. Often, especially in block diagrams there are boxes that contain other boxes.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;display: block; float: none; margin-left: auto; margin-right: auto&quot; title=&quot;image&quot; alt=&quot;image&quot; src=&quot;/images/image_22.png&quot; width=&quot;240&quot; height=&quot;107&quot; /&gt;&lt;/p&gt;  &lt;p&gt;However, during iterating through shapes in a Visio diagram such a relationship is not preserved.&lt;!-- more --&gt;&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(shape.Text);&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This piece of code will output three shape names, as if the diagram was flat. If you read carefully the Visio object model, you can find that the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class contains two properties that might be of interest for us. These properties are &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Parent&lt;/span&gt; and &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ContainingShape&lt;/span&gt;. However, if you read documentation on them or try writing some code, you will realise they work only if shapes in a diagram are grouped. Indeed, grouping shapes when drawing Visio diagram isn’t a bad idea. But how often do you really group your shapes? How many diagram do you have with grouped shapes? I guess not many.&lt;/p&gt;
+
+&lt;p&gt;Thus, we have to find another way of analysing parent-child relationships in Visio diagrams. Fortunately, there is a property, &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff767509.aspx&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SpatialNeighbors&lt;/span&gt;&lt;/a&gt;, of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class that returns a collection of shapes that are in a given relation to a specified shape. Yes, this property does accept parameters. Actually, its signature is the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection Shape.SpatialNeighbors[short relation, double tolerance, short flags[, object resultRoot]]&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;relation &lt;/span&gt;specifies in which relation shapes should be to a specified one. Its value can be any of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff766208.aspx&quot; target=&quot;_blank&quot;&gt;VisSpatialRelationCode&lt;/a&gt;. &lt;/span&gt;At this moment we are only interested in two of them. The first one is &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialContainedIn &lt;/span&gt;that will return a shape that a the parent to a given one. For instance, if we run it for the “Financial Department” shape in the diagram above it will return “Acme Ltd”. The second property is &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff766208.aspx&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialContain&lt;/span&gt;&lt;/a&gt;, it will return all the children of a specified shape, so if we pass “Acme Ltd”, then we will get “Financial Department” and “Marketing Department”.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;tolerance &lt;/span&gt;specifies a distance between a given shape and shapes we are looking for. This parameter is useful if we want to find adjacent shapes, however if are looking for only child or parent shapes, we can leave it as zero.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;flags&lt;/span&gt; sets properties of a returned result set, such as which shapes to return, in which order, etc. Its value can be one of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff765950.aspx&quot; target=&quot;_blank&quot;&gt;VisSpatialRelationFlags&lt;/a&gt;&lt;/span&gt;. Normally, I just set &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialFrontToBack&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;resultRoot&lt;/span&gt;, &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff767509.aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt; says the following about it ‘If you don&#39;t specify ResultRoot, this property returns a &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection&lt;/span&gt; object that represents the shapes that meet certain criteria in relation to the specified shape. If you specify ResultRoot, this property returns a &lt;strong&gt;Selection&lt;/strong&gt; object that represents all the shapes in the &lt;strong&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt;&lt;/strong&gt; object specified by ResultRoot that meet certain criteria in relation to the specified shape. For example, specify ResultRoot to find all shapes within a group that are near a specified shape.’ I normally leave this parameter blank.&lt;/p&gt;
+
+&lt;p&gt;The only thing that I haven’t mentioned about &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.SpatialNeighbors&lt;/span&gt; is that it retuns an object of class &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff768737.aspx&quot; target=&quot;_blank&quot;&gt;Selection&lt;/a&gt;&lt;/span&gt;. If you just want to get a parent of a shape, then you can simply use &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection.PrimaryItem&lt;/span&gt;. Otherwise, when looking for children shapes you can simply iterate through &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;Okay, it’s time to write some code. We are going to create a simply application that displays a list of available shapes, like in the previous chapter, however this time it will preserve a shape hierarchy. I won’t cover the basics on how to create a Visio add-in or an application hosting a Visio control, since it was already covered in the &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;previous chapter&lt;/a&gt;. In fact, I’ll just create a WPF application with an embedded Vision control.&lt;/p&gt;
+
+&lt;p&gt;Since, the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class has no notion of parent or child, the first thing we should do is to create a wrapper around that class that will have the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Children&lt;/span&gt; property.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; ShapeWrapper&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Visio.Shape Shape { get; set; }&lt;/pre&gt;
+
+  &lt;pre&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt; children = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt;();&lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt; Children { get { &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.children; } }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; ShapeWrapper(Visio.Shape shape)&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+
+  &lt;pre&gt;        Shape = shape;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Good. Now, we should put down some code that will parse a diagram and preserve parent-child relations.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//a list of already parsed shapes that are children to some other shapes&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;    List&amp;lt;Visio.Shape&amp;gt; addedShapes = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;Visio.Shape&amp;gt;();&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//a list of wrappers that we are building&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;    List&amp;lt;ShapeWrapper&amp;gt; shapeWrappers = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt;();&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+
+  &lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!addedShapes.Contains(shape))&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
+
+  &lt;pre&gt;            ShapeWrapper shapeWrapper = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; ShapeWrapper(shape);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;            shapeWrappers.Add(shapeWrapper);&lt;/pre&gt;
+
+  &lt;pre&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;rem&quot;&gt;//here we are trying to retrieve all the children of a current shape&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;            FindChildren(shapeWrapper, addedShapes);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
+
+  &lt;pre&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;rem&quot;&gt;//just some WPF binding&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    treeShapes.ItemsSource = shapeWrappers;&lt;/pre&gt;
+
+  &lt;pre&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There are might be two confusing points about this piece of code. The first one is the mystical &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt; method, and the second on is the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt; collection. &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt;is given below, as for &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt;, when we are iterating through all the shapes in a diagram we can encounter shapes that have been already added to a certain &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ShapeWrapper &lt;/span&gt;in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;shapeWrappers&lt;/span&gt; during the execution of the the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt; method and it is much easier to add them to &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt; and check afterwards rather than check recursively in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;shapeWrappers&lt;/span&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; FindChildren(ShapeWrapper shapeWrapper, List&amp;lt;Visio.Shape&amp;gt; addedShapes)&lt;/pre&gt;
+
+  &lt;pre&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    Visio.Selection children = shapeWrapper.Shape.SpatialNeighbors[(&lt;span class=&quot;kwrd&quot;&gt;short&lt;/span&gt;)Visio.VisSpatialRelationCodes.visSpatialContain, 0,&lt;/pre&gt;
+
+  &lt;pre&gt;                (&lt;span class=&quot;kwrd&quot;&gt;short&lt;/span&gt;)Visio.VisSpatialRelationFlags.visSpatialFrontToBack];&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape child &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; children)&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
+
+  &lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!addedShapes.Contains(child))&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
+
+  &lt;pre&gt;            &lt;span class=&quot;rem&quot;&gt;//MessageBox.Show(child.Text);&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;            ShapeWrapper childWrapper = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; ShapeWrapper(child);&lt;/pre&gt;
+
+  &lt;pre&gt;            shapeWrapper.Children.Add(childWrapper);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre&gt;            FindChildren(childWrapper, addedShapes);&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
+
+  &lt;pre&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;So here in the code above we use the aforementioned &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.SpatialNeighbors&lt;/span&gt;.&lt;/p&gt;
+
+&lt;p&gt;After compiling the application you should see a diagram and a hierarchical list on the right.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_23.png&quot; width=&quot;740&quot; height=&quot;766&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This time we feature the architecture of Windows 2000 that I found on a &lt;a href=&quot;http://en.wikipedia.org/wiki/Block_diagram&quot; target=&quot;_blank&quot;&gt;Wikipedia page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1&gt;Source Code&lt;/h1&gt;
+
+&lt;p&gt;I don’t provide the rest of the code related to XAML and Visio initialisation, instead you can download it here.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/VisioParentChild.zip&quot;&gt;VisioParentChild.zip (108.69 kb)&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 06 Sep 2011 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/analysing-parent-child-relations-in-visio</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/analysing-parent-child-relations-in-visio</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Developing Applications for Visio with Visual Studio (VSTO, Windows Forms, WPF, XBAP)</title>
+        <description>&lt;p&gt;This tutorial demonstrates how to extend the Visio functionality by writing an Visio add-in with VSTO, creating a standalone application with both Windows Forms and WPF, and finally by building a browse application with WPF (XBAP). &lt;!-- more --&gt;&lt;/p&gt;  &lt;p&gt;Visio is a conventional tool for drawing various diagrams. However, sometimes we are not satisfied with its default functionality and want to extend it. There are thousands of reason why one may want to extend the Visio functionality, starting from creating a code generator that will automatically write code based on a UML diagram or will create a database (it is also possible to do a reverse operation and draw diagrams based on your class hierarchy or database schema) to analysing workflow diagrams or supply chains.&lt;/p&gt;  &lt;p&gt;Technically there are three ways of extending the Visio functionality.&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;Visio Add-in &lt;/li&gt;    &lt;li&gt;Standalone desktop application featuring a Visio control &lt;/li&gt;    &lt;li&gt;Web application hosting a Visio control &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;This tutorial covers all three approaches describing their pros and cons.&lt;/p&gt;  &lt;p&gt;There are some prerequisites to this tutorial which are:&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;Visual Studio 2010 &lt;/li&gt;    &lt;li&gt;Visio 2010 &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;However, you can try using Visio 2007 and Visual Studio 2008, I just haven’t tested my code for those versions.&lt;/p&gt;  &lt;p&gt;In this tutorial we will cover how to write a simply application that just lists all the shapes that are present in a diagram. For this reason we also draw a small diagram that illustrates the process of applying for a bank account and receiving a credit card.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_7.png&quot; width=&quot;643&quot; height=&quot;325&quot; /&gt;&lt;/p&gt;  &lt;h1&gt;Visio Add-In&lt;/h1&gt;  &lt;p&gt;The first approach of extending the Visio functionality is writing an add-in for it. Visual Studio provides tools for extending Microsoft Office applications that are called VSTO (Visual Studio Tools for Office). However, their set of features for Visio is somewhat limited. The main restriction is inability to embed a user interface in Visio by using panes that are available for Word and Excel add-ins. Of course, it is possible to create our own windows, but having a window over Visio is not the best usability decision, because it already looks as a standalone application and not Visio.&lt;/p&gt;  &lt;p&gt;Anyway, in order to create a Visio add-in you have to launch Visio Studio, create a new project and choose Visual C# –&amp;gt; Office –&amp;gt; 2010 –&amp;gt; Visio 2010 Add-in .&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_8.png&quot; width=&quot;903&quot; height=&quot;605&quot; /&gt;&lt;/p&gt;  &lt;p&gt;&amp;#160;&lt;/p&gt;  &lt;p&gt;This will generate some dummy code for you. Our next step is adding interaction between our add-in and a user. This can be accomplished by adding a Ribbon to our application. You have to navigate to Project-&amp;gt;Add Component-&amp;gt;Office-&amp;gt;Ribbon (Visual Designer).&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_9.png&quot; width=&quot;852&quot; height=&quot;575&quot; /&gt;&lt;/p&gt;  &lt;p&gt;After adding a Ribbon it’s time to drop some control to it. If you open the Toolbox you will see a list of Ribbon controls.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_10.png&quot; width=&quot;296&quot; height=&quot;437&quot; /&gt;&lt;/p&gt;  &lt;p&gt;We just need to drop a button that will open a new window which will contain a ListBox for displaying shapes. Having places a button onto the Ribbon you just have to create a new Form (let’s call it FormListShapes) and to insert a ListBox (lstShapes).&lt;/p&gt;  &lt;p&gt;Then we go back to the Ribbon and to the newly created button and add a click handler that shows a window.&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; btnListShapes_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RibbonControlEventArgs e)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    FormListShapes formListShapes = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; FormListShapes();&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    formListShapes.Show();&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we switch back to the Form and finally put some code that will display all the present shapes in a diagram.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; FormListShapes()&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;    InitializeComponent();&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; Globals.ThisAddIn.Application.ActivePage.Shapes)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;    {&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;        lstShapes.Items.Add(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;  11:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Okay, this piece of code requires a few explanations. We iterate through each shape in a currently open page and display its caption (shape.Text) and a shape type (shape.Name) in parentheses. Please, also pay attention at line 7 that makes use of class Globals that is automatically generated by Visual Studio and is meant to provide access to the Visio object from other parts of the appliation. You can get more information on this class on &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/bhczd18c(v=VS.100).aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Please, note that we will cover the Visio API in next tutorials, when we will speak about its object model, advanced diagram analysis, on the fly diagram creation and so on.&lt;/p&gt;
+
+&lt;h1&gt;Using Visio in Standalone Desktop Applications&lt;/h1&gt;
+
+&lt;p&gt;Although writing a Visio add-in seems to be an obvious idea when it is necessary to extend its functionality, it is not always the best choice. Firstly, as it is shown above, there are some limitations when it comes to designing a convenient UI. In order to add any control to any other place besides the Ribbon, one has to create separate window that already gives a feeling of having a standalone application rather than a Visio add-in. Secondly, there are cases when you have a sophisticated application that requires a just little bit of interaction with Visio, then it is pretty natural to embed Visio in that application instead of writing an add-in for that.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, Visual Studio is capable of handling that task. Moreover, you can use both Windows Forms and WPF. We will start with Windows Forms, but later you will see that embedding Visio in a WPF application is not any harder.&lt;/p&gt;
+
+&lt;h2&gt;Embedding Visio in a Windows Forms Application&lt;/h2&gt;
+
+&lt;p&gt;I hope we can easily skip that part that tells how to create a Windows Forms application and we can proceed with adding a Vision control to a newly created form.&lt;/p&gt;
+
+&lt;p&gt;Obviously, you won’t find anything related to Visio in the Toolbox. Anyway, you still open the Toolbox, right-click and then select ‘Choose Items’.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_11.png&quot; width=&quot;309&quot; height=&quot;309&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Switch to the COM Components tab and find Microsoft Office Visio 14.0 Drawing Control.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_12.png&quot; width=&quot;673&quot; height=&quot;483&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After doing that you will see a new control in the Toolbox, just drag-n-drop to the form you will see something like the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_13.png&quot; width=&quot;734&quot; height=&quot;639&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Unlike a Visio add-in when you can open a diagram and Visio and then run an add-in, if you embed Visio in your application you have to write code in order to open a diagram. It is just sufficient to specify a value of the Src property of a Visio control to open a diagram.&lt;/p&gt;
+
+&lt;pre class=&quot;csharpcode&quot;&gt;axDrawingControl1.Src = &lt;span class=&quot;str&quot;&gt;&amp;quot;Some Diagram.vsd&amp;quot;&lt;/span&gt;;&lt;/pre&gt;
+
+&lt;p&gt;However, we do no want to hardcode a path to a diagram, instead we will provide a dialog for choosing a Visio diagram to open.&lt;/p&gt;
+
+&lt;p&gt;So, just think about the way you want to open the dialog. I just created added a main menu with the ‘Open’ item.&lt;/p&gt;
+
+&lt;p&gt;Then, drop an OpenFileDialog onto you form and set its Filter property to ‘Visio Diagrams|*.vsd;*.vdx’, so that users cannot open any other file types.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_14.png&quot; width=&quot;299&quot; height=&quot;431&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally, we can add some code that will open a chosen diagram for us.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; openToolStripMenuItem_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EventArgs e)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (dlgOpenDiagram.ShowDialog() == System.Windows.Forms.DialogResult.OK)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    {&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;        axDrawingControl1.Src = dlgOpenDiagram.FileName;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you compile and run the application now, you will see a form list that (after you open a diagram, of course):&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_15.png&quot; width=&quot;679&quot; height=&quot;566&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Okay, it looks good! So, now we just want to list any shape that is present in a diagram, like we did for a Visio add-in before. Thus, drop a ListBox onto the form.&lt;/p&gt;
+
+&lt;p&gt;We will populate that ListBox as soon as you open a diagram. How does the application know if you open a diagram? Obviously, via some kind of event.&lt;/p&gt;
+
+&lt;p&gt;There is an event called DocumentOpened that is fired every time a new diagram is opened in a control. The thing we need to do is just to subscribe to that event. So, just add the following code to your form constructor.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Form1()&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    InitializeComponent();&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;&lt;strong&gt;    axDrawingControl1.DocumentOpened += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(axDrawingControl1_DocumentOpened);&lt;/strong&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you wonder about the axDrawingControl1_DocumentOpened() method, then it is automatically generated by Visual Studio, if you just press ‘Tab’ twice after typing ‘axDrawingControl1.DocumentOpened’. So, you don’t have to worry about going through a documentation to find a method signature.&lt;/p&gt;
+
+&lt;p&gt;Now, you can add code that lists Visio shapes to that event handler.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; axDrawingControl1_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; axDrawingControl1.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    {&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;        lstShapes.Items.Add(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    }&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The code looks basically similar to the same for a Visio add-in, with the only exception that instead of referencing Globals, you just point to your Visio control and its Window.Application.&lt;/p&gt;
+
+&lt;p&gt;As a result after compiling the application you should see something like this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_16.png&quot; width=&quot;897&quot; height=&quot;509&quot; /&gt;&lt;/p&gt;
+
+&lt;h2&gt;Embedding Visio in a WPF Application&lt;/h2&gt;
+
+&lt;p&gt;That Visio control that we added into a Windows Forms application is, in fact, an ActiveX control, that might be pretty evident because it is located in the COM Components tab. However, WPF does not support ActiveX controls directly. But there is always a workaround.&lt;/p&gt;
+
+&lt;p&gt;You can place a WindowsFormHost control onto your WPF window and that control can host any Windows Forms control. Pretty convenient.&lt;/p&gt;
+
+&lt;p&gt;Thus, just add WindowsFormHost to the Toolbox. It is located in the WPF Components tab.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_17.png&quot; width=&quot;673&quot; height=&quot;483&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And then just place this control onto a form.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;WindowsFormsHost&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;host&amp;quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Next steps, however, are bit less obvious. We have to add a Visio control, but we can’t just drag-n-drop it, like we did before. Visual Studio WPF designer just does not support ActiveX objects. So, we have to add a control programmatically, but first we have to add all the necessary references.&lt;/p&gt;
+
+&lt;p&gt;Go to the Solution Explorer, right-click on ‘References’ and press ‘Add Reference’, then switch to the COM tab and find Microsoft Visio Type Library.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_18.png&quot; width=&quot;817&quot; height=&quot;609&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This will add a reference to the DLL containing classes related to Visio. However, it doesn’t contain the control itself. So, we have to add yet another reference that can be a bit tricky. Basically, we should look for AxInterop.Microsoft.Office.Interop.VisOcx.dll. There is a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ms742735.aspx&quot; target=&quot;_blank&quot;&gt;tutorial&lt;/a&gt; saying to create a separate project for Windows Forms Control Library where you have to drag-n-drop that Visio ActiveX control and then reference that project. It’s one way to go. The other way is just to directly reference that DLL from an old project. Please, note those AxIntertop DLL are automatically created by Visual Studio once you drop a control.&lt;/p&gt;
+
+&lt;p&gt;So you can add a reference to a DLL created in the Windows Forms project. So, open the Add Reference open and go to the Browse tab and navigate to the ‘bin/Debug/’ folder of the Windows Forms project and choose AxInterop.Microsoft.Office.Interop.VisOcx.dll.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_19.png&quot; width=&quot;817&quot; height=&quot;609&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Okay, the preparatory steps are done. We can finally add a Visio control. This time, however, it’s done solely programmatically.&lt;/p&gt;
+
+&lt;p&gt;First of all, import the necessary namespaces:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then, add a Visio control to the WindowsFormHost:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;partial&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; MainWindow : Window&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; AxDrawingControl visioControl = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxDrawingControl();&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; MainWindow()&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    {&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;        InitializeComponent();&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.host.Child = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;    }&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We mark the control as a field of our class, so that it can be accessed from its methods.&lt;/p&gt;
+
+&lt;p&gt;The next steps are pretty obvious we set a source of a diagram, add event handlers, populate a ListBox, etc. However, it is advisable to set event handlers not in the constructor, but in the Window_Loaded event when the Visio control is known to be fully loaded.&lt;/p&gt;
+
+&lt;p&gt;So we set the event of Loaded.&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;Window&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;x:Class&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;VisioWpf.MainWindow&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;        &lt;span class=&quot;attr&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;xmlns:x&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;http://schemas.microsoft.com/winfx/2006/xaml&amp;quot;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;        &lt;span class=&quot;attr&quot;&gt;Title&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;MainWindow&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Height&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;650&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;525&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Loaded&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;Window_Loaded&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And handle it:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Window_Loaded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RoutedEventArgs e)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.DocumentOpened += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then, for filling in a ListBox we can use fancy WPF binding:&lt;/p&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    lstShapes.ItemsSource = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, &quot;Courier New&quot;, courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --&gt;
+
+&lt;div class=&quot;csharpcode&quot;&gt;
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;lstShapes&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox.ItemTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DataTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;            &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Orientation&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;Horizontal&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;{Binding Path=Text}&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot; (&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;{Binding Path=Name}&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;)&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;            &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DataTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;  11:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox.ItemTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+
+  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  12:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1&gt;Embedding Visio in a Web Application&lt;/h1&gt;
+
+&lt;p&gt;Yes, it is also possible to embed Visio in a web application, or more precisely in a browser application. I believe those of you are pretty much familiar with WPF can guess that it is done with WPF Browser Applications (XBAP). That’s right.&lt;/p&gt;
+
+&lt;p&gt;I need to give a quick remark that there are some other ways of using Visio on the web. Of course, you can use a free Visio Web Viewer control that, however, has a somewhat limited API. You can even embed a fully-fledged Visio control in an HTML page and try to interact with it via JavaScript, however your UI capabilities will be limited.&lt;/p&gt;
+
+&lt;p&gt;So, the best way to go is to create a WPF Browser Application (XBAP). There is one important consideration though. Since, embedded Visio is an ActiveX control, an XBAP application containing it will require running in the full trust mode that grants access to your machine to a browser application. This mode is enabled by default in Internet Explorer for intranet websites, which are a common location for such applications. In order to use it on the Web you can either alter your IE security settings, so that it allows running XBAP application in full trust for every website, which is obviously not secure, or just to add your website to the trusted zone.&lt;/p&gt;
+
+&lt;p&gt;Marking a WPF Browser application as a full trust one is the first thing you should do after creating a project. Right-click on your project in the Solution Explorer, press ‘Properties’ and go to ‘Security’ and set ‘This is a full trust application’.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_20.png&quot; width=&quot;896&quot; height=&quot;422&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;#160;&lt;/p&gt;
+
+&lt;p&gt;I won’t show you the source code here, because it is exactly the same as for a regular WPF application, except for some points where instead of Window you are using Page. You can still find the source code in the ZIP file I provide below.&lt;/p&gt;
+
+&lt;p&gt;Anyway, you should see something like that.&lt;/p&gt;
+
+&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_21.png&quot; width=&quot;877&quot; height=&quot;548&quot; /&gt;&lt;/p&gt;
+
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;There are multiple reasons for extending Visio functionality. Also there are many ways of doing that. Although writing a Visio add-in often seems to be a reasonable idea, it is not always the case because of its limited UI capabilities. At the same time, it can be easily sorted out by writing a standalone desktop application that can be created with both Windows Forms and with powerful Windows Presentation Foundation.&lt;/p&gt;
+
+&lt;p&gt;Furthermore, if you want to ease deployment of your application and making it available to users immediately, you should consider an option of creating it as a browser application with XBAP.&lt;/p&gt;
+
+&lt;h1&gt;Next Chapters&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx&quot; target=&quot;_blank&quot;&gt;Analysing Parent-Child Relations in Visio&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot;&gt;Understanding Visio Event Model&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This is only the first article of the series. Next articles will focus more on the Visio object model that allows analysing diagrams and creating new ones programmatically. The Visio API is the same, no matter which you decide to create your application with, so those chapters will be useful for any case.&lt;/p&gt;
+
+&lt;p&gt;Stay tuned!&lt;/p&gt;
+
+&lt;h1&gt;Download Source Code&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/files/Visio.zip&quot;&gt;Visio.zip (496.48 kb)&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Sep 2011 00:00:00 +0000</pubDate>
+        <link>http://yourdomain.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</link>
+        <guid isPermaLink="true">http://yourdomain.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

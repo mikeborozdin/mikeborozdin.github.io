@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Understanding Visio Event Model</title>
+  <meta name="description" content="In the previous chapters we have already seen an important Visio event, DocumentOpened, which is triggered each time you open a new diagram. However, the Vis...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/understanding-visio-event-model">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Understanding Visio Event Model</h1>
+  </header>
+
+  <article class="post-content">
+    <p>In the previous chapters we have already seen an important Visio event, DocumentOpened, which is triggered each time you open a new diagram. However, the Visio API supports tons of other events and some of them are necessary for building sophisticated applications around Visio. Provided you have an application with an embedded Visio control and users can use the application to modify diagrams. Obviously, you want to keep track of such changes and, say, record them in a database. Visio events allows you to receive notifications every time such a change occurs. <!-- more --></p>  <h1>SelectionChanged</h1>  <p>However, we postpone fancy diagram editing to a later stage. Instead we’ll start with a simple yet rather important event that fires when a user selects or deselects shape in a diagram.</p>  <p>The event is called <span style="font-family: &#39;Courier New&#39;">SelectionChanged</span> and you write down the following code in order to handle it:</p>  <div class="csharpcode">   <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> Window_Loaded(<span class="kwrd">object</span> sender, RoutedEventArgs e)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    <span class="kwrd">this</span>.visioControl.SelectionChanged += <span class="kwrd">new</span> EVisOcx_SelectionChangedEventHandler(visioControl_SelectionChanged);</pre>
+</div>
+
+<p>While the handler itself may look in the following way:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_SelectionChanged(<span class="kwrd">object</span> sender, EVisOcx_SelectionChangedEvent e)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    MessageBox.Show(<span class="str">&quot;You have selected &quot;</span> + e.window.Selection.Count.ToString() + <span class="str">&quot; shape(s)&quot;</span>);</pre>
+
+  <pre>    MessageBox.Show(<span class="str">&quot;Which are/is&quot;</span>);</pre>
+
+  <pre class="alt">            </pre>
+
+  <pre>    <span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> e.window.Selection)</pre>
+
+  <pre class="alt">    {</pre>
+
+  <pre>        MessageBox.Show(shape.Text + <span class="str">&quot; (&quot;</span> + shape.Name + <span class="str">&quot;)&quot;</span>);</pre>
+
+  <pre class="alt">    }</pre>
+
+  <pre>}</pre>
+</div>
+
+<p>Here we receive a parameter <span style="font-family: &#39;Courier New&#39;">e</span> of type <span style="font-family: &#39;Courier New&#39;">EvisOcx_SelectionChangedEvent</span> that allows as to get access to a current object of class <span style="font-family: &#39;Courier New&#39;">Selection</span> that was already mentioned in the <a href="http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx" target="_blank">previous tutorial</a>. As a result we can always get a number of selected shapes and iterate through them. It is clear that is a user drops a selection that object will contain no shapes at all.</p>
+
+<h1>ShapeAdded</h1>
+
+<p>This event is triggered by adding new shapes into a diagram. Although it hasn’t been shown yet, but it is possible incorporate a Visio window for adding shapes in your application.</p>
+
+<p><a href="/images/image_24.png"><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_thumb_2.png" width="249" height="420" /></a></p>
+
+<p>Moreover, this is not the only trigger for the event. Every time you paste something into a diagram including already present the event is fired. So, you can try it now without having to draw that shapes window.</p>
+
+<pre class="csharpcode"><span class="kwrd">this</span>.visioControl.ShapeAdded += <span class="kwrd">new</span> EVisOcx_ShapeAddedEventHandler(visioControl_ShapeAdded);</pre>
+
+<p>I wrote the following event handler that simply outputs a name of a newly added or pasted shape:</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_ShapeAdded(<span class="kwrd">object</span> sender, EVisOcx_ShapeAddedEvent e)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    MessageBox.Show(<span class="str">&quot;You have added a new shape which is &quot;</span> + e.shape.Name);</pre>
+
+  <pre>}</pre>
+</div>
+
+<p>As with <span style="font-family: &#39;Courier New&#39;">SelectionChanged </span>the second parameter of the handler contains useful information about the event, in particular you can access a newly added shape.</p>
+
+<h1>Detecting Shape Movements, Resizing, and etc.</h1>
+
+<p>The Visio API doesn’t have an event, like ShapeMoved or ShapeResized. Instead, there is an event called CellChanged that consumes almost every event related to changing the way a shape looks. Each shape has a property, Cell, that contains data about a shape’s size, fill colour, line colour, coordinates, and etc. This data is represented as as spread sheet, where <span style="font-family: &#39;Courier New&#39;">Cell.Name</span> refers to a property name (e.g. Width), while <span style="font-family: &#39;Courier New&#39;">Cell.Formula</span> holds its values. You can find more information about that on <a href="http://msdn.microsoft.com/en-us/library/ff768297.aspx" target="_blank">MSDN</a>. Obviously, when moving a shape around a diagram this property changes. Moreover, the event can fire a few times depending on how many properties have been changed.</p>
+
+<p>If we want to detect a movement we are interested only in <span style="font-family: &#39;Courier New&#39;">PinX</span> and <span style="font-family: &#39;Courier New&#39;">PinY</span> that represent the centre of rotation of a shape.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">this</span>.visioControl.Window.Application.CellChanged += <span class="kwrd">new</span> Visio.EApplication_CellChangedEventHandler(Application_CellChanged);</pre>
+
+  <pre><span class="rem">//...</span></pre>
+
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> Application_CellChanged(Visio.Cell cell)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    <span class="kwrd">if</span> (cell.Name == <span class="str">&quot;PinX&quot;</span> || cell.Name == <span class="str">&quot;PinY&quot;</span>)</pre>
+
+  <pre>    {</pre>
+
+  <pre class="alt">        MessageBox.Show(cell.Shape.Name + <span class="str">&quot; has been moved&quot;</span>);</pre>
+
+  <pre>    }</pre>
+
+  <pre class="alt">}</pre>
+</div>
+
+<p>Moreover, it is also possible to check which shape has been really moved by accessing <span style="font-family: &#39;Courier New&#39;">cell.Shape</span>.</p>
+
+<h1>Shape Caption Change</h1>
+
+<p>Often, it is useful to track when a user changes a shape caption (or <span style="font-family: &#39;Courier New&#39;">Shape.Text</span> in the API terminology). There is a convenient event, <span style="font-family: &#39;Courier New&#39;">ShapeExitedTextEdit</span>, that, as the title suggests, fires when a user exists a textbox for editing a caption.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">this</span>.visioControl.ShapeExitedTextEdit += <span class="kwrd">new</span> EVisOcx_ShapeExitedTextEditEventHandler(visioControl_ShapeExitedTextEdit);</pre>
+
+  <pre><span class="rem">//...</span></pre>
+
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_ShapeExitedTextEdit(<span class="kwrd">object</span> sender, EVisOcx_ShapeExitedTextEditEvent e)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    MessageBox.Show(e.shape.Name + <span class="str">&quot;'s text has been chaged&quot;</span>);</pre>
+
+  <pre>}</pre>
+</div>
+
+<h1>BeforeShapeDelete</h1>
+
+<p>Finally, if you feel you some shape in your diagram is not needed anymore, you can easily delete it and most importantly handle that event.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">this</span>.visioControl.Window.Application.BeforeShapeDelete += <span class="kwrd">new</span> Visio.EApplication_BeforeShapeDeleteEventHandler(Application_BeforeShapeDelete);</pre>
+
+  <pre><span class="rem">//...</span></pre>
+
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> Application_BeforeShapeDelete(Visio.Shape shape)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    MessageBox.Show(shape.Name + <span class="str">&quot; has been deleted&quot;</span>);</pre>
+
+  <pre>}</pre>
+</div>
+
+<h1>Source Code</h1>
+
+<p><a href="/files/VisioEventModelTutorial.zip">VisioEventModelTutorial.zip (76.63 kb)</a></p>
+
+<h1>Conclusion</h1>
+
+<p>The Visio event model allows you to build rich interaction between your application and a hosted Visio control. You can freely allow users to edit diagrams in your application and the application itself will be notified about every change.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>7 September 2011</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

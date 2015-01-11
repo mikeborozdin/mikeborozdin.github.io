@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Put EntityDataSource Attributes to Code-Behind</title>
+  <meta name="description" content="The EntityDataSource control is a very powerful one. It allows you to rapidly create database driven application. You don&rsquo;t have to manually write code...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/put-entitydatasource-attributes-to-code-behind">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Put EntityDataSource Attributes to Code-Behind</h1>
+  </header>
+
+  <article class="post-content">
+    <p>The EntityDataSource control is a very powerful one. It allows you to rapidly create database driven application. You don&rsquo;t have to manually write code for extracting, modification and deleting records from the database. Moreover since this code is backed by Entity Framework, you are not tied up with a particular database schema and can easily change it or even choose other database application.</p>
+<p>However when working with EntityDataSource sometimes I feel like I using plain old SqlDataSource and simply have too much unnecessary code in my .aspx files. <!-- more --> For instance, you may end up have code like this one:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:EntityDataSource</span> <span class="attr">ID</span><span class="kwrd">="EntityDataSource1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ConnectionString</span><span class="kwrd">="name=NorthwindEntities"</span> 
+    <span class="attr">DefaultContainerName</span><span class="kwrd">="NorthwindEntities"</span> <span class="attr">EnableDelete</span><span class="kwrd">="True"</span> 
+    <span class="attr">EnableInsert</span><span class="kwrd">="True"</span> <span class="attr">EnableUpdate</span><span class="kwrd">="True"</span> <span class="attr">EntitySetName</span><span class="kwrd">="Products"</span> <span class="attr">Include</span><span class="kwrd">="Categories, Suppliers"</span> <span class="attr">AutoGenerateWhereClause</span><span class="kwrd">="true"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">WhereParameters</span><span class="kwrd">&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:QueryStringParameter</span> <span class="attr">Type</span><span class="kwrd">="Int32"</span> <span class="attr">Name</span><span class="kwrd">="CategoryID"</span> <span class="attr">QueryStringField</span><span class="kwrd">="CategoryID"</span> <span class="kwrd">/&gt;</span>
+        <span class="kwrd">&lt;</span><span class="html">asp:QueryStringParameter</span> <span class="attr">Type</span><span class="kwrd">="Int32"</span> <span class="attr">Name</span><span class="kwrd">="SupplierID"</span> <span class="attr">QueryStringField</span><span class="kwrd">="SupplierID"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">WhereParameters</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">asp:EntityDataSource</span><span class="kwrd">&gt;</span></pre>
+<p>That certainly isn&rsquo;t cool at all. Because it simply shouldn&rsquo;t be in an .aspx file, not only because it breaks application layers, but simply because it inconvenient. It clutters .aspx files which should be templates only. What if a designer meets code like this? What if accidently change something?</p>
+<p>Instead it&rsquo;s reasonable to move all these lines of code to code-behind.</p>
+<p>So, in your .aspx file you just leave this declaration:</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:EntityDataSource</span> <span class="attr">ID</span><span class="kwrd">="dsProducts"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span></pre>
+<p>&nbsp;</p>
+<p>While put all the attribute assignments to code-behind:</p>
+<pre class="csharpcode">NorthwindEntities db = <span class="kwrd">new</span> NorthwindEntities();
+
+dsProducts.ConnectionString = db.Connection.ConnectionString;
+dsProducts.DefaultContainerName = <span class="str">"NorthwindEntities"</span>;
+dsProducts.EntitySetName = <span class="str">"Products"</span>;
+dsProducts.Include = <span class="str">"Categories, Suppliers"</span>;
+
+dsProducts.EnableUpdate = <span class="kwrd">true</span>;
+dsProducts.EnableInsert = <span class="kwrd">true</span>;
+dsProducts.EnableDelete = <span class="kwrd">true</span>;
+dsProducts.AutoGenerateWhereClause = <span class="kwrd">true</span>;
+
+dsProducts.WhereParameters.Add(<span class="kwrd">new</span> QueryStringParameter(<span class="str">"CategoryID"</span>, TypeCode.Int32, <span class="str">"CategoryID"</span>));
+dsProducts.WhereParameters.Add(<span class="kwrd">new</span> QueryStringParameter(<span class="str">"SupplierD"</span>, TypeCode.Int32, <span class="str">"SupplierID"</span>));</pre>
+<p>&nbsp;</p>
+<p>In fact, the same technique applies to any other data source control, like LinqDataSource or even ObjectDataSource.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>23 March 2009</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

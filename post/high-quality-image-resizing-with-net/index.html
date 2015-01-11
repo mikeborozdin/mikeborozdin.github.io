@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>High Quality Image Resizing with .NET</title>
+  <meta name="description" content="I want to proceed with telling how to deal with uploaded images with ASP.NET. I have already showed how to resize images. However, that resizing method isn't...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/high-quality-image-resizing-with-net">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>High Quality Image Resizing with .NET</h1>
+  </header>
+
+  <article class="post-content">
+    <p>I want to proceed with telling how to deal with uploaded images with ASP.NET. I have already showed how to resize images. However, that resizing method isn't perfect. It doesn't produce images of high quality. Even though it just shrinks images, the quality of resized images don't match the quality of original images, the produced quality usually appears to be worse. Sure, there is a neat solution. We just need to use the <strong>HighQualityB
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+icubic</strong> <strong>Interpolation mode</strong>. Sounds difficult? In fact, it's not difficult to implement, just need to add a few lines of code,&nbsp; but the result is great. <!-- more --></p>
+<p>Here are two images, the left is made with a simply resizing method, while the right one is made with a resizing method. Note, that it doesn't have noise on the buildings and the right image has the better contrast.</p>
+<p><a href="/images/WindowsLiveWriter/HighQualityImageResizingwith.NET_C19F/low_2.jpg"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" src="/images/WindowsLiveWriter/HighQualityImageResizingwith.NET_C19F/low_thumb.jpg" border="0" alt="low" width="180" height="240" /></a> <a href="/images/WindowsLiveWriter/HighQualityImageResizingwith.NET_C19F/high_2.jpg"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" src="/images/WindowsLiveWriter/HighQualityImageResizingwith.NET_C19F/high_thumb.jpg" border="0" alt="high" width="180" height="240" /></a></p>
+<p>The code is:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">private</span> Bitmap ResizeImage(Stream streamImage, <span class="kwrd">int</span> maxWidth, <span class="kwrd">int</span> maxHeight)
+{
+    Bitmap originalImage = <span class="kwrd">new</span> Bitmap(streamImage);
+    <span class="kwrd">int</span> newWidth = originalImage.Width;
+    <span class="kwrd">int</span> newHeight = originalImage.Height;
+    <span class="kwrd">double</span> aspectRatio = (<span class="kwrd">double</span>)originalImage.Width / (<span class="kwrd">double</span>)originalImage.Height;
+
+    <span class="kwrd">if</span> (aspectRatio &lt;= 1 &amp;&amp; originalImage.Width &gt; maxWidth)
+    {
+        newWidth = maxWidth;
+        newHeight = (<span class="kwrd">int</span>)Math.Round(newWidth / aspectRatio);
+    }
+    <span class="kwrd">else</span> <span class="kwrd">if</span> (aspectRatio &gt; 1 &amp;&amp; originalImage.Height &gt; maxHeight)
+    {
+        newHeight = maxHeight;
+        newWidth = (<span class="kwrd">int</span>)Math.Round(newHeight * aspectRatio);
+    }
+
+    Bitmap newImage = <span class="kwrd">new</span> Bitmap(originalImage, newWidth, newHeight);
+    
+    Graphics g = Graphics.FromImage(newImage);
+    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBilinear;
+    g.DrawImage(originalImage, 0, 0, newImage.Width, newImage.Height);
+
+    originalImage.Dispose();
+    
+    <span class="kwrd">return</span> newImage;     
+}</pre>
+</div>
+<p>You can read more on different interpolation mode <a href="http://msdn.microsoft.com/en-us/library/k0fsyd4e.aspx" target="_blank">here</a>.</p>
+<p>You can also download the project files <a href="/files/HighQualityImageUploading.zip">here</a>, they include uploading and high quality resizing.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>25 August 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

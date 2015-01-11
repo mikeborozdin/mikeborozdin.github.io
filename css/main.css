@@ -1,0 +1,247 @@
+body {
+    font-size: 1em;
+    font-family: Georgia;
+    line-height: 1.5;
+    margin: 0px;
+    padding: 0px
+}
+
+#header {
+    background-color: #014E82;
+    color: #fff;
+    font-family: Helvetica;
+    width: 100%;
+    z-index: 10;
+    top: 0px;
+    position: fixed
+}
+
+#content {
+    margin: auto;
+    width: 95%;
+    position: relative;
+    top: 50px
+}
+
+#logo {
+    font-size: 1em
+}
+
+#description {
+    font-size: 0.62em
+}
+
+h1 {
+    color: #014E82;
+    font-size: 1em
+}
+
+h2 {
+    color: #014E82;
+    font-size: 1em
+}
+
+#header a {
+    color: #fff;
+    text-decoration: none
+}
+
+#banner div a:hover {
+    text-decoration: none
+}
+
+#header a:hover {
+    text-decoration: underline
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+.more {
+    text-decoration: underline;
+    font-weight: bold
+}
+
+#menuButton {
+    display: block;
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    text-decoration: none
+}
+
+#menu {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px
+}
+
+.menuItem {
+    display: inline-block;
+    width: 100%
+}
+
+#menu li {
+    border-top: 1px solid #fff;
+    width: 100%
+}
+
+#relatedPosts div {
+    border-left: 3px solid #014E82;
+    padding-left: 10px
+}
+
+#relatedPosts div a {
+    display: block
+}
+
+#allPosts {
+    list-style: none
+}
+
+#postFooter {
+    text-align: right;
+    font-style: italic
+}
+
+#postFooter p {
+    margin-top: 0px;
+    margin-bottom: 0px
+}
+
+label {
+    display: block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px
+}
+
+.field {
+    display: block;
+    width: 100%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px
+}
+
+#postPager {
+    list-style: none;
+    text-align: center
+}
+
+#postPager li {
+    display: inline;
+    margin-right: 10px;
+    margin-left: 10px
+}
+
+#footer {
+    font-style: italic;
+    font-size: 0.7em;
+    text-align: center
+}
+
+#footer p {
+    margin: 0px
+}
+
+#twitterText {
+    display: inline
+}
+
+#twitterImage {
+    display: none
+}
+
+.visible {
+    display: block
+}
+
+.hidden {
+    display: none
+}
+
+a {
+    color: #014E82
+}
+
+@media screen and (min-width:768px) {
+    body {
+        font-size: 1.4em;
+        font-family: Georgia;
+        line-height: 1.5
+    }
+
+    #banner {
+        position: relative;
+        float: left;
+        width: auto;
+        margin: 0px;
+        padding: 0px
+    }
+
+    #menuButton {
+        display: none
+    }
+
+    #menu {
+        display: block;
+        position: absolute;
+        right: 30px;
+        width: auto;
+        padding: 0px;
+        margin-left: 0px;
+        margin-bottom: 0px
+    }
+
+    #menu li {
+        list-style: none;
+        display: inline;
+        margin-left: 20px;
+        border: 0px
+    }
+
+    #content {
+        width: 80%;
+        position: relative;
+        top: 50px
+    }
+
+    h1 {
+        font-size: 1.25em
+    }
+
+    .menuItem {
+        display: inline
+    }
+
+    #twitterText {
+        display: none;
+    }
+
+    #twitterImage {
+        display: inline;
+    }
+
+    .hideen {
+        display: block;
+    }
+}
+
+#postPaging {
+	text-align: center;
+}
+
+.photo {
+	float: left;
+	margin: 10px;
+}
+

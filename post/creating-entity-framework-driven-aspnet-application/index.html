@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Creating Entity Framework Driven ASP.NET Application</title>
+  <meta name="description" content="IntroductionI have already written several posts on the Entity Framework where I described the power of this particular ORM tool. I also mentioned the book o...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/creating-entity-framework-driven-aspnet-application">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Creating Entity Framework Driven ASP.NET Application</h1>
+  </header>
+
+  <article class="post-content">
+    <h2>Introduction</h2>
+<p>I have already written several posts on the Entity Framework where I described the power of this particular ORM tool. I also mentioned the book on the Entity Framework written by a Microsoft MVP - Joydip Kanjila. This time I will publish an extract from the book that shows how you can build ASP.NET application by using the Entity Framework and the EntityDataSource control. It can also give a glimpse of the Entity Framework is, if you have no experience in it.</p>
+<p>The tutorial covers the following topics:</p>
+<ul>
+<li>Creating the Entity Data Model by using a graphical utility built-in Visual Studio 2008 SP1 </li>
+<li>Creating the Entity Data Model by using a command line utility </li>
+<li>Using the EntityDataSource ASP.NET control </li>
+<li>Displaying the data in a GridView </li>
+</ul>
+<p>This tutorial uses a particular database, but in fact you can use any database you already have. <!-- more --></p>
+<h2>Creating an Entity Data Model.</h2>
+<p>You can create the ADO.NET Entity Data Model in one of the two ways:</p>
+<ul>
+<li>Use the ADO.NET Entity Data Model Designer </li>
+<li>Use the command line Entity Data Model Designer called EdmGen.exe </li>
+</ul>
+<p>We will first take a look at how we can design an Entity Data Model using the ADO.NET Entity Data Model Designer which is a Visual Studio wizard that is enabled after you install ADO.NET Entity Framework and its tools. It provides a graphical interface that you can use to generate an Entity Data Model.</p>
+<h2>Creating the Payroll Entity Data Model using the ADO.NET Entity Data Model Designer</h2>
+<p>Here are the tables of the 'Payroll' database that we will use to generate the data model:</p>
+<ul>
+<li>Employee </li>
+<li>Designation </li>
+<li>Department </li>
+<li>Salary </li>
+<li>ProvidentFund </li>
+</ul>
+<p>To create an entity data model using the ADO.NET Entity Data Model Designer, follow these simple steps:</p>
+<p>
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+l&gt;
+<li>Open Visual Studio.NET and create a solution for a new web application project as seen below and save with a name.
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image1.png" alt="" /></p>
+</li>
+<li>Switch to the Solution Explorer, right click and click on <strong>Add New Item</strong> as seen in the following screenshot:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image2.png" alt="" /></p>
+</li>
+<li>Next, select <strong>ADO.NET Entity Data Model</strong> from the list of the templates displayed as shown in the following screenshot:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image3.png" alt="" /></p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+<li>Name the Entity Data Model <strong>PayrollModel</strong> and click on <strong>Add</strong>. </li>
+<li>Select <strong>Generate from database</strong> from the Entity Data Model Wizard as shown in the following screenshot:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image4.png" alt="" /></p>
+<p>Note that you can also use the Empty model template to create the Entity Data Model yourself.</p>
+<p>If you select the Empty Data Model template and click on next, the following screen appears:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image5.png" alt="" /></p>
+<p>As you can see from the above figure, you can use this template to create the Entity Data Model yourself. You can create the Entity Types and their relationships manually by dragging items from the toolbox. We will not use this template in our discussion here. So, let's get to the next step.</p>
+</li>
+<li>Click on <strong>Next</strong> in the Entity Data Model Wizard window shown earlier. </li>
+<li>The modal dialog box will now appear and prompts you to choose your connection as shown in the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image6.png" alt="" /></p>
+</li>
+<li>Click on <strong>New Connection</strong> Now you will need to specify the connection properties and parameters as shown in the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image7.png" alt="" /></p>
+<p style="margin-left: 40px; margin-right: 40px"><em>We will use a dot to specify the database server name. This implies that we will be using the database server of the localhost, which is the current system in use.</em></p>
+</li>
+<li>After you specify the necessary user name, password, and the server name, you can test your connection using the <strong>Test Connection</strong> button. When you do so, the message <strong>Test connection succeeded</strong> gets displayed in the message box as shown in the previous figure. </li>
+<li>When you click on <strong>OK</strong> on the Test connection dialog box, the following screen appears:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image8.png" alt="" /></p>
+<p>Note the Entity Connection String generated automatically. This connection string will be saved in the ConnectionStrings section of your application's <em>web.config</em> file. This is how it will look like:</p>
+<ol>
+<pre>&lt;connectionStrings&gt; <br />&lt;add name="PayrollEntities" connectionString="metadata=res:// *;<br />provider=System.Data.SqlClient;provider connection string=&amp;quot;<br />Data Source=.;Initial Catalog=Payroll;User ID=sa;Password=joydip1@3;<br />MultipleActiveResultSets=True&amp;quot;" providerName="System.Data.EntityClient" /&gt; <br />&lt;/connectionStrings&gt;<br /></pre>
+</ol> </li>
+<li>When you click on <strong>Next</strong> in the previous figure, the following screen appears:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image9.png" alt="" /></p>
+</li>
+<li>Expand the <strong>Tables</strong> node and specify the database objects that you require in the Entity Data Model to be generated as shown in the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image10.png" alt="" /></p>
+</li>
+<li>Click on <strong>Finish</strong> to generate the Entity Data Model. </li>
+<p>Here is the output displayed in the Output Window while the Entity Data Model is being generated:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image11.png" alt="" /></p>
+<p>Your Entity Data Model has been generated and saved in a file named <em>PayrollModel.edmx</em>. We are done creating our first Entity Data Model using the ADO.NET Entity Data Model Designer tool.</p>
+<p>When you open the Payroll Entity Data Model that we just created in the designer view, it will appear as shown in the following figure:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image12.png" alt="" /></p>
+<p>Note how the Entity Types in the above model are related to one another. These relationships have been generated automatically by the Entity Data Model Designer based on the relationships between the tables of the Payroll database.</p>
+<p>In the next section, we will learn how we can create an Entity Data Model using the EdmGen.exe command line tool.</p>
+<h2>Creating the Payroll Data Model Using the EdmGen Tool</h2>
+<p>We will now take a look at how to create a data model using the Entity Data Model generation tool called EdmGen.</p>
+<p>The EdmGen.exe command line tool can be used to do one or more of the following:</p>
+<ul>
+<li>Generate the <em>.cdsl</em>, <em>.msl</em>, and <em>.ssdl</em> files as part of the Entity Data Model </li>
+<li>Generate object classes from a <em>.csdl</em> file </li>
+<li>Validate an Entity Data Model </li>
+</ul>
+<p>The EdmGen.exe command line tool generates the Entity Data Model as a set of three files: <em>.csdl</em>, <em>.msl</em>, and <em>.ssdl</em>. If you have used the ADO.NET Entity Data Model Designer to generate your Entity Data Model, the <em>.edmx</em> file generated will contain the CSDL, MSL, and the SSDL sections. You will have a single <em>.edmx</em> file that bundles all of these sections into it. On the other hand, if you use the EdmGen.exe tool to generate the Entity Data Model, you would find three distinctly separate files with <em>.csdl</em>, <em>.msl</em> or <em>.ssdl </em>extensions.</p>
+<p>Here is a list of the major options of the EdmGen.exe command line tool:</p>
+<p style="text-align: center">&nbsp;</p>
+<div>ttom: medium none; border-left: medium none; border-collapse: collapse; border-top: medium none; border-right: medium none" class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0"&gt;
+<table style="border-bo&lt;mce:script type=" border="0">
+<tbody>
+<tr style="height: 12.9pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 12.9pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><strong><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Option</span></strong><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt"></span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 12.9pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><strong><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Description</span></strong><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt"></span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/help</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to display help on all the possible options of this tool. The short form is </span><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/?</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/language:CSharp</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate code using C# language</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/language:VB</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate code using VB language</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/provider:&lt;string&gt;</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to specify the name of the ADO.NET data provider that you would like to use.</span></p>
+</td>
+</tr>
+<tr style="height: 30.65pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 30.65pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/connectionstring:</span></p>
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">&lt;connection string&gt;</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 30.65pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to specify the connection string to be used to connect to the database</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/namespace:&lt;string&gt;</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to specify the name of the namespace</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/mode:FullGeneration</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate your CSDL, MSL, and SSDL objects from the database schema</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/mode:EntityClassGeneration</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate your entity classes from a given CSDL file</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/mode:FromSsdlGeneration</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate MSL, CSDL, and Entity Classes from a given SSDL file</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/mode:ValidateArtifacts</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to validate the CSDL, SSDL, and MSL files</span></p>
+</td>
+</tr>
+<tr style="height: 24.15pt;">
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">/mode:ViewGeneration</span></p>
+</td>
+<td style="padding-bottom: 0in; padding-left: 5.4pt; width: 191.2pt; padding-right: 5.4pt; height: 24.15pt; padding-top: 0in; border: medium none;" width="255" valign="top">
+<p class="Pa50"><span style="font-family: &quot;Verdana&quot;,&quot;sans-serif&quot;; color: black; font-size: 10pt">Use this option to generate mapping views from the CSDL, SSDL, and MSL files </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<br /> 
+<hr size="1" noshade="noshade" />
+<br />
+<div class="header"><strong>Entity Framework Tutorial</strong></div>
+<table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="99" valign="top"><a href="http://www.packtpub.com/entity-framework-tutorial/book/mid/241208ot4wpd"><img class="left" title="Entity Framework Tutorial" src="http://images.packtpub.com/images/100x123/1847195229.png" border="0" alt="Entity Framework Tutorial" width="99" height="123" /></a></td>
+<td valign="top">Learn to build a better data access layer with the ADO.NET Entity Framework and ADO.NET Data Services          
+<ul>
+<li>Clear and concise guide to the ADO.NET Entity Framework with plentiful code examples </li>
+<li>Create Entity Data Models from your database and use them in your applications </li>
+<li>Learn about the Entity Client data provider and create statements in Entity SQL </li>
+<li>Learn about ADO.NET Data Services and how they work with the Entity Framework </li>
+</ul>
+<p><a href="http://www.packtpub.com/entity-framework-tutorial/book/mid/241208ot4wpd">http://www.PacktPub.com/entity-framework-tutorial/book</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br /> 
+<hr size="1" noshade="noshade" />
+<p>Note that you basically need to pass the connection string, specify the mode, and also the project name of the artifact files (<em>.csdl</em>, <em>.msl</em>, and the <em>.ssdl</em> files) to be created. To create the Entity Data Model for our database, open a command window and type in the following:</p>
+<pre style="margin-left: 40px">edmgen /mode:fullgeneration /c:"Data Source=.;Initial Catalog=Payroll;User ID=sa;<br />Password=joydip1@3;" /p:Payroll<br /></pre>
+<p>This will create a full ADO.NET Entity Data Model for our database. The output is shown in the following figure:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image13.png" alt="" /></p>
+<p>You can now see the list of the files that have been generated:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image14.png" alt="" /></p>
+<p>You can validate the Payroll Entity Data Model that was just created, using the <em>ValidateArtifacts</em> option of the EdmGen command line tool as shown below:</p>
+<pre style="margin-left: 40px">EdmGen /mode:ValidateArtifacts /inssdl:Payroll.ssdl /inmsl:Payroll.msl /incsdl:Payroll.csdl<br /></pre>
+<p>When you execute the above command, the output will be similar to what is shown in the following figure:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image15.png" alt="" /></p>
+<p>As you can see in the previous figure, there are no warnings or errors displayed. So, our Entity Data Model is perfect.</p>
+<p>The section that follows discusses the new Entity Data Source control which was introduced as part of the Visual Studio.NET 2008 SP1 release.</p>
+<h2>The ADO.NET Entity Data Source Control</h2>
+<p>Data controls are those that can be bound to data from external data sources. These data sources may include databases, XML files, or even flat files. ASP.NET 2.0 introduced some data source controls with a powerful data binding technique so the need for writing lengthy code for binding data to data controls has been eliminated.</p>
+<p style="margin-left: 40px; margin-right: 40px"><em>In ASP.NET, the term Data Binding implies binding the controls to data retrieved from a data source and providing a read or write connectivity between these controls and the data that they are bound to.</em></p>
+<p>The Entity Data Source control is an example of a data control that is included as part of the Visual Studio 2008 SP1 release and can be used to bind data retrieved from an Entity Data Model to the data bound controls of ASP.NET. If you have installed Visual Studio 2008 SP1, you can see the EntityDataSource control listed in the Data section of your toolbox.</p>
+<p>If you cannot locate the EntityDataSource control in the toolbox, follow these steps:</p>
+<ol>
+<li>Right-click on the <strong>Toolbox</strong> and select the <strong>Choose Items</strong> option as shown in the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image16.png" alt="" /></p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+<li>From the list of the components displayed, scroll down to locate the EntityDataSource in the .NET Framework Components tab. Refer to the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image17.png" alt="" /></p>
+</li>
+<li>Now, check the checkbox next to the EntityDataSource component and click on <strong>OK</strong>. </li>
+</ol>
+<p>The ADO.NET Entity Data Source control is now added to your toolbox as shown in the following figure:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image18.png" alt="" /></p>
+<p>If the EntityDataSource component is not listed in the list of the componentsdisplayed in the Choose Toolbox Items window, you will have to add it manually. To do this, click on the <strong>Browse</strong> button in the Choose Toolbox Items window, locate the<em>System.Web.Entity.dll</em> in the folder in your system where Microsoft .NET Framework 3.5 has been installed and click on <strong>OK</strong>.</p>
+<h2>Implementing Our First Application Using the Entity Framework</h2>
+<p>In this section, we will learn how to use the Entity Data Model and the Entity Data Source Control to implement our first program using the Entity Framework. We will use a GridView control to display bound data.</p>
+<p>Refer to the solution we created earlier using the Entity Data Model Designer. Now, follow these steps:</p>
+<ol>
+<li>Drag and drop an Entity Data Source control from the toolbox onto your&nbsp; <em>Default.aspx</em> web form. </li>
+<li>Now, click on the Configure Data Source option to specify the data source. Refer to the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image19.png" alt="" /></p>
+</li>
+<li>Specify the Connection String and DefaultContainerName and then click on&nbsp; <strong>Next</strong>. </li>
+<li>Specify the fields you would want to retrieve from the database table and click on <strong>Finish</strong> when done. </li>
+<li>Now, drag and drop a <strong>GridView</strong> control from the toolbox onto the&nbsp; <em>Default.aspx</em> web form as seen in the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image20.png" alt="" /></p>
+</li>
+<li>Next, use the Choose Data Source option of the GridView control to associate its data source with the Entity Data Source control we created earlier. Refer to the following figure:
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image21.png" alt="" /></p>
+</li>
+</ol>
+<p>Here is how the markup code of the GridView control looks with its templates defined. Note how the DataSourceID of the GridView control has been associated with the Entity Data Source control we created earlier.</p>
+<pre style="margin-left: 40px">&lt;asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="EmployeeID" <br />DataSourceID="SqlDataSource1" BorderColor="Black" BorderStyle="Solid" Width="400px"&gt; <br />&lt;Columns&gt; <br />&lt;asp:BoundField DataField="EmployeeID" HeaderText="Employee ID" ReadOnly="True" <br />SortExpression="EmployeeID" /&gt; <br />&lt;asp:BoundField DataField="FirstName" HeaderText="First Name" SortExpression="FirstName" /&gt; <br />&lt;asp:BoundField DataField="LastName" HeaderText="Last Name" SortExpression="LastName" /&gt; <br />&lt;asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" /&gt; <br />&lt;/Columns&gt;<br />&lt;/asp:GridView&gt;<br /></pre>
+<p>We are done! When you execute the application, your output should be similar to what is shown in the following figure:</p>
+<p style="text-align: center"><img src="http://www.packtpub.com/files/images/ado-net-entity-image22.png" alt="" /></p>
+<br /> 
+<hr size="1" noshade="noshade" />
+<br />
+<div class="header"><strong>Entity Framework Tutorial</strong></div>
+<table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="99" valign="top"><a href="http://www.packtpub.com/entity-framework-tutorial/book/mid/241208ot4wpd"><img class="left" title="Entity Framework Tutorial" src="http://images.packtpub.com/images/100x123/1847195229.png" border="0" alt="Entity Framework Tutorial" width="99" height="123" /></a></td>
+<td valign="top">Learn to build a better data access layer with the ADO.NET Entity Framework and ADO.NET Data Services          
+<ul>
+<li>Clear and concise guide to the ADO.NET Entity Framework with plentiful code examples </li>
+<li>Create Entity Data Models from your database and use them in your applications </li>
+<li>Learn about the Entity Client data provider and create statements in Entity SQL </li>
+<li>Learn about ADO.NET Data Services and how they work with the Entity Framework </li>
+</ul>
+<a href="http://www.packtpub.com/entity-framework-tutorial/book/mid/241208ot4wpd">
+<p><br />http://www.PacktPub.com/entity-framework-tutorial/book</p>
+</a></td>
+</tr>
+</tbody>
+</table>
+<br /> 
+<hr size="1" noshade="noshade" />
+<h2>About the Author</h2>
+<p><strong>Joydip Kanjilal</strong> is a Microsoft MVP in ASP.NET. He has over 12 years of industry experience in IT with more than 6 years in Microsoft .NET and its related technologies. He has authored many articles for some of the most reputable sites like,www.asptoday.com, www.devx.com, www.aspalliance.com, www.aspnetpro.com, www.sql-server-performance.com, www.sswug.com, etc. Several of these articles have been featured at www.asp.net&mdash;Microsoft's Official Site on ASP.NET. Joydip was also a community credit winner at www.community-credit.com a number of times.</p>
+<p>He is currently working as a Senior Consultant in a reputable company in Hyderabad, INDIA. He has years of experience in designing and architecting solutions for various domains. His technical strengths include C, C++, VC++, Java, C#, Microsoft .NET, Ajax, Design Patterns, SQL Server, Operating Systems, and Computer Architecture. Joydip blogs at http://aspadvice.com/blogs/joydip and spends most of his time reading books, blogs, and writing books and articles. His hobbies include watching cricket and soccer and playing chess.</p>
+</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>3 January 2009</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

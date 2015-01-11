@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Adding Client-Side Events To Extender Controls</title>
+  <meta name="description" content="In the previous articles I wrote about how to use the extender controls available in ASP.NET AJAX Control Toolkit, how to process them on the server, validat...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/adding-client-side-events-to-extender-controls">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Adding Client-Side Events To Extender Controls</h1>
+  </header>
+
+  <article class="post-content">
+    <p>In the previous articles I wrote about how to use the extender controls available in ASP.NET AJAX Control Toolkit, how to process them on the server, validate the data. It mainly dealt with a server-side part. Today, I'll show you how to add client-side events to the extender controls. <!-- more --></p>
+<p>As an example, I'll use Slider again. But unlike the previous article where we processed its value on the server, we'll use its value directly on the page with JavaScript to resize an image, although it won't actually resize the picture, but it will just resize it on the page, i.e., just change the <span style="font-family: 'Courier New'; color: #800000;">width</span> and <span style="font-family: 'Courier New'; color: #800000;">height</span> attributes of the <span style="font-family: 'Courier New'; color: #800000;">&lt;img /&gt;</span> tag.</p>
+<p>Let's start, add some image, two sliders for width and height, two text boxes and two labels.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">form</span> <span class="attr">id</span><span class="kwrd">="form1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:ScriptManager</span> <span class="attr">ID</span><span class="kwrd">="ScriptManager1"</span> <span class="attr">runat</span><span class="kwrd">="server"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">asp:ScriptManager</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">div</span><span class="kwrd">&gt;</span>
+    Width:<span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtWidth"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:Label</span> <span class="attr">ID</span><span class="kwrd">="lblWidth"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="sliderWidth"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtWidth"</span>
+        <span class="attr">BoundControlID</span><span class="kwrd">="lblWidth"</span> <span class="attr">Minimum</span><span class="kwrd">="100"</span> <span class="attr">Maximum</span><span class="kwrd">="800"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+    
+    Height:<span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:TextBox</span> <span class="attr">ID</span><span class="kwrd">="txtHeight"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">asp:Label</span> <span class="attr">ID</span><span class="kwrd">="lblHeight"</span> <span class="attr">runat</span><span class="kwrd">="serBver"</span> <span class="kwrd">/&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="sliderHeight"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtHeight"</span>
+        <span class="attr">BoundControlID</span><span class="kwrd">="lblHeight"</span> <span class="attr">Minimum</span><span class="kwrd">="100"</span> <span class="attr">Maximum</span><span class="kwrd">="532"</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span>
+    <span class="kwrd">&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+    
+    <span class="kwrd">&lt;</span><span class="html">asp:Image</span> <span class="attr">ID</span><span class="kwrd">="imgPanda"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">ImageUrl</span><span class="kwrd">="http://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Giant_Panda_2004-03-2.jpg/800px-<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"><!--mce:0--></script>Giant_Panda_2004-03-2.jpg"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">div</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">form</span><span class="kwrd">&gt;</span></pre>
+<p>&nbsp;</p>
+<p>We want to resize the image on moving the slider, since when we move the slider handler, the actual value is being changed in the assigned TextBox, we should add the onChanged even to the TextBox.</p>
+<p>&nbsp;</p>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> Page_Load(<span class="kwrd">object</span> sender, EventArgs e)
+{
+    txtWidth.Attributes.Add(<span class="str">"onChange"</span>, <span class="str">"ChangeWidth()"</span>);
+    txtHeight.Attributes.Add(<span class="str">"onChange"</span>, <span class="str">"ChangeHeight()"</span>);
+}</pre>
+<p>&nbsp;</p>
+<p>And add the JavaScript event handlers.</p>
+<pre class="csharpcode">&lt;script type=<span class="str">"text/javascript"</span>&gt;
+    <span class="kwrd">function</span> ChangeWidth()
+    {
+        $get(<span class="str">"imgPanda"</span>).width = $get(<span class="str">"txtWidth"</span>).value;
+    }
+    
+    <span class="kwrd">function</span> ChangeHeight()
+    {
+        $get(<span class="str">"imgPanda"</span>).height = $get(<span class="str">"txtHeight"</span>).value;
+    }
+&lt;/script&gt;</pre>
+<p>By the way, please note the we are using the <span style="font-family: 'Courier New'; color: #800000;">$get()</span> shortcut here that actually invokes <span style="font-family: 'Courier New'; color: #800000;">document.getElementById()</span></p>
+<p>Let's test it. The image gets really resized but only when you release the button, but not when you just move the slider handle. This can be corrected by setting the <span style="font-family: 'Courier New'; color: #800000;">RaiseChangeOnlyOnMouseUp</span> to <span style="font-family: 'Courier New'; color: #800000;">false</span>.</p>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="sliderWidth"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtWidth"</span>
+    <span class="attr">BoundControlID</span><span class="kwrd">="lblWidth"</span> <span class="attr">Minimum</span><span class="kwrd">="100"</span> <span class="attr">Maximum</span><span class="kwrd">="800"</span> <span class="attr">RaiseChangeOnlyOnMouseUp</span><span class="kwrd">="false"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span>
+<span class="asp">&lt;%</span>-- some other tags--<span class="asp">%&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">cc1:SliderExtender</span> <span class="attr">ID</span><span class="kwrd">="sliderHeight"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">TargetControlID</span><span class="kwrd">="txtHeight"</span>
+    <span class="attr">BoundControlID</span><span class="kwrd">="lblHeight"</span> <span class="attr">Minimum</span><span class="kwrd">="100"</span> <span class="attr">Maximum</span><span class="kwrd">="532"</span> <span class="attr">RaiseChangeOnlyOnMouseUp</span><span class="kwrd">="false"</span><span class="kwrd">&gt;</span>
+<span class="kwrd">&lt;/</span><span class="html">cc1:SliderExtender</span><span class="kwrd">&gt;</span></pre>
+<h2>Conclusion</h2>
+<p>In this tutorial we have learnt how to add how add client-side events to the extender controls, how to handle them. We have also learnt about the <span style="font-family: Cour; color: #800000;">RaiseChangeOnlyOnMouseUp</span> attribute of the Slider control.</p>
+<p>Your feedback is appretiated.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>3 August 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Understanding Attaching/Detaching Objects in LINQ to SQL and in the Entity Framework</title>
+  <meta name="description" content="LINQ to SQL and the Entity Framework are very powerful tools, however as in many other useful tools there are some things you should be aware of when working...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/understanding-attachingdetaching-objects-in-linq-to-sql-and-in-the-entity-framework3cscript-type3d">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Understanding Attaching/Detaching Objects in LINQ to SQL and in the Entity Framework</h1>
+  </header>
+
+  <article class="post-content">
+    <p>LINQ to SQL and the Entity Framework are very powerful tools, however as in many other useful tools there are some things you should be aware of when working with them. One of those things is object attaching and detaching. Let&rsquo;s have a concrete example.</p>
+<p>As you already know, you can retrieve an object from the database, update or remove it and all the necessary changes will be submitted to the database.</p>
+<p>But what if you don&rsquo;t want to perform additional SELECT query? Instead, you want just to perform one necessary query, either to update an object or remove it. <!-- more --></p>
+<p>Well, a quite logical idea is to create an object, set an appropriate ID attribute and then update/delete it:</p>
+<div class="csharpcode">
+<pre class="alt">NorthwindDataContext db = <span class="kwrd">new</span> NorthwindDataContext();</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">Product product = <span class="kwrd">new</span> Product { ProductID = 1 };</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">db.Products.DeleteOnSubmit(product);</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">db.SubmitChanges();</pre>
+</div>
+<p><!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --></p>
+<p>&nbsp;</p>
+<p>Okay, but it won&rsquo;t work. The code will gets compiled, but when executed it will throw an exception stating: &ldquo;<strong>Cannot remove an entity that has not been attached.</strong>&rdquo; Well, in fact, it&rsquo;s quite obvious, because the object context is simply unaware of that object, so let it know about the object. We just need to attach the object to the object context:</p>
+<div class="csharpcode">
+<pre class="alt">NorthwindDataContext db = <span class="kwrd">new</span> NorthwindDataContext();</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">Product product = <span class="kwrd">new</span> Product { ProductID = 1 };</pre>
+<pre>db.Products.Attach(product); <span class="rem">//that necessary line</span></pre>
+<pre class="alt">&nbsp;</pre>
+<pre>db.Products.DeleteOnSubmit(product);</pre>
+<pre class="alt">&nbsp;</pre>
+<pre>db.SubmitChanges();</pre>
+</div>
+<p><!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --></p>
+<p>So, if you compile it now, you will get no exceptions and the necessary product will be removed from the database. You can use the same technique when you need to update an object without having to retrieve it from the database and the same thing applies to the Entity Framework, although the code is slightly different:</p>
+<pre class="csharpcode">NorthwindEntities db = <span class="kwrd">new</span> NorthwindEntities();
+
+Product product = <span class="kwrd">new</span> Product { ProductID = 10 };
+product.EntityKey = <span class="kwrd">new</span> EntityKey("NorthwindEntities.Products", "ProductID", 10);</pre>
+<pre class="csharpcode">db.Attach(product);
+
+db.DeleteObject(product);
+
+db.SaveChanges();</pre>
+<p><!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --></p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>15 January 2009</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

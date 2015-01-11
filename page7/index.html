@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mike Borozdin's Blog</title>
+  <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/page7/">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        
+<div>
+	<h1><a href="/post/adding-client-side-events-to-extender-controls">Adding Client-Side Events To Extender Controls</a></h1>
+	In the previous articles I wrote about how to use the extender controls available in ASP.NET AJAX Control Toolkit, how to process them on the server, validate the data. It mainly dealt with a server-side part. Today, I'll show you how to add client-side events to the extender controls. 
+
+<a href="/post/adding-client-side-events-to-extender-controls" class="more">More...</a>
+	<div id="postFooter">3 August 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/aspnet-ajax-control-toolkit-extenders-processing-and-validation">ASP.NET AJAX Control Toolkit Extenders: Processing And Validation</a></h1>
+	In <a href="http://www.mikeborozdin.com/post/Building-Rich-Internet-Applications-With-ASPNET-AJAX-Control-Toolkit.aspx" target="_blank">the previous article</a> I told you about ASP.NET AJAX Control Toolkit, I explained its purpose, listed the available controls and showed an example. However, I think some things should be explained a bit more detailed. Today I'm going to talk about the extenders controls, I already mentioned them in <a href="http://www.mikeborozdin.com/post/Building-Rich-Internet-Applications-With-ASPNET-AJAX-Control-Toolkit.aspx" target="_blank">the previous article</a>, but I can repeat. An extender is a control that is a based on an ASP.NET web control, but provides an additional client-side functionality. Slider is a good example of an extender, in looks like a real sliding control in desktop applications, but in fact it just extends the TextBox control. 
+
+<a href="/post/aspnet-ajax-control-toolkit-extenders-processing-and-validation" class="more">More...</a>
+	<div id="postFooter">1 August 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/aspnet-books">Recommended Advanced ASP.NET Books</a></h1>
+	
+I often see questions in the forums regarding ASP.NET books, usually people ask not only about reference style books, but about more advanced books that explain not only ASP.NET basics but teach you to write real world applications.
+
+
+I know a really good book on that topic. This book focuses on building a web portal including news system, guest book, user registration, e-shop and many other features. Actually, this portal is a popular starter-kit called &quot;E-commerce starter-kit&quot; or &quot;The Beer House&quot; that you can find <a href="http://www.asp.net/downloads/starter-kits/the-beer-house/" target="_blank">here</a>.
+
+
+The book is called &quot;<a href="http://www.amazon.com/gp/product/0764584642?ie=UTF8&amp;tag=mikborsblo-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0764584642" target="_blank">ASP.NET 2.0 Website Programming: Problem - Design - Solution</a>&quot;. 
+
+
+<a href="http://www.amazon.com/gp/product/0470187581?ie=UTF8&amp;tag=mikborsblo-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0470187581" target="_blank">The new edition that describes ASP.NET 3.5</a> including LINQ and ASP.NET AJAX will soon arrive.
+
+
+So, the books are highly recommended by many professional ASP.NET developers.
+
+
+
+<a href="/post/aspnet-books" class="more">More...</a>
+	<div id="postFooter">31 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/building-rich-internet-applications-with-aspnet-ajax-control-toolkit">Building Rich Internet Applications With ASP.NET AJAX Control Toolkit</a></h1>
+	<h1>Introduction</h1>
+Nowadays web isn't a web as it was 10 years ago. Web isn't a collection of static pages anymore. Actually, there was JavaScript and DHTML, but still web sites were far behind desktop applications in terms of interactivity. After the invention of AJAX it became possible to build really interactive web applications
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+that are nearly the same as desktop applications except they are run in a browser.
+Writing AJAX JavaScript code is a pretty routine task, so it's sensible to use a library that already has the necessary functionality. While Visual Studio 2008 has built-in ASP.NET AJAX 1.0 library, it doesn't contain many useful things we need when we are writing rich Internet applications.
+<h1>ASP.NET AJAX Control Toolkit</h1>
+ASP.NET AJAX Control Toolkit or simply ACT is a thing that can help to write rich Internet applications. Basically, it's set a of useful interactive web controls that we usually find in desktop applications, but missing in web applications. These controls include sliders, pop-up calendars, modal dialogs and many others. We don't have to write any JavaScript code to use them in our applications, we just need to use ACT controls that are very similar to ordinary ASP.NET controls.
+ACT is run both by Microsoft and community, so everybody can take part in the creation of the decent AJAX toolkit. 
+
+<a href="/post/building-rich-internet-applications-with-aspnet-ajax-control-toolkit" class="more">More...</a>
+	<div id="postFooter">30 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/windows-live-writer-simplifies-your-blogging">Windows Live Writer Simplifies Your Blogging</a></h1>
+	
+Finally, I have installed <a href="http://get.live.com/writer/overview" target="_blank">Windows Live Writer</a> and got amazed by its features. It does really simplify your blogging and save your time. With Live Writer you don&#39;t have to write a post in Word and then paste it to your blog, sometimes you even have to paste it to a another editor in order to get rid of Word text formatting. Now you don&#39;t have to do that.
+
+  
+
+Windows Live Writer supports many blogging platform, from Live Spaces to BlogEngine.NET and WordPress
+
+  
+
+Windows Live Writer has a built-in spell checker, so you don&#39;t need Word to check your spelling, it has nice formatting features, it supports different plug-in, so you can get a syntax highlighter, which is not available by default unfortunately.&nbsp; 
+
+  
+
+You can preview your posts, post preview is integrated into your blog design that looks awesome.
+
+  
+
+The only thing I didn&#39;t like is that it&#39;s not very obvious how to add new tags, because when your click the &quot;TAG&quot; button it only lists the existing tags, you can add new ones in the &quot;Keywords field in the properties section.
+
+
+
+<a href="/post/windows-live-writer-simplifies-your-blogging" class="more">More...</a>
+	<div id="postFooter">27 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/dzone-instead-of-digg">Dzone Instead Of Digg</a></h1>
+	If you have a blog, then you want to promote it. It doesn&rsquo;t matter whether you are motivated by money or by recognition.&nbsp; It you release your writings to public, then you want people to read them. Nowadays one of the most popular promotion techniques is sending links to social bookmarking web sites. The most popular social bookmarking web site is <a href="http://www.digg.com/" target="_blank">Digg.com</a>. But does Digg work perfectly for every blog? I mean, can you promote every blog with Digg? 
+
+<a href="/post/dzone-instead-of-digg" class="more">More...</a>
+	<div id="postFooter">24 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/using-microsoft-synchronization-services-for-adonet-(introducing-microsoft-sql-server-compact-edition-(part-ii))">Using Microsoft Synchronization Services For ADO.NET (Introducing Microsoft SQL Server Compact Edition (Part II))</a></h1>
+	In the <a href="/post/Introducing-Microsoft-SQL-Server-Compact-Edition-(Part-I).aspx" target="_blank">previous part of the tutorial</a> we learnt how to use SQL Server Compact Edition in our application. In this part we are going to learn how to synchronize the data between Compact Edition and a regular verson of SQL Server.
+<br /> Visual Studio 2008 has built-in Synchronization Services that we&rsquo;ll be using in our project. 
+
+<a href="/post/using-microsoft-synchronization-services-for-adonet-(introducing-microsoft-sql-server-compact-edition-(part-ii))" class="more">More...</a>
+	<div id="postFooter">23 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/free-sql-server-2008-hosting">Free SQL Server 2008 Hosting</a></h1>
+	Since I have already touched a topic of SQL Server, I want to inform that <a href="http://www.discountasp.net/index.aspx?refcode=MIKEBOR" target="_blank">Discount ASP.NET</a> has launched SQL 2008 Hosting Beta Program. If you are already a subscriber of <a href="http://www.discountasp.net/index.aspx?refcode=MIKEBOR" target="_blank">Discount ASP.NET</a>, you can activate it in your control panel, if not, then you can <a href="http://www.discountasp.net/index.aspx?refcode=MIKEBOR" target="_blank">subscribe</a> if you are looking for a good hosting provider.<br />
+
+
+<a href="/post/free-sql-server-2008-hosting" class="more">More...</a>
+	<div id="postFooter">21 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/introducing-microsoft-sql-server-compact-edition-(part-i)">Introducing Microsoft SQL Server Compact Edition (Part I)</a></h1>
+	<a href="http://www.microsoft.com/sql/editions/compact/default.mspx" target="_blank">Microsoft SQL Server Compact Edition</a> is an embeded database that allows you to integrate it in your destkop and mobile applications. It can be used in a variety of scenarios, just some examples:
+<ul>
+<li>a single-user application that still stores its data in the SQL database</li>
+<li>a local cache of a remote SQL Server database,</li>
+<li>a mobile application that synchronizes its local compact database with a remote database from time to time.</li>
+</ul>
+SQL Server Compact Edition takes about 1.5 MB on HDD and consumes about 5 MB of RAM. It&rsquo;s free to use and free to distribute with your application. 
+
+<a href="/post/introducing-microsoft-sql-server-compact-edition-(part-i)" class="more">More...</a>
+	<div id="postFooter">20 July 2008</div>
+</div>
+
+<div>
+	<h1><a href="/post/blogenginenet-making-the-archive-work-without-categories">BlogEngine.NET: Making The Archive Work Without Categories</a></h1>
+	As you may notice I don&rsquo;t use categories in my blog, only tags. Whether it&rsquo;s good or bad &ndash; is a matter of another topic.&nbsp; Now I&rsquo;m going to talk about how to make the archive work properly if you don&rsquo;t have any categories, because it doesn&rsquo;t display any posts unless they are filed under some category. I hope this will be fixed in the next versions, but you can fix it yourself, it&rsquo;s not difficult. 
+
+<a href="/post/blogenginenet-making-the-archive-work-without-categories" class="more">More...</a>
+	<div id="postFooter">18 July 2008</div>
+</div>
+
+
+<div id="postPaging">
+	
+	    <a href="/page6">Previous posts</a>
+		
+	  
+	    &nbsp;&nbsp;<a href="/page8" class="next">Next posts</a>
+	  
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

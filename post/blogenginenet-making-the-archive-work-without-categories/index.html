@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>BlogEngine.NET: Making The Archive Work Without Categories</title>
+  <meta name="description" content="As you may notice I don&rsquo;t use categories in my blog, only tags. Whether it&rsquo;s good or bad &ndash; is a matter of another topic.&nbsp; Now I&rsquo;...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/blogenginenet-making-the-archive-work-without-categories">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>BlogEngine.NET: Making The Archive Work Without Categories</h1>
+  </header>
+
+  <article class="post-content">
+    <p>As you may notice I don&rsquo;t use categories in my blog, only tags. Whether it&rsquo;s good or bad &ndash; is a matter of another topic.&nbsp; Now I&rsquo;m going to talk about how to make the archive work properly if you don&rsquo;t have any categories, because it doesn&rsquo;t display any posts unless they are filed under some category. I hope this will be fixed in the next versions, but you can fix it yourself, it&rsquo;s not difficult. <!-- more --></p>
+<p><br /> Open <span style="font-family: 'courier new', courier;">archive.aspx.cs</span>, find the <span style="font-family: 'courier new', courier;">Page_Load() </span>method and remove the line containing <span style="font-family: 'courier new', courier;">CreateMenu()</span> that we don&rsquo;t need, because this function just prints the list of the categories, but we don&rsquo;t have any. Then, go to the <span style="font-family: 'courier new', courier;">CreateArchive()</span> method. Can you see that it only returns the posts assigned to some category? That&rsquo;s no good, just remove the foreach statement and change <span style="font-family: 'courier new', courier;">Post.GetPostsByCategory()</span> to <span style="font-family: 'courier new', courier;">Post.Posts</span> that will just return all the posts, no matter whether they belong to a particular category or not.</p>
+<p>So, <span style="font-family: 'courier new', courier;">CreateArchive()</span> should look like this:</p>
+<p>[code:c#]</p>
+<p>private void CreateArchive()<br /> {<br /> &nbsp; List&lt;Post&gt; list = Post.Posts;<br /> <br /> &nbsp; HtmlTable table = CreateTable("");<br /> <br /> &nbsp; foreach (Post post in list)<br /> &nbsp; {<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (!post.IsVisible)<br /> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; continue;<br /> <br /> &nbsp;&nbsp;&nbsp; HtmlTableRow row = new HtmlTableRow
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+();<br /> <br /> &nbsp;&nbsp;&nbsp; HtmlTableCell date = new HtmlTableCell();<br /> &nbsp;&nbsp;&nbsp; date.InnerHtml = post.DateCreated.ToString("yyyy-MM-dd");<br /> &nbsp;&nbsp;&nbsp; date.Attributes.Add("class", "date");<br /> &nbsp;&nbsp;&nbsp; row.Cells.Add(date);<br /> <br /> &nbsp;&nbsp;&nbsp; HtmlTableCell title = new HtmlTableCell();<br /> &nbsp;&nbsp;&nbsp; title.InnerHtml = string.Format("&lt;a href=\"{0}\"&gt;{1}&lt;/a&gt;", post.RelativeLink, post.Title);<br /> &nbsp;&nbsp;&nbsp; title.Attributes.Add("class", "title");<br /> &nbsp;&nbsp;&nbsp; row.Cells.Add(title);<br /> <br /> &nbsp;&nbsp;&nbsp; if (BlogSettings.Instance.IsCommentsEnabled)<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HtmlTableCell comments = new HtmlTableCell();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comments.InnerHtml = post.ApprovedComments.Count.ToString();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; comments.Attributes.Add("class", "comments");<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; row.Cells.Add(comments);<br /> &nbsp;&nbsp;&nbsp; }<br /> <br /> &nbsp;&nbsp;&nbsp; if (BlogSettings.Instance.EnableRating)<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HtmlTableCell rating = new HtmlTableCell();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating.InnerHtml = post.Raters == 0 ? "None" : Math.Round(post.Rating, 1).ToString();<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rating.Attributes.Add("class", "rating");<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; row.Cells.Add(rating);<br /> &nbsp;&nbsp;&nbsp; }<br /> <br /> &nbsp;&nbsp;&nbsp; table.Rows.Add(row);<br /> &nbsp; }<br /> <br /> &nbsp; phArchive.Controls.Add(table);<br /> }</p>
+<p>[/code]</p>
+<p><a rel="enclosure" href="/files/archive.aspx.cs">archive.aspx.cs (4.62 kb)</a></p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>18 July 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ASP.NET Image Uploading (part I)</title>
+  <meta name="description" content="Download filesIntroductionIs image uploading different from simply file uploading? No, but when creating an image uploading functionality you usually have to...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/aspnet-image-uploading-(part-i)">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>ASP.NET Image Uploading (part I)</h1>
+  </header>
+
+  <article class="post-content">
+    <p><a href="/files/ImageUploading.zip"><strong>Download files</strong></a></p>
+<h2>Introduction</h2>
+<p>Is image uploading different from simply file uploading? No, but when creating an image uploading functionality you usually have to perform more operation, than if you application were to receive text files only. Basically, when making an image uploading form, you have to implement the following things:</p>
+<ul>
+<li>Check if a file is uploaded </li>
+<li>Check if the uploaded file is an image </li>
+<li>Check if the uploaded file doesn't exceed a certain size </li>
+<li>Resize the uploaded images without changing the proportions of the picture </li>
+<li>Save the image </li>
+</ul>
+<p>In this particular tutorial, I'll tell you how to perform the 3 operations, while I'll explain how to check the file size in the next part. <!-- more --></p>
+<h2>Form</h2>
+<p>We need to create a form element that is used for choosing a file, we can do it by using the <strong>FileUpload</strong> control.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:FileUpload</span> <span class="attr">ID</span><span class="kwrd">="fileImage"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>After that, we add two CustomValidators that will validate if file upload and the file type, we also add a submit button:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:CustomValidator</span> <span class="attr">ID</span><span class="kwrd">="valFile"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ErrorMessage</span><span class="kwrd">="No file uploaded"</span> 
+    <span class="attr">onservervalidate</span><span class="kwrd">="valFile_ServerValidate"</span> <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;</span>
+<span class="kwrd">&lt;</span><span class="html">asp:CustomValidator</span> <span class="attr">ID</span><span class="kwrd">="valFileType"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ErrorMessage</span><span class="kwrd">="This isn't not an image"</span> 
+    <span class="attr">onservervalidate</span><span class="kwrd">="valFileType_ServerValidate"</span> <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;&lt;</span><span class="html">br</span> <span class="kwrd">/&gt;</span>
+    
+<span class="kwrd">&lt;</span><span class="html">asp:Button</span> <span class="attr">ID</span><span class="kwrd">="btnSubmit"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> <span class="attr">Text</span><span class="kwrd">="Upload"</span> 
+    <span class="attr">onclick</span><span class="kwrd">="btnSubmit_Click"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<h2>Validation</h2>
+<p>Since, we cannot access the file input with JavaScript, we can perform only server-side validation. First, we should validate if a user has uploaded a file.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> valFile_ServerValidate(<span class="kwrd">object</span> source, ServerValidateEventArgs args)
+{
+    <span class="kwrd">if</span> (!fileImage.HasFile)
+    {
+        args.IsValid = <span class="kwrd">false</span>;
+    }
+}</pre>
+</div>
+<p>There are two ways of validating the file type, the first one is to check the extension and the second one is to check the mime/type. The first one isn't very reliable, because a smart user can change the file extension, besides there are lot of extensions of JPEG images - .jpg, .jpeg, .jpe, while the mime/type is the only - "image/jpeg". So, we'll be using the second way, i.e. we will be checking the mime type. Here is the code we should write:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> valFileType_ServerValidate(<span class="kwrd">object</span> source, ServerValidateEventArgs args)
+{
+    <span class="kwrd">if</span> (fileImage.HasFile)
+    {
+        <span class="kwrd">string</span>[] acceptedTypes = <span class="kwrd">new</span> <span class="kwrd">string</span>[] 
+    { 
+        <span class="str">"image/bmp"</span>, 
+        <span class="str">"image/jpeg"</span>, 
+        <span class="str">"image/tiff"</span>, 
+        <span class="str">"image/gif"</span>, 
+        <span class="str">"image/png"</span> 
+    };
+
+        <span class="kwrd">if</span> (!acceptedTypes.Contains(fileImage.PostedFile.ContentType))
+        {
+            args.IsValid = <span class="kwrd">false</span>;
+        }
+    }
+}</pre>
+</div>
+<p>There is an interesting thing in this code, we use the <strong>Contains()</strong> extension method, that checks if a string belongs to a collection.</p>
+<h2>Processing Image Upload</h2>
+<p>In order to process image uploading we should simply add some code to the submit button click event handler:</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> btnSubmit_Click(<span class="kwrd">object</span> sender, EventArgs e)
+{
+    <span class="kwrd">if</span> (IsValid)
+    {
+        Bitmap image = ResizeImage(fileImage.PostedFile.InputStream, 200, 400);
+        image.Save(Server.MapPath(<span class="str">"~/Photos/"</span>) + Guid.NewGuid().ToString() + <span class="str">".jpg"</span>, ImageFormat.Jpeg);
+    }
+}</pre>
+<h2>Resizing</h2>
+<p>This is the most interesting part of the tutorial. We won't simply resize images, but we also retain their proportions. Here is the code:&nbsp;</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">private</span> Bitmap ResizeImage(Stream streamImage, <span class="kwrd">int</span> maxWidth, <span class="kwrd">int</span> maxHeight)
+{
+    Bitmap originalImage = <span class="kwrd">new</span> Bitmap(streamImage);
+    <span class="kwrd">int</span> newWidth = originalImage.Width;
+    <span class="kwrd">int</span> newHeight = originalImage.Height;
+    <span class="kwrd">double</span> aspectRatio = (<span class="kwrd">double</span>)originalImage.Width / (<span class="kwrd">double</span>)originalImage.Height;
+
+    <span class="kwrd">if</span> (aspectRatio &lt;= 1 &amp;&amp; originalImage.Width &gt; maxWidth)
+    {
+        newWidth = maxWidth;
+        newHeight = (<span class="kwrd">int</span>)Math.Round(newWidth / aspectRatio);
+    }
+    <span class="kwrd">else</span> <span class="kwrd">if</span> (aspectRatio &gt; 1 &amp;&amp; originalImage.Height &gt; maxHeight)
+    {
+        newHeight = maxHeight;
+        newWidth = (<span class="kwrd">int</span>)Math.Round(newHeight * aspectRatio);
+    }
+    
+    <span class="kwrd">return</span> <span class="kwrd">new</span> Bitmap(originalImage, newWidth, newHeight);
+}</pre>
+</div>
+<p>Now, you can compile the project and test it by uploading some of new images and seeing the resized ones on the server.</p>
+<h2>Conclusion</h2>
+<p>Image uploading is very common problem. ASP.NET provides great tools for developers to accomplishing this task. In the next part, I'll show you how to validate the file size that can be very tricky sometimes.</p>
+<p><a href="/files/ImageUploading.zip">
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+trong&gt;Download files</a></p>
+</div>
+<p>&nbsp;</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>21 August 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

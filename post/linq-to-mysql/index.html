@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LINQ To MySQL</title>
+  <meta name="description" content="LINQ to SQL is a great tool that saves a lot of time. However it has one disadvantage &ndash; it supports only SQL Server. Anyway it&rsquo;s possible to writ...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/linq-to-mysql">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>LINQ To MySQL</h1>
+  </header>
+
+  <article class="post-content">
+    <p>LINQ to SQL is a great tool that saves a lot of time. However it has one disadvantage &ndash; it supports only SQL Server. Anyway it&rsquo;s possible to write your own LINQ provider. Sure, there is one for MySQL. It is called <a href="http://code2code.net/DB_Linq/" target="_blank">DbLinq</a>, in fact in supports many databases:</p>
+<ul>
+<li>MySQL</li>
+<li>Oracle</li>
+<li>PostreSql</li>
+<li>Ingress</li>
+<li>SqlLite</li>
+</ul>
+<p>It&rsquo;s not finished yet, however you can still try to use it. I&rsquo;m going to explain how to use it in this article; we&rsquo;ll go through 3 steps:</p>
+<ol>
+<li>Installation</li>
+<li>Using DbLinq in a console application</li>
+<li>Using DbLinq in a ASP.NET application</li>
+</ol>
+<h2><span style="font-weight: normal;"><!-- more --></span></h2>
+<h2>Installation</h2>
+<ol>
+<li>Go <a href="http://code2code.net/DB_Linq/" target="_blank">here</a> and download the ZIP archieve</li>
+<li>Unpack the archive</li>
+<li>Open the Visual Studio solution - <span style="font-family: 'courier new', courier; ">DbLinq</span></li>
+<li>Build the solution</li>
+</ol>
+<h2>Using DbLinq in a console application</h2>
+<p>Ok, let&rsquo;s try it in action, we are going to create a console application that will retrieve, insert, update and delete records from the database.</p>
+<p>First, we need to generate the data context and the table classes. Unfortunately you cannot do this in Visual Studio, but there is a command line utility called <span style="font-family: 'courier new', courier; ">DbMetal</span> and its visual analogue &ndash; <span style="font-family: 'courier new', courier; ">Visual Metal</span> that is written in WPF, by the way.</p>
+<p><br /> Go to the <span style="font-family: 'courier new', courier; ">\dblinq2007\DbMetal\</span> folder, there are several BAT files, open in your favourite text editor <span style="font-family: 'courier new', courier; ">run_myMetal.bat</span>, since we are dealing with MySQL, and change the necessary parameters, save and run it. You must have got a generated CS file, copy it to your console application project.<br /> Then, it&rsquo;s time to add the references, you should add the following:</p>
+<ul>
+<li>System.Data.Linq</li>
+<li>DbLinq.dll (located in <span style="font-family: 'courier new', courier; ">\dblinq2007\DbLinq.MySql\bin\release</span>\)</li>
+<li>DbLinq.MySql.dll (located in <span style="font-family: 'courier new', courier; ">\dblinq2007\DbLinq.MySql\bin\release\</span>)</li>
+<li>MySql.Data.dll (located in <span style="font-family: 'courier new', courier; ">\dblinq2007\lib\</span>)</li>
+</ul>
+<p>Since the table is called <span style="font-family: 'courier new', courier; ">Products</span>, I want the class that represents a stored entity to be called <span style="font-family: 'courier new', courier; ">Product</span>, not <span style="font-family: 'courier new', courier; ">Products</span>, as it was called by DbMetal. So, I change the generated code.</p>
+<p><br /> Compile the project to check if there are no errors. If you get any error, check if there are all the necessary references.</p>
+<p><br /> Let&rsquo;s write some code; basically we want just to display the data:</p>
+<p>[code:c#]</p>
+<p>using System;<br /> using System.Collections.Generic;<br /> using System.Linq;<br /> using System.Text;<br /> using MySql.Data.MySqlClient; //Don't forget to add this line<br /> <br /> namespace MySqlLinqTest<br /> {<br /> &nbsp;&nbsp;&nbsp; class Program<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static void Main(string[] args)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LinqTest db = new LinqTest(new MySqlConnection("Database=&lt;your database&gt;;Data Source=localhost;User Id=&lt;user&gt;;Password=&lt;password&gt;"));<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var products = from p in db.Products <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where p.Category == "Sport cars"<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p;<br /> <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreach (var product in products)<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(product.Name);<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /> &nbsp;&nbsp;&nbsp; }<br /> }</p>
+<p>[/code]</p>
+<p>That works. What about inserting a new record? No pro
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+blems!</p>
+<p>[code:c#]</p>
+<p>db.Products.InsertOnSubmit(new Product { Name = "Some car", Category = "Some category" });<br /> db.SubmitC
+<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
+hanges();<br /> <br /> var products = from p in db.Products<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; orderby p.Name<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p;&nbsp; <br /> <br /> foreach (var product in products)<br /> {<br /> &nbsp;&nbsp;&nbsp; Console.WriteLine(product.Name);<br /> }</p>
+<p>[/code]</p>
+<p>Ok, let&rsquo;s remove the newly added record:</p>
+<p>[code:c#]</p>
+<p>Product someCar = (from p in db.Products<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where p.Name == "Some car"<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p).First();<br /> <br /> db.Products.DeleteOnSubmit(someCar);<br /> db.SubmitChanges();</p>
+<p>[/code]</p>
+<p>Let&rsquo;s update something:</p>
+<p>[code:c#]</p>
+<p>Product bentley = (from p in db.Products<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; where p.Name == "Bentley"<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p).First();<br /> <br /> bentley.Name = "Bentley Continental";<br /> db.SubmitChanges();</p>
+<p>[/code]</p>
+<h2>Using DbLinq in an ASP.NET application</h2>
+<p>It was funny enough, but the console applications are not very useful when dealing with the database, let&rsquo;s write something that is closer to a real world &ndash; an ASP.NET application.</p>
+<p><br /> Create a C# web site; copy the generated file we used in the previous example.</p>
+<p><br /> Don&rsquo;t forget to add the necessary references.</p>
+<p><br /> We are going to add a GridView and bind the data retrieved from the database.<br /> <span style="font-family: 'courier new', courier; "><br /> </span></p>
+<p><span style="font-family: 'courier new', courier; ">Default.aspx</span></p>
+<p>[code:c#]</p>
+<p>&lt;asp:GridView ID="gridProducts" runat="server"&gt; <br /> &lt;/asp:GridView&gt;</p>
+<p>[/code]</p>
+<p>&nbsp;</p>
+<p><span style="font-family: 'courier new', courier; ">Default.aspx.cs</span>&nbsp;</p>
+<p>[code:c#]</p>
+<p>protected void Page_Load(object sender, EventArgs e)<br /> {<br /> &nbsp;&nbsp;&nbsp; LinqTest db = new LinqTest(new MySqlConnection("Database=&lt;your database&gt;;Data Source=localhost;User Id=&lt;user&gt;;Password=&lt;password&gt;"));<br /> <br /> &nbsp;&nbsp;&nbsp; gridProducts.DataSource = from p in db.Products<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; orderby p.Name<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; select p;<br /> &nbsp;&nbsp;&nbsp; gridProducts.DataBind();<br /> }</p>
+<p>[/code]</p>
+<p>It works.<br /> <br /> What about LinqDataSource, can we use it with DbLinq? Yes, we can, but it&rsquo;s a bit tricky. If we add a LinqDataSource, we&rsquo;ll get an error saying that there&rsquo;s no parametless constructor in our DataContext. That is a thing that hopefully will be fixed in the new versions, but now we have to write a wrapper around a generated DataContext.</p>
+<p><span style="font-family: 'courier new', courier; ">App_Code/Products.cs </span></p>
+<p>[code:c#]</p>
+<p>public class MyDataContext<br /> {<br /> &nbsp;&nbsp;&nbsp; private LinqTest _db;<br /> <br /> &nbsp;&nbsp;&nbsp; public MyDataContext()<br /> &nbsp;&nbsp;&nbsp; {<br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _db = new LinqTest(new MySqlConnection("Database=&lt;your database&gt;;Data Source=localhost;User Id=&lt;user&gt;;Password=&lt;password&gt;"));<br /> &nbsp;&nbsp;&nbsp; }<br /> <br /> &nbsp;&nbsp;&nbsp; public Table&lt;Product&gt; Products { get { return _db.GetTable&lt;Product&gt;(); } }<br /> }</p>
+<p>[/code]</p>
+<p>Then, we can use LinqDataSource as usual:</p>
+<p>[code:html]</p>
+<p>&lt;asp:LinqDataSource ID="dsProducts" runat="server" ContextTypeName="MysqlLinqTest.MyDataContext"<br /> &nbsp;&nbsp;&nbsp; TableName="Products"&gt;<br /> &lt;/asp:LinqDataSource&gt;<br /> <br /> &lt;asp:GridView ID="gridProducts" runat="server" DataSourceID="dsProducts"&gt;&nbsp; <br /> &lt;/asp:GridView&gt;</p>
+<p>[/code]</p>
+<h2>Conclusion</h2>
+<p>As you see you can use LINQ to work with MySQL, unfortunately sometimes it&rsquo;s not very convenient and we have to wait for the new versions or wait for a LINQ to MySQL provider from MySQL.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>26 June 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

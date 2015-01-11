@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ASP.NET Image Uploading (part II)</title>
+  <meta name="description" content="In the previous tutorial I showed how to handle image uploads, how to validate some things and finally how to resize images retaining their proportions. This...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/aspnet-image-uploading-(part-ii)">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>ASP.NET Image Uploading (part II)</h1>
+  </header>
+
+  <article class="post-content">
+    <p>In the <a href="http://www.mikeborozdin.com/post/ASPNET-Image-Uploading-(part-I).aspx" target="_blan&lt;mce:script type=">previous tutorial</a> I showed how to handle image uploads, how to validate some things and finally how to resize images retaining their proportions. This time I'll show you how to prevent uploading of files which size exceeds the defined limit. Well, this is not difficult to implement,&nbsp; however there are some pitfalls I'll tell you about later. <!-- more --></p>
+<p>Let's create a validator that will check if the size of an uploaded file is greater than the limit you set. We use a&nbsp; CustomValidator for this.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">asp:CustomValidator</span> <span class="attr">ID</span><span class="kwrd">="valFileSize"</span> <span class="attr">runat</span><span class="kwrd">="server"</span> 
+    <span class="attr">ErrorMessage</span><span class="kwrd">="The image exceeds 10 MB"</span> 
+    <span class="attr">onservervalidate</span><span class="kwrd">="valFileSize_ServerValidate"</span> <span class="attr">Display</span><span class="kwrd">="Dynamic"</span> <span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>The method that actually performs the validation looks like this one:</p>
+<p>&nbsp;</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">protected</span> <span class="kwrd">void</span> valFileSize_ServerValidate(<span class="kwrd">object</span> source, ServerValidateEventArgs args)
+{
+    <span class="kwrd">if</span> (IsValid)
+    {
+        <span class="kwrd">int</span> maxSize = 5 * 1024 * 1024;
+        <span class="kwrd">if</span> (fileImage.PostedFile.ContentLength &gt; maxSize)
+        {
+            args.IsValid = <span class="kwrd">false</span>;
+        }
+    }
+}</pre>
+</div>
+<p>Why do we check if the page is valid in the validation method? We check it, because the file size validation has sense only if there is an uploaded file and this file is an image. We should ensure that the validator that checks the file size is executed after all other validators, in order to make sure we should just put the corresponding CustomValidator after the other ones. On the other hand, we can have other fields on the form that we also want to validate and those fields are not connected to file uploading, in this case we can use a boolean field that will indicate whether file uploading is correct or not.</p>
+<p>Well, if you run the web site and upload an image that is larger than 4 MB, you are likely to get a server error. This error is caused by uploading a file which size is larger than the maximum allowed size that is usually set to 4 MB. In order to extend that amount, you must correct Web.config, basically you need to set the <strong>maxRequestLength</strong> attribute of the <strong>httpRuntime</strong> element.</p>
+<div>
+<pre class="csharpcode"><span class="kwrd">&lt;</span><span class="html">httpRuntime</span> <span class="attr">maxRequestLength</span><span class="kwrd">="20480"</span><span class="kwrd">/&gt;</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>In this example the maximum uploaded file size is set to 20 MB, because you set the value in KB, so 20480 = 20 * 1024.</p>
+<p>You may also want to to set the value of the executionTimeout which will allow longer uploads.</p>
+<p>However, you still cannot prevent a server from displaying an error if an uploaded file is larger than the value in Web.config, so it's recommended to set a deliberately large value and validate the file size programatically.</p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>24 August 2008</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

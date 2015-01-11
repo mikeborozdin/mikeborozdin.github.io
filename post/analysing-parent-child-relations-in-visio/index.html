@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Analysing Parent-Child Relations in Visio</title>
+  <meta name="description" content="This is the second part of the Developing for Visio series. Today, we’ll speak about how to analyse programmatically parent-child relationships in Visio diag...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/analysing-parent-child-relations-in-visio">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Analysing Parent-Child Relations in Visio</h1>
+  </header>
+
+  <article class="post-content">
+    <p>This is the second part of the <a href="http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx" target="_blank">Developing for Visio series</a>. Today, we’ll speak about how to analyse programmatically parent-child relationships in Visio diagrams. Often, especially in block diagrams there are boxes that contain other boxes.</p>  <p><img style="display: block; float: none; margin-left: auto; margin-right: auto" title="image" alt="image" src="/images/image_22.png" width="240" height="107" /></p>  <p>However, during iterating through shapes in a Visio diagram such a relationship is not preserved.<!-- more --></p>  <div class="csharpcode">   <pre class="alt"><span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> <span class="kwrd">this</span>.visioControl.Window.Application.ActivePage.Shapes)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    MessageBox.Show(shape.Text);</pre>
+
+  <pre>}</pre>
+</div>
+
+<p>This piece of code will output three shape names, as if the diagram was flat. If you read carefully the Visio object model, you can find that the <span style="font-family: &#39;Courier New&#39;">Shape</span> class contains two properties that might be of interest for us. These properties are <span style="font-family: &#39;Courier New&#39;">Parent</span> and <span style="font-family: &#39;Courier New&#39;">ContainingShape</span>. However, if you read documentation on them or try writing some code, you will realise they work only if shapes in a diagram are grouped. Indeed, grouping shapes when drawing Visio diagram isn’t a bad idea. But how often do you really group your shapes? How many diagram do you have with grouped shapes? I guess not many.</p>
+
+<p>Thus, we have to find another way of analysing parent-child relationships in Visio diagrams. Fortunately, there is a property, <a href="http://msdn.microsoft.com/en-us/library/ff767509.aspx" target="_blank"><span style="font-family: &#39;Courier New&#39;">SpatialNeighbors</span></a>, of the <span style="font-family: &#39;Courier New&#39;">Shape</span> class that returns a collection of shapes that are in a given relation to a specified shape. Yes, this property does accept parameters. Actually, its signature is the following:</p>
+
+<p><span style="font-family: &#39;Courier New&#39;">Selection Shape.SpatialNeighbors[short relation, double tolerance, short flags[, object resultRoot]]</span></p>
+
+<p><span style="font-family: &#39;Courier New&#39;">relation </span>specifies in which relation shapes should be to a specified one. Its value can be any of the <span style="font-family: &#39;Courier New&#39;"><a href="http://msdn.microsoft.com/en-us/library/ff766208.aspx" target="_blank">VisSpatialRelationCode</a>. </span>At this moment we are only interested in two of them. The first one is <span style="font-family: &#39;Courier New&#39;">visSpatialContainedIn </span>that will return a shape that a the parent to a given one. For instance, if we run it for the “Financial Department” shape in the diagram above it will return “Acme Ltd”. The second property is <a href="http://msdn.microsoft.com/en-us/library/ff766208.aspx" target="_blank"><span style="font-family: &#39;Courier New&#39;">visSpatialContain</span></a>, it will return all the children of a specified shape, so if we pass “Acme Ltd”, then we will get “Financial Department” and “Marketing Department”.</p>
+
+<p><span style="font-family: &#39;Courier New&#39;">tolerance </span>specifies a distance between a given shape and shapes we are looking for. This parameter is useful if we want to find adjacent shapes, however if are looking for only child or parent shapes, we can leave it as zero.</p>
+
+<p><span style="font-family: &#39;Courier New&#39;">flags</span> sets properties of a returned result set, such as which shapes to return, in which order, etc. Its value can be one of the <span style="font-family: &#39;Courier New&#39;"><a href="http://msdn.microsoft.com/en-us/library/ff765950.aspx" target="_blank">VisSpatialRelationFlags</a></span>. Normally, I just set <span style="font-family: &#39;Courier New&#39;">visSpatialFrontToBack</span>.</p>
+
+<p><span style="font-family: &#39;Courier New&#39;">resultRoot</span>, <a href="http://msdn.microsoft.com/en-us/library/ff767509.aspx" target="_blank">MSDN</a> says the following about it ‘If you don't specify ResultRoot, this property returns a <span style="font-family: &#39;Courier New&#39;">Selection</span> object that represents the shapes that meet certain criteria in relation to the specified shape. If you specify ResultRoot, this property returns a <strong>Selection</strong> object that represents all the shapes in the <strong><span style="font-family: &#39;Courier New&#39;">Shape</span></strong> object specified by ResultRoot that meet certain criteria in relation to the specified shape. For example, specify ResultRoot to find all shapes within a group that are near a specified shape.’ I normally leave this parameter blank.</p>
+
+<p>The only thing that I haven’t mentioned about <span style="font-family: &#39;Courier New&#39;">Shape.SpatialNeighbors</span> is that it retuns an object of class <span style="font-family: &#39;Courier New&#39;"><a href="http://msdn.microsoft.com/en-us/library/ff768737.aspx" target="_blank">Selection</a></span>. If you just want to get a parent of a shape, then you can simply use <span style="font-family: &#39;Courier New&#39;">Selection.PrimaryItem</span>. Otherwise, when looking for children shapes you can simply iterate through <span style="font-family: &#39;Courier New&#39;">Selection.</span></p>
+
+<p>Okay, it’s time to write some code. We are going to create a simply application that displays a list of available shapes, like in the previous chapter, however this time it will preserve a shape hierarchy. I won’t cover the basics on how to create a Visio add-in or an application hosting a Visio control, since it was already covered in the <a href="http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx" target="_blank">previous chapter</a>. In fact, I’ll just create a WPF application with an embedded Vision control.</p>
+
+<p>Since, the <span style="font-family: &#39;Courier New&#39;">Shape</span> class has no notion of parent or child, the first thing we should do is to create a wrapper around that class that will have the <span style="font-family: &#39;Courier New&#39;">Children</span> property.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">using</span> Visio = Microsoft.Office.Interop.Visio;</pre>
+
+  <pre><span class="rem">//...</span></pre>
+
+  <pre class="alt"><span class="kwrd">public</span> <span class="kwrd">class</span> ShapeWrapper</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    <span class="kwrd">public</span> Visio.Shape Shape { get; set; }</pre>
+
+  <pre>&#160;</pre>
+
+  <pre class="alt">    <span class="kwrd">private</span> List&lt;ShapeWrapper&gt; children = <span class="kwrd">new</span> List&lt;ShapeWrapper&gt;();</pre>
+
+  <pre>    <span class="kwrd">public</span> List&lt;ShapeWrapper&gt; Children { get { <span class="kwrd">return</span> <span class="kwrd">this</span>.children; } }</pre>
+
+  <pre class="alt">&#160;</pre>
+
+  <pre>    <span class="kwrd">public</span> ShapeWrapper(Visio.Shape shape)</pre>
+
+  <pre class="alt">    {</pre>
+
+  <pre>        Shape = shape;</pre>
+
+  <pre class="alt">    }</pre>
+
+  <pre>}</pre>
+</div>
+
+<p>Good. Now, we should put down some code that will parse a diagram and preserve parent-child relations.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_DocumentOpened(<span class="kwrd">object</span> sender, EVisOcx_DocumentOpenedEvent e)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    <span class="rem">//a list of already parsed shapes that are children to some other shapes</span></pre>
+
+  <pre>    List&lt;Visio.Shape&gt; addedShapes = <span class="kwrd">new</span> List&lt;Visio.Shape&gt;();</pre>
+
+  <pre class="alt">    <span class="rem">//a list of wrappers that we are building</span></pre>
+
+  <pre>    List&lt;ShapeWrapper&gt; shapeWrappers = <span class="kwrd">new</span> List&lt;ShapeWrapper&gt;();</pre>
+
+  <pre class="alt">&#160;</pre>
+
+  <pre>    <span class="kwrd">foreach</span> (Visio.Shape shape <span class="kwrd">in</span> <span class="kwrd">this</span>.visioControl.Window.Application.ActivePage.Shapes)</pre>
+
+  <pre class="alt">    {</pre>
+
+  <pre>        <span class="kwrd">if</span> (!addedShapes.Contains(shape))</pre>
+
+  <pre class="alt">        {</pre>
+
+  <pre>            ShapeWrapper shapeWrapper = <span class="kwrd">new</span> ShapeWrapper(shape);</pre>
+
+  <pre class="alt">            shapeWrappers.Add(shapeWrapper);</pre>
+
+  <pre>&#160;</pre>
+
+  <pre class="alt">            <span class="rem">//here we are trying to retrieve all the children of a current shape</span></pre>
+
+  <pre>            FindChildren(shapeWrapper, addedShapes);</pre>
+
+  <pre class="alt">        }</pre>
+
+  <pre>    }</pre>
+
+  <pre class="alt">&#160;</pre>
+
+  <pre>    <span class="rem">//just some WPF binding</span></pre>
+
+  <pre class="alt">    treeShapes.ItemsSource = shapeWrappers;</pre>
+
+  <pre>}</pre>
+</div>
+
+<p>There are might be two confusing points about this piece of code. The first one is the mystical <span style="font-family: &#39;Courier New&#39;">FindChildren()</span> method, and the second on is the <span style="font-family: &#39;Courier New&#39;">addedShapes</span> collection. <span style="font-family: &#39;Courier New&#39;">FindChildren()</span>is given below, as for <span style="font-family: &#39;Courier New&#39;">addedShapes</span>, when we are iterating through all the shapes in a diagram we can encounter shapes that have been already added to a certain <span style="font-family: &#39;Courier New&#39;">ShapeWrapper </span>in <span style="font-family: &#39;Courier New&#39;">shapeWrappers</span> during the execution of the the <span style="font-family: &#39;Courier New&#39;">FindChildren()</span> method and it is much easier to add them to <span style="font-family: &#39;Courier New&#39;">addedShapes</span> and check afterwards rather than check recursively in <span style="font-family: &#39;Courier New&#39;">shapeWrappers</span>.</p>
+
+<div class="csharpcode">
+  <pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> FindChildren(ShapeWrapper shapeWrapper, List&lt;Visio.Shape&gt; addedShapes)</pre>
+
+  <pre>{</pre>
+
+  <pre class="alt">    Visio.Selection children = shapeWrapper.Shape.SpatialNeighbors[(<span class="kwrd">short</span>)Visio.VisSpatialRelationCodes.visSpatialContain, 0,</pre>
+
+  <pre>                (<span class="kwrd">short</span>)Visio.VisSpatialRelationFlags.visSpatialFrontToBack];</pre>
+
+  <pre class="alt">&#160;</pre>
+
+  <pre>    <span class="kwrd">foreach</span> (Visio.Shape child <span class="kwrd">in</span> children)</pre>
+
+  <pre class="alt">    {</pre>
+
+  <pre>        <span class="kwrd">if</span> (!addedShapes.Contains(child))</pre>
+
+  <pre class="alt">        {</pre>
+
+  <pre>            <span class="rem">//MessageBox.Show(child.Text);</span></pre>
+
+  <pre class="alt">            ShapeWrapper childWrapper = <span class="kwrd">new</span> ShapeWrapper(child);</pre>
+
+  <pre>            shapeWrapper.Children.Add(childWrapper);</pre>
+
+  <pre class="alt">&#160;</pre>
+
+  <pre>            FindChildren(childWrapper, addedShapes);</pre>
+
+  <pre class="alt">        }</pre>
+
+  <pre>    }</pre>
+
+  <pre class="alt">}</pre>
+</div>
+
+<p>So here in the code above we use the aforementioned <span style="font-family: &#39;Courier New&#39;">Shape.SpatialNeighbors</span>.</p>
+
+<p>After compiling the application you should see a diagram and a hierarchical list on the right.</p>
+
+<p><img style="background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px" title="image" border="0" alt="image" src="/images/image_23.png" width="740" height="766" /></p>
+
+<p>This time we feature the architecture of Windows 2000 that I found on a <a href="http://en.wikipedia.org/wiki/Block_diagram" target="_blank">Wikipedia page</a>.</p>
+
+<h1>Source Code</h1>
+
+<p>I don’t provide the rest of the code related to XAML and Visio initialisation, instead you can download it here.</p>
+
+<p><a href="/files/VisioParentChild.zip">VisioParentChild.zip (108.69 kb)</a></p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>6 September 2011</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>

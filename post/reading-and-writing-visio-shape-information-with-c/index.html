@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Reading and Writing Visio Shape Information with C#</title>
+  <meta name="description" content="Often, you want to either to read or put some additional information regarding shapes in your diagram. For instance, you have an application for drawing a la...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/post/reading-and-writing-visio-shape-information-with-c">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="http://yourdomain.com/feed.xml" />
+</head>
+
+
+  <body>
+
+    <div id="header">
+	<div id="banner">
+		<div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+		<div id="description"><a href="/">a blog about software engineering...</a></div>
+	</div>
+	
+	<a href="#" id="menuButton">Menu</a>
+	
+	<ul id="menu" class="hidden">
+		<li><a href="/" class="menuItem">Home</a></li>
+		<li><a href="/all-posts/" class="menuItem">All posts</a></li>
+        <li><a href="/talks/" class="menuItem">Talks</a></li>
+		<li><a href="/about/" class="menuItem">About me</a></li>
+        <li>
+            <a href="http://www.twitter.com/mikeborozdin">
+                <span id="twitterText">Twitter</span>
+                <span id="twitterImage"><img src="/images/twitter.png" /></span>
+            </a>
+        </li>
+	</ul>
+</div>
+
+    <div id="content">
+        <div class="post">
+
+  <header class="post-header">
+    <h1>Reading and Writing Visio Shape Information with C#</h1>
+  </header>
+
+  <article class="post-content">
+    <p>Often, you want to either to read or put some additional information regarding shapes in your diagram. For instance, you have an application for drawing a layout of your office. Obviously, every piece of equipment or furniture your have has some information, such as its name, code and any other information related to facility management. There are two ways of reading/writing such kind of information. The first one is to make use of Visio custom properties, while the second one is to store that kind of information in a database. The former is relatively simple, as it doesn&rsquo;t require to have any additional layer, such as database. At the same time, the latter is more versatile, as it allows integrating Visio application with other business application by querying a database. In the tutorial we cover the first option, that is using custom properties of Visio. <!-- more --></p>
+<p>When drawing diagrams in Visio you often can assign custom properties to shapes by right-clicking and choosing <span style="font-family: 'Courier New';">Properties</span><span style="font-family: Georgia;">. For instance, during a creation of an <span style="font-family: 'Courier New';">Office Layout</span> diagram you can see the following dialog.</span></p>
+<p><img style="display: block; float: none; margin-left: auto; margin-right: auto;" title="image" src="/images/image_25.png" alt="image" width="838" height="524" /></p>
+<p>The dialog prompts to enter such information as&nbsp; length, depth, ID, name, product number and any other information that makes sense for furniture and office equipment.</p>
+<p>For sure, the Visio API provides tools for reading and writing such pieces of information. In the <a href="http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx" target="_blank">previous tutorial</a> I briefly mentioned that every <span style="font-family: 'Courier New';">Shape</span> object holds a property of the type of <span style="font-family: 'Courier New';">Cell</span> that keeps shape&rsquo;s properties, as well as additional properties. In order to access one of them you should refer to <span style="font-family: 'Courier New';">Shape.Cell[&lsquo;PropertyName&rsquo;].</span></p>
+<p>Usually, property names slightly differ from those ones displayed in the user-friendly Visio dialog. It doesn&rsquo;t impose a serious problem, however, because their names can be looked up in the <span style="font-family: 'Courier New';">ShapeSheet Data Window</span>. The window is accessible on right-clicking a shape and choosing &lsquo;<span style="font-family: 'Courier New';">Show ShapeSheet&rsquo;</span>. If you can&rsquo;t see that window, then you must enable the Developer mode, which can be done by going to <span style="font-family: 'Courier New';">File-&gt;Options-&gt;Advanced</span> and ticking &lsquo;<span style="font-family: 'Courier New';">Run in developer mode&rsquo;</span>.</p>
+<p><img style="display: inline;" title="image" src="/images/image_26.png" alt="image" width="841" height="526" /></p>
+<p>The window shows a whole cell of available properties including some general ones linked to a shape appearance and a position in a diagram to more customised one located in the &lsquo;Shape Data&rsquo; section where you can spot properties like &lsquo;Prop.Department&rsquo;, &lsquo;Prop.Name&rsquo; and so on.</p>
+<p>We will create a simple application that will display a few properties in a form on selecting a shape. Modification of those properties will be also preserved. Moreover, we will allow user to save a modified diagram.</p>
+<p><img style="display: inline;" title="image" src="/images/image_27.png" alt="image" width="817" height="510" /></p>
+<p>The basics of creating applications for Visio are given <a href="http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx" target="_blank">here</a>, while <a href="http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx" target="_blank">another tutorial</a> explains how to track if a shape has been selected in a diagram, as well as how to handle some other events.</p>
+<p>So, when handling the SelectionChanged event we must extract and display values of custom properties we are interested in.</p>
+<div class="csharpcode">
+<pre class="alt"><span class="kwrd">private</span> <span class="kwrd">void</span> visioControl_SelectionChanged(<span class="kwrd">object</span> sender, EVisOcx_SelectionChangedEvent e)</pre>
+<pre>{</pre>
+<pre class="alt">    Visio.Shape selectedShape = <span class="kwrd">this</span>.visioControl.Window.Selection.PrimaryItem;</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">    <span class="rem">//we bind only if we have selected a shape, not in case if we have deselected it</span></pre>
+<pre>    <span class="kwrd">if</span> (selectedShape != <span class="kwrd">null</span>)</pre>
+<pre class="alt">    {</pre>
+<pre>        Binding bindingId = <span class="kwrd">new</span> Binding(<span class="str">"Formula"</span>);</pre>
+<pre class="alt">        bindingId.Source = selectedShape.Cells[<span class="str">"Prop.ID"</span>];</pre>
+<pre>        <span class="rem">//we update a source, in our case, a Prop.ID everytime we type in something in a textbox</span></pre>
+<pre class="alt">        bindingId.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;</pre>
+<pre>        <span class="rem">//we specify a converter that removes trailing and leading quotes when displaying values</span></pre>
+<pre class="alt">        <span class="rem">//and enquotes values when saving them</span></pre>
+<pre>        bindingId.Converter = <span class="kwrd">new</span> VisioCellFormulaConverter();</pre>
+<pre class="alt">        tbId.SetBinding(TextBox.TextProperty, bindingId);</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">        Binding bindingName = <span class="kwrd">new</span> Binding(<span class="str">"Formula"</span>);</pre>
+<pre>        bindingName.Source = selectedShape.Cells[<span class="str">"Prop.Name"</span>];</pre>
+<pre class="alt">        bindingName.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;</pre>
+<pre>        bindingName.Converter = <span class="kwrd">new</span> VisioCellFormulaConverter();</pre>
+<pre class="alt">        tbName.SetBinding(TextBox.TextProperty, bindingName);</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">        Binding bindingDepartment = <span class="kwrd">new</span> Binding(<span class="str">"Formula"</span>);</pre>
+<pre>        bindingDepartment.Source = selectedShape.Cells[<span class="str">"Prop.Department"</span>];</pre>
+<pre class="alt">        bindingDepartment.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;</pre>
+<pre>        bindingDepartment.Converter = <span class="kwrd">new</span> VisioCellFormulaConverter();</pre>
+<pre class="alt">        tbDepartment.SetBinding(TextBox.TextProperty, bindingDepartment);</pre>
+<pre>    }</pre>
+<pre class="alt">}</pre>
+</div>
+<!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, "Courier New", courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } -->
+<p>Okay, it is clear that we have a WPF application because of having bindings. However, they do not make things any more complicated. Basically, we refer to a selected shape by pointing to <span style="font-family: 'Courier New';">Window.Selection.PrimaryItem</span>. Well, in case there are multiple items in a selection we display information only on the first one. Then, provided we have three different text boxes for three different properties we specify bindings for those properties (<span style="font-family: 'Courier New';">Prop.ID</span>, <span style="font-family: 'Courier New';">Prop.Name</span>, and <span style="font-family: 'Courier New';">Prop.Department</span>). Each <span style="font-family: 'Courier New';">Cell</span> object contains a property, <span style="font-family: 'Courier New';">Formula</span>, that has a corresponding value, so we put in as a binding path. Since, that property, Formula, is surrounded by quotes, we remove them when showing data and put them back by using a converter called VisioCellFormulaConverter.</p>
+<div class="csharpcode">
+<pre class="alt"><span class="kwrd">public</span> <span class="kwrd">class</span> VisioCellFormulaConverter : IValueConverter</pre>
+<pre>{</pre>
+<pre class="alt">    <span class="kwrd">public</span> <span class="kwrd">object</span> Convert(<span class="kwrd">object</span> <span class="kwrd">value</span>, Type targetType, <span class="kwrd">object</span> parameter, System.Globalization.CultureInfo culture)</pre>
+<pre>    {</pre>
+<pre class="alt">        <span class="kwrd">string</span> result;</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">        <span class="kwrd">if</span> (!<span class="kwrd">string</span>.IsNullOrEmpty(<span class="kwrd">value</span>.ToString()))</pre>
+<pre>        {</pre>
+<pre class="alt">            <span class="kwrd">string</span> sValue = <span class="kwrd">value</span>.ToString();</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">            result = sValue.Substring(1, sValue.Length - 2);</pre>
+<pre>        }</pre>
+<pre class="alt">        <span class="kwrd">else</span></pre>
+<pre>        {</pre>
+<pre class="alt">            result = <span class="kwrd">string</span>.Empty;</pre>
+<pre>        }</pre>
+<pre class="alt">&nbsp;</pre>
+<pre>        <span class="kwrd">return</span> result;</pre>
+<pre class="alt">    }</pre>
+<pre>&nbsp;</pre>
+<pre class="alt">    <span class="kwrd">public</span> <span class="kwrd">object</span> ConvertBack(<span class="kwrd">object</span> <span class="kwrd">value</span>, Type targetType, <span class="kwrd">object</span> parameter, System.Globalization.CultureInfo culture)</pre>
+<pre>    {</pre>
+<pre class="alt">        <span class="kwrd">return</span> <span class="str">"\""</span> + <span class="kwrd">value</span>.ToString() + <span class="str">"\""</span>;</pre>
+<pre>    }</pre>
+<pre class="alt">}</pre>
+</div>
+<p>You can find the rest of the source code, as well, as the sample diagram here.</p>
+<p><a href="/files/VisioShapeProperties.zip">VisioShapeProperties.zip (484.76 kb)</a></p>
+
+  </article>
+  
+  <div id="postFooter">
+	  <p>Mike Borozdin</p>
+	  <p>21 September 2011</p>
+  </div>
+
+</div>
+
+		
+		<div id="footer">
+	<p>
+		The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way.
+		My personal thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present 		standpoint.
+	</p>
+	<p>&copy; 2015 Mike Borozdin</p>
+</div>
+
+    </div>
+
+    
+
+  </body>
+
+</html>
