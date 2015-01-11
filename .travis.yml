@@ -1,0 +1,10 @@
+language: ruby
+script: ./build.sh
+branches:
+  only:
+  - jekyll
+rvm:
+- 2.1.2
+env:
+  global:
+    secure: kgPYF/7cSxxz5cI1RWyA+rq84Ta3yW1iA7mqhJqV/vLS+AF4wbRyIBBnSjm5196wyVMrmgoZuICxlVo6igTkhEYxmSmRjc/TTGAXfwD6r07ty6elIc8ZIDs4EJA1NIshU3BSX6cU7S2I3uRXLnFKcOe1+A6Ms3X3t86MShstYG4=
