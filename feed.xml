@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mike Borozdin&#39;s Blog</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+    <description>Mike Borozdin&#39;s Blog about software engineering
 </description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 11 Jan 2015 10:39:30 +0000</pubDate>
-    <lastBuildDate>Sun, 11 Jan 2015 10:39:30 +0000</lastBuildDate>
+    <link>http://mikeborozdin.com/</link>
+    <atom:link href="http://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 11 Jan 2015 11:12:10 +0000</pubDate>
+    <lastBuildDate>Sun, 11 Jan 2015 11:12:10 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -21,8 +21,8 @@
 &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/hWWr2fex2Tc&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 </description>
         <pubDate>Sun, 16 Nov 2014 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/practical-functional-programming-in-javascript</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/practical-functional-programming-in-javascript</guid>
+        <link>http://mikeborozdin.com/post/practical-functional-programming-in-javascript</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/practical-functional-programming-in-javascript</guid>
         
         
       </item>
@@ -32,8 +32,8 @@
         <description>&lt;p&gt;I have already &lt;a href=&quot;http://ncredinburgh.com/blog/posts/information-sharing-in-software-development&quot;&gt;blogged&lt;/a&gt; about the ways to share expertise and knowledge inside your organisation However, there is one more way. That’s something we call a codefest or hackathon. Codefest is an opportunity to work for two days on any project you like using any technology of your choice. Also, it’s a chance to work with people you don’t have on your project. This blog post is available &lt;a href=&quot;http://ncredinburgh.com/blog/posts/joy-and-benefits-of-codefest&quot; target=&quot;_blank&quot;&gt;on my company’s blog&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 23 Sep 2014 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/joy-and-benefits-of-codefest</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/joy-and-benefits-of-codefest</guid>
+        <link>http://mikeborozdin.com/post/joy-and-benefits-of-codefest</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/joy-and-benefits-of-codefest</guid>
         
         
       </item>
@@ -43,8 +43,8 @@
         <description>&lt;p&gt;Where IT organisations have heterogeneous technical environments it is not always possible to know what your colleagues are working on and which challenges they are facing. This blog post will discuss various ways to share information in an IT organisation. The article was written for company’s blog &lt;a href=&quot;http://ncredinburgh.com/blog/posts/information-sharing-in-software-development&quot; target=&quot;_blank&quot;&gt;where you can read it now&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Tue, 23 Sep 2014 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/information-sharing-in-software-development</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/information-sharing-in-software-development</guid>
+        <link>http://mikeborozdin.com/post/information-sharing-in-software-development</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/information-sharing-in-software-development</guid>
         
         
       </item>
@@ -54,8 +54,8 @@
         <description>&lt;p&gt;Recently, I came across a situation which once again proved the immense value in having code reviews. I was working on a tricky part of an application that involved substantial design work. As part of our &#39;Definition of Done&#39;, I had to submit my code for a peer review. The review turned out to be invaluable - after all, it&#39;s always useful to get the second pair of eyes to look at your work.&lt;/p&gt;  &lt;p&gt;I wrote this article for my &lt;a class=&quot;more&quot; href=&quot;http://ncredinburgh.com/blog/posts/a-code-review-is-more-useful-than-you-think&quot;&gt;company’s blog where&lt;/a&gt; you can read it now.&lt;/p&gt;
 </description>
         <pubDate>Sun, 08 Jun 2014 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/a-code-review-is-more-useful-than-you-think</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/a-code-review-is-more-useful-than-you-think</guid>
+        <link>http://mikeborozdin.com/post/a-code-review-is-more-useful-than-you-think</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/a-code-review-is-more-useful-than-you-think</guid>
         
         
       </item>
@@ -65,8 +65,8 @@
         <description>&lt;p&gt;There can be debates whether the Agile Software Development processes have become mainstream or not, but most of the software development houses are trying to adopt the Agile practices. Yet, coming from academia or, say, a less agile environment, such practices can be misunderstood.&lt;/p&gt;  &lt;p&gt;In this post, I am going to tell how I have become an avid agile practitioner and what has helped in that glorious journey. &lt;!-- more --&gt; My journey started in December 2011 when I finished my Master’s got my first full time job as a Software Developer at &lt;a href=&quot;http://www.cloudreach.com/&quot; target=&quot;_blank&quot;&gt;Cloudreach Limited&lt;/a&gt;. Of course, I had a couple of internships under my belt, and was running this blog, but I clearly didn’t have any experience of working in a team on commercial software. I must admit though I was still interested not only programming languages and technologies, but also in processes. Yet, I only had, say, some textbook knowledge, and was slightly scared to write tests before code. I remember though that while working on some university project I was saying to myself that I must write some unit tests, or otherwise, my code would become a buggy mess.&lt;/p&gt;  &lt;p&gt;The times they are a changing. Now, I can’t allow myself to write a piece of code without writing a test first. So, I’ll try to list the thing which have helped to become comfortable to Agile, and which I have noticed on my journey.&lt;/p&gt;  &lt;h2&gt;Proper Mentorship Helps. Yet, You Must Be Open For New Things.&lt;/h2&gt;  &lt;p&gt;First of all, I would hardly be able to embrace Agile without the help of my more experienced colleagues. Thank you guys! Of course, one can read books, and various online resources, but it’s crucial to be able to ask someone a question, and check whether you are on a right track or not. In total, I was assisted in the following ways:&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;A training project that can give a developer a kick start with the Agile, as well as with some new technology. Since, it’s just a training project it eliminates all possible stress and allows focusing on learning new things &lt;/li&gt;    &lt;li&gt;Code reviews are an efficient way of learning from your peers, and also getting to know other parts of the application. So, try to get your code reviewed, and use a chance to review someone else’s code. I wrote a bit on the benefits of code reviews and the ways of conducting them in &lt;a href=&quot;http://devblog.cloudreach.co.uk/2012/08/asynchronous-code-reviews-as-efficient.html&quot; target=&quot;_blank&quot;&gt;this article&lt;/a&gt;. &lt;/li&gt;    &lt;li&gt;Regular catch-ups with a more experienced colleague. In other words, try to get a mentor who works with you and observes your progress. Also, don’t view mentorship as a one-way process. A good mentor will be keen to get your feedback and react accordingly. &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;The last, but not the least, be open to new things. People can be naturally resistant to changes, and it’s essential to keep that in mind when thinking about the customer, yet, yourself should not be discouraged from doing something in a new way.&lt;/p&gt;  &lt;h2&gt;Scrum Is Easy To Understand&lt;/h2&gt;  &lt;p&gt;Just recently I came across an &lt;a href=&quot;http://java.dzone.com/articles/why-scrum-won&quot; target=&quot;_blank&quot;&gt;article&lt;/a&gt; which said that Scrum had achieved its solid position today mainly due to its simplicity. Thinking retrospectively, I would say that this is indeed true. Moreover, this is one of the factors that has helped to adopt the agile quite easily.&lt;/p&gt;  &lt;p&gt;Moreover, things like daily stand-ups and sprint retrospectives allow you to know what everyone is doing, and have your say if something does not go very well.&lt;/p&gt;  &lt;h2&gt;Don’t Be Scared of Test-Driven Development&lt;/h2&gt;  &lt;p&gt;Writing tests before code might sound strange at first, but it’s indeed worth doing that. It not only makes your code more reliable, but also dramatically improves its maintainability. Indeed, the book that assisted me in embracing TDD was called ‘&lt;a href=&quot;http://www.growing-object-oriented-software.com/&quot; target=&quot;_blank&quot;&gt;Growing Object-Oriented Software Guided By Tests’&lt;/a&gt;. There is a popular argument against TDD which says that it slows down development. In fact, it speeds it up. Try writing a complex application that interacts with a few external system with no tests – it will fail to work at first, and you will struggle to debug it.&lt;/p&gt;  &lt;p&gt;Finally, don’t focus on testing method per se, put emphasis on testing behaviour of your application and its parts. Adopt &lt;a href=&quot;http://dannorth.net/introducing-bdd/&quot; target=&quot;_blank&quot;&gt;Behaviour-Driven Development&lt;/a&gt;, and pair it with &lt;a href=&quot;http://rubylearning.com/blog/2010/10/05/outside-in-development/&quot; target=&quot;_blank&quot;&gt;Outside-in Development.&lt;/a&gt;&lt;/p&gt;  &lt;p&gt;I also gave a &lt;a href=&quot;http://vimeo.com/46619279&quot; target=&quot;_blank&quot;&gt;talk&lt;/a&gt; in Glasgow, UK, and wrote a &lt;a href=&quot;http://devblog.cloudreach.co.uk/2012/05/behaviour-driven-development-in-net.html&quot; target=&quot;_blank&quot;&gt;blog post&lt;/a&gt; about Outside-In Behaviour Driven Development.&lt;/p&gt;  &lt;h2&gt;It’s More About Techniques Rather Than Underlying Tools&lt;/h2&gt;  &lt;p&gt;Indeed, you can work with a programming language whose limitation doesn’t allow for having a generic mocking framework. Is it a reason not to use mock objects in your tests? Not all! After all, it doesn’t take a lot of time to write mock objects by hand. Once again, the benefits of doing that will hugely outweigh that little time you spend on it.&lt;/p&gt;  &lt;h2&gt;Transfer Your Knowledge As You Go&lt;/h2&gt;  &lt;p&gt;There is no better way to ensure that you understand a concept than explaining it to someone else. Feel free to tell about your Agile successes to fellow developers. Don’t be afraid to blog, and speak at public events. You will not only improve your understanding of the Agile methodology, but spread the word about it. Needless to say, it will also help you to build up your professional reputation.&lt;/p&gt;  &lt;h2&gt;It’s A Never Ending Journey&lt;/h2&gt;  &lt;p&gt;Having called myself ‘an avid Agile practitioner’ in the beginning of the article, I believe there are still tons to be learnt. After all, we should try to learn something every day.&lt;/p&gt;
 </description>
         <pubDate>Sun, 20 Jan 2013 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/my-agile-journey</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/my-agile-journey</guid>
+        <link>http://mikeborozdin.com/post/my-agile-journey</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/my-agile-journey</guid>
         
         
       </item>
@@ -133,8 +133,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Tue, 22 Nov 2011 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/handling-the-double-click-event-with-the-visio-api</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/handling-the-double-click-event-with-the-visio-api</guid>
+        <link>http://mikeborozdin.com/post/handling-the-double-click-event-with-the-visio-api</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/handling-the-double-click-event-with-the-visio-api</guid>
         
         
       </item>
@@ -217,8 +217,8 @@
 &lt;p&gt;&lt;a href=&quot;/files/VisioShapeProperties.zip&quot;&gt;VisioShapeProperties.zip (484.76 kb)&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/reading-and-writing-visio-shape-information-with-c</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/reading-and-writing-visio-shape-information-with-c</guid>
+        <link>http://mikeborozdin.com/post/reading-and-writing-visio-shape-information-with-c</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/reading-and-writing-visio-shape-information-with-c</guid>
         
         
       </item>
@@ -355,8 +355,8 @@
 &lt;p&gt;The Visio event model allows you to build rich interaction between your application and a hosted Visio control. You can freely allow users to edit diagrams in your application and the application itself will be notified about every change.&lt;/p&gt;
 </description>
         <pubDate>Wed, 07 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/understanding-visio-event-model</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/understanding-visio-event-model</guid>
+        <link>http://mikeborozdin.com/post/understanding-visio-event-model</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/understanding-visio-event-model</guid>
         
         
       </item>
@@ -523,8 +523,8 @@
 &lt;p&gt;&lt;a href=&quot;/files/VisioParentChild.zip&quot;&gt;VisioParentChild.zip (108.69 kb)&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 06 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/analysing-parent-child-relations-in-visio</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/analysing-parent-child-relations-in-visio</guid>
+        <link>http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</guid>
         
         
       </item>
@@ -848,8 +848,8 @@
 &lt;p&gt;&lt;a href=&quot;/files/Visio.zip&quot;&gt;Visio.zip (496.48 kb)&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://yourdomain.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</link>
-        <guid isPermaLink="true">http://yourdomain.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</guid>
+        <link>http://mikeborozdin.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</guid>
         
         
       </item>
