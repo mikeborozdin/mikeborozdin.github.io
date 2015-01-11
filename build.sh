@@ -9,7 +9,7 @@ fi
 # enable error reporting to the console
 set -e
 
-bundle install
+#bundle install
 
 echo "Building a Jekyll site"
 
