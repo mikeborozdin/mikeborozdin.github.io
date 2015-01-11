@@ -14,4 +14,4 @@ I’m extremely keen on knowledge sharing, hence I give an occasional talk at lo
 
 Regarding my personal interests and hobbies, I’m very passionate about music and travelling – I’m fortunate to have lived in four different countries and be able explore different cultures.
 
-Feel free to contact me by using this form or follow me on Twitter.
+Feel free to [drop me a line](mailto:mike.borozdin@gmail.com) or follow me on [Twitter](http://www.twitter.com/mikeborozdin).
