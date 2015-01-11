@@ -16,3 +16,5 @@ markdown: kramdown
 permalink: post/:title
 paginate: 10
 excerpt_separator: <!-- more -->
+
+exclude: [vendor]
