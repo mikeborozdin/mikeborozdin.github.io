@@ -7,11 +7,12 @@ permalink: /talks/
 Upcoming Talks
 ----
 
-* 14th Jan 2015 A Code Review Is More Useful Than You Think @ [TechMeetup Edinburgh](http://techmeetup.co.uk)
+* Nothing's scheduled
 
 Past Talks
 ----
 
+* A Code Review Is More Useful Than You Think @ [TechMeetup Edinburgh](http://techmeetup.co.uk)
 * Practical Functional Programming in JavaScript @ [EdinburghJS](https://twitter.com/edinburghjs)
 * Functional Programming in Java 8 @ [EdLambda](http://www.edlambda.co.uk/)
 * Practical Functional Programming in JavaScript @ [AngularJS Edinburgh](http://www.meetup.com/AngularJS-Edinburgh/)
