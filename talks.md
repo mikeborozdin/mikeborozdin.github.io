@@ -7,7 +7,7 @@ permalink: /talks/
 Upcoming Talks
 ----
 
-* Nothing's scheduled
+* March 12, 2015 - JavaScript and AngularJS on an ATM @ [EdinburghJS](https://ti.to/edinburghjs/march-2015-meetup) 
 
 Past Talks
 ----
