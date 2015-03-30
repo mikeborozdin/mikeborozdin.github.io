@@ -7,11 +7,12 @@ permalink: /talks/
 Upcoming Talks
 ----
 
-* March 12, 2015 - JavaScript and AngularJS on an ATM @ [EdinburghJS](https://ti.to/edinburghjs/march-2015-meetup) 
+* Nothing's scheduled 
 
 Past Talks
 ----
 
+* JavaScript and AngularJS on an ATM @ [EdinburghJS](https://twitter.com/edinburghjs)
 * A Code Review Is More Useful Than You Think @ [TechMeetup Edinburgh](http://techmeetup.co.uk)
 * Practical Functional Programming in JavaScript @ [EdinburghJS](https://twitter.com/edinburghjs)
 * Functional Programming in Java 8 @ [EdLambda](http://www.edlambda.co.uk/)
