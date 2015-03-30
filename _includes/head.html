@@ -9,9 +9,12 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   
   <!--[if lt IE 9]>
-  		<script src="http://www.mikeborozdin.com/Scripts/css3-mediaqueries.js"></script>
+  		<script src="{{ "/js/css3-mediaqueries.js" | prepend: site.baseurl}}></script>
   	<![endif]-->
   
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+  
+  <script type="text/javascript" src="{{ "/js/toggle-menu.js" | prepend: site.baseurl }}"></script>
+
 </head>
