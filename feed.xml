@@ -6,9 +6,99 @@
 </description>
     <link>http://mikeborozdin.com/</link>
     <atom:link href="http://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 31 Mar 2015 21:37:47 +0000</pubDate>
-    <lastBuildDate>Tue, 31 Mar 2015 21:37:47 +0000</lastBuildDate>
+    <pubDate>Tue, 31 Mar 2015 21:37:50 +0000</pubDate>
+    <lastBuildDate>Tue, 31 Mar 2015 21:37:50 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Writing a JavaScript Public Library? Validate Your Arguments</title>
+        <description>&lt;p&gt;How many times have seen an obscure JavaScript error when using one 3rd party library or another? More likely than not, you’ve come across a message like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;TypeError: Cannot call method &#39;someMethod&#39; of undefined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your browser or the Node.js interpreter will tell you in which file and on which line that error has occurred. Then, you’ll start a very mundane task of examining the code of a 3rd party library, if it’s has not been minimised, of course. Eventually, you will find out that you have forgotten to provide one of the arguments required by a function.
+You may even see a more obscure error. &lt;!-- more --&gt; Let’s take the standard Node.js library for an example, more specifically, its &lt;code&gt;http&lt;/code&gt; module. It has the &lt;code&gt;request()&lt;/code&gt; function that sends an HTTP request that can be meticulously configured with an object you pass into. What if you accidentally confuse one of the object’s attributes, for example, instead of typing &lt;code&gt;hostname&lt;/code&gt; you write &lt;code&gt;url&lt;/code&gt;, e.g.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;http&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;
+&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+&lt;a name=&quot;True-4&quot;&gt;&lt;/a&gt; &lt;span class=&quot;nx&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;www.google.com&amp;#39;&lt;/span&gt;
+&lt;a name=&quot;True-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, you will see an error saying exactly the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;throw er; // Unhandled &#39;error&#39; event
+Error: connect ECONNREFUSED
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Urgh, what could it mean? Has Google suddenly gone down? No, you should have read the documentation more carefully and remember that the attribute is called &lt;code&gt;hostname&lt;/code&gt;, not &lt;code&gt;url&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Okay, so, where does the problem lie? Is it a developer’s problem that they have accidentally made mistake and spent hours debugging? Let’s face, we all make mistakes. Some tools though provide better feedback than the other ones.&lt;/p&gt;
+
+&lt;h2 id=&quot;can-static-typing-really-help&quot;&gt;Can Static Typing Really Help?&lt;/h2&gt;
+
+&lt;p&gt;It might sound that I’m arriving on the idea of introducing static typing in JavaScript - this is not true. However, I believe that when we’re writing code in JavaScript we still assume certain types. In other words, if we create a multiplying function, like the one below:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We presume that &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; are numbers, not strings or objects. This idea is beautifully put by Facebook &lt;a href=&quot;https://code.facebook.com/posts/1505962329687926/flow-a-new-static-type-checker-for-javascript/&quot;&gt;in their introduction to Flow&lt;/a&gt;, a static type checking for JavaScript - &lt;em&gt;‘the design of Flow is the assumption that most JavaScript code is implicitly statically typed; even though types may not appear anywhere in the code, they are in the developer’s mind as a way to reason about the correctness of the code’&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Would even having static typing in JavaScript help? After all, you can already use TypeScript…&lt;/p&gt;
+
+&lt;p&gt;Well, partially… Statically typed languages are still prone to similar issues. Let’s take Java as an example. It can provide great feedback to a developer during a compilation. What about the run time though? How many time have you seen a &lt;code&gt;NullPointerException&lt;/code&gt; creeping out of nowhere?&lt;/p&gt;
+
+&lt;p&gt;Is Java’s &lt;code&gt;NullPointerException&lt;/code&gt; anyhow different from the problem with &lt;code&gt;undefined&lt;/code&gt; and &lt;code&gt;null&lt;/code&gt; in JavaScript? Not really. Either way, you’ll have to analyse a call stack.&lt;/p&gt;
+
+&lt;p&gt;Consider the following example:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;   &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;a name=&quot;True-4&quot;&gt;&lt;/a&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;a name=&quot;True-5&quot;&gt;&lt;/a&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code is written in a statically type language, so you cannot pass an &lt;code&gt;int&lt;/code&gt; or a &lt;code&gt;String&lt;/code&gt;. What about passing a &lt;code&gt;null&lt;/code&gt; though?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CustomerPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That problem will not be caught when compiling the code, instead there will be a runtime exception. The code snippet above is fairly simple. Imagine calling &lt;code&gt;customer.getName()&lt;/code&gt; somewhere deep inside the method? That would be ‘fun’ to debug…&lt;/p&gt;
+
+&lt;p&gt;It’s hardly a surprise that even Java, a statically typed language, has libraries, such as Guava, one of which goals is to solve the problem by &lt;a href=&quot;http://stackoverflow.com/questions/26184322/whats-the-point-of-guava-checknotnull&quot;&gt;failing fast&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Developers, using Guava, would strive to use &lt;code&gt;Preconditions&lt;/code&gt; to fail as early as possibly and provide meaningful information if something goes wrong, e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;   &lt;span class=&quot;n&quot;&gt;Preconditions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;checkNotNull&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;a name=&quot;True-4&quot;&gt;&lt;/a&gt;
+&lt;a name=&quot;True-5&quot;&gt;&lt;/a&gt;   &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;a name=&quot;True-6&quot;&gt;&lt;/a&gt; &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;a name=&quot;True-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;fail-fast&quot;&gt;Fail Fast&lt;/h2&gt;
+
+&lt;p&gt;Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dwell into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.&lt;/p&gt;
+
+&lt;p&gt;All we want to see is a nice message saying that a certain argument is not what a function expects. That can be implemented with a fairly simple piece of code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;a name=&quot;True-1&quot;&gt;&lt;/a&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sendHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-2&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;object&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hostname&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;string&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;a name=&quot;True-3&quot;&gt;&lt;/a&gt;    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Param must be an object that has the `hostname` attribute&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;a name=&quot;True-4&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;a name=&quot;True-5&quot;&gt;&lt;/a&gt;
+&lt;a name=&quot;True-6&quot;&gt;&lt;/a&gt;  &lt;span class=&quot;c1&quot;&gt;//do something useful&lt;/span&gt;
+&lt;a name=&quot;True-7&quot;&gt;&lt;/a&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Tue, 31 Mar 2015 00:00:00 +0000</pubDate>
+        <link>http://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</guid>
+        
+        
+      </item>
     
       <item>
         <title>Practical Functional Programming in JavaScript</title>
@@ -525,331 +615,6 @@
         <pubDate>Tue, 06 Sep 2011 00:00:00 +0000</pubDate>
         <link>http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</link>
         <guid isPermaLink="true">http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Developing Applications for Visio with Visual Studio (VSTO, Windows Forms, WPF, XBAP)</title>
-        <description>&lt;p&gt;This tutorial demonstrates how to extend the Visio functionality by writing an Visio add-in with VSTO, creating a standalone application with both Windows Forms and WPF, and finally by building a browse application with WPF (XBAP). &lt;!-- more --&gt;&lt;/p&gt;  &lt;p&gt;Visio is a conventional tool for drawing various diagrams. However, sometimes we are not satisfied with its default functionality and want to extend it. There are thousands of reason why one may want to extend the Visio functionality, starting from creating a code generator that will automatically write code based on a UML diagram or will create a database (it is also possible to do a reverse operation and draw diagrams based on your class hierarchy or database schema) to analysing workflow diagrams or supply chains.&lt;/p&gt;  &lt;p&gt;Technically there are three ways of extending the Visio functionality.&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;Visio Add-in &lt;/li&gt;    &lt;li&gt;Standalone desktop application featuring a Visio control &lt;/li&gt;    &lt;li&gt;Web application hosting a Visio control &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;This tutorial covers all three approaches describing their pros and cons.&lt;/p&gt;  &lt;p&gt;There are some prerequisites to this tutorial which are:&lt;/p&gt;  &lt;ul&gt;   &lt;li&gt;Visual Studio 2010 &lt;/li&gt;    &lt;li&gt;Visio 2010 &lt;/li&gt; &lt;/ul&gt;  &lt;p&gt;However, you can try using Visio 2007 and Visual Studio 2008, I just haven’t tested my code for those versions.&lt;/p&gt;  &lt;p&gt;In this tutorial we will cover how to write a simply application that just lists all the shapes that are present in a diagram. For this reason we also draw a small diagram that illustrates the process of applying for a bank account and receiving a credit card.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_7.png&quot; width=&quot;643&quot; height=&quot;325&quot; /&gt;&lt;/p&gt;  &lt;h1&gt;Visio Add-In&lt;/h1&gt;  &lt;p&gt;The first approach of extending the Visio functionality is writing an add-in for it. Visual Studio provides tools for extending Microsoft Office applications that are called VSTO (Visual Studio Tools for Office). However, their set of features for Visio is somewhat limited. The main restriction is inability to embed a user interface in Visio by using panes that are available for Word and Excel add-ins. Of course, it is possible to create our own windows, but having a window over Visio is not the best usability decision, because it already looks as a standalone application and not Visio.&lt;/p&gt;  &lt;p&gt;Anyway, in order to create a Visio add-in you have to launch Visio Studio, create a new project and choose Visual C# –&amp;gt; Office –&amp;gt; 2010 –&amp;gt; Visio 2010 Add-in .&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_8.png&quot; width=&quot;903&quot; height=&quot;605&quot; /&gt;&lt;/p&gt;  &lt;p&gt;&amp;#160;&lt;/p&gt;  &lt;p&gt;This will generate some dummy code for you. Our next step is adding interaction between our add-in and a user. This can be accomplished by adding a Ribbon to our application. You have to navigate to Project-&amp;gt;Add Component-&amp;gt;Office-&amp;gt;Ribbon (Visual Designer).&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_9.png&quot; width=&quot;852&quot; height=&quot;575&quot; /&gt;&lt;/p&gt;  &lt;p&gt;After adding a Ribbon it’s time to drop some control to it. If you open the Toolbox you will see a list of Ribbon controls.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_10.png&quot; width=&quot;296&quot; height=&quot;437&quot; /&gt;&lt;/p&gt;  &lt;p&gt;We just need to drop a button that will open a new window which will contain a ListBox for displaying shapes. Having places a button onto the Ribbon you just have to create a new Form (let’s call it FormListShapes) and to insert a ListBox (lstShapes).&lt;/p&gt;  &lt;p&gt;Then we go back to the Ribbon and to the newly created button and add a click handler that shows a window.&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; btnListShapes_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RibbonControlEventArgs e)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    FormListShapes formListShapes = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; FormListShapes();&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    formListShapes.Show();&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Now we switch back to the Form and finally put some code that will display all the present shapes in a diagram.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; FormListShapes()&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;    InitializeComponent();&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; Globals.ThisAddIn.Application.ActivePage.Shapes)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;    {&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;        lstShapes.Items.Add(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;  11:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Okay, this piece of code requires a few explanations. We iterate through each shape in a currently open page and display its caption (shape.Text) and a shape type (shape.Name) in parentheses. Please, also pay attention at line 7 that makes use of class Globals that is automatically generated by Visual Studio and is meant to provide access to the Visio object from other parts of the appliation. You can get more information on this class on &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/bhczd18c(v=VS.100).aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Please, note that we will cover the Visio API in next tutorials, when we will speak about its object model, advanced diagram analysis, on the fly diagram creation and so on.&lt;/p&gt;
-
-&lt;h1&gt;Using Visio in Standalone Desktop Applications&lt;/h1&gt;
-
-&lt;p&gt;Although writing a Visio add-in seems to be an obvious idea when it is necessary to extend its functionality, it is not always the best choice. Firstly, as it is shown above, there are some limitations when it comes to designing a convenient UI. In order to add any control to any other place besides the Ribbon, one has to create separate window that already gives a feeling of having a standalone application rather than a Visio add-in. Secondly, there are cases when you have a sophisticated application that requires a just little bit of interaction with Visio, then it is pretty natural to embed Visio in that application instead of writing an add-in for that.&lt;/p&gt;
-
-&lt;p&gt;Fortunately, Visual Studio is capable of handling that task. Moreover, you can use both Windows Forms and WPF. We will start with Windows Forms, but later you will see that embedding Visio in a WPF application is not any harder.&lt;/p&gt;
-
-&lt;h2&gt;Embedding Visio in a Windows Forms Application&lt;/h2&gt;
-
-&lt;p&gt;I hope we can easily skip that part that tells how to create a Windows Forms application and we can proceed with adding a Vision control to a newly created form.&lt;/p&gt;
-
-&lt;p&gt;Obviously, you won’t find anything related to Visio in the Toolbox. Anyway, you still open the Toolbox, right-click and then select ‘Choose Items’.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_11.png&quot; width=&quot;309&quot; height=&quot;309&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Switch to the COM Components tab and find Microsoft Office Visio 14.0 Drawing Control.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_12.png&quot; width=&quot;673&quot; height=&quot;483&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;After doing that you will see a new control in the Toolbox, just drag-n-drop to the form you will see something like the following:&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_13.png&quot; width=&quot;734&quot; height=&quot;639&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Unlike a Visio add-in when you can open a diagram and Visio and then run an add-in, if you embed Visio in your application you have to write code in order to open a diagram. It is just sufficient to specify a value of the Src property of a Visio control to open a diagram.&lt;/p&gt;
-
-&lt;pre class=&quot;csharpcode&quot;&gt;axDrawingControl1.Src = &lt;span class=&quot;str&quot;&gt;&amp;quot;Some Diagram.vsd&amp;quot;&lt;/span&gt;;&lt;/pre&gt;
-
-&lt;p&gt;However, we do no want to hardcode a path to a diagram, instead we will provide a dialog for choosing a Visio diagram to open.&lt;/p&gt;
-
-&lt;p&gt;So, just think about the way you want to open the dialog. I just created added a main menu with the ‘Open’ item.&lt;/p&gt;
-
-&lt;p&gt;Then, drop an OpenFileDialog onto you form and set its Filter property to ‘Visio Diagrams|*.vsd;*.vdx’, so that users cannot open any other file types.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_14.png&quot; width=&quot;299&quot; height=&quot;431&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Finally, we can add some code that will open a chosen diagram for us.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; openToolStripMenuItem_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EventArgs e)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (dlgOpenDiagram.ShowDialog() == System.Windows.Forms.DialogResult.OK)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    {&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;        axDrawingControl1.Src = dlgOpenDiagram.FileName;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;If you compile and run the application now, you will see a form list that (after you open a diagram, of course):&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_15.png&quot; width=&quot;679&quot; height=&quot;566&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Okay, it looks good! So, now we just want to list any shape that is present in a diagram, like we did for a Visio add-in before. Thus, drop a ListBox onto the form.&lt;/p&gt;
-
-&lt;p&gt;We will populate that ListBox as soon as you open a diagram. How does the application know if you open a diagram? Obviously, via some kind of event.&lt;/p&gt;
-
-&lt;p&gt;There is an event called DocumentOpened that is fired every time a new diagram is opened in a control. The thing we need to do is just to subscribe to that event. So, just add the following code to your form constructor.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Form1()&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    InitializeComponent();&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;&lt;strong&gt;    axDrawingControl1.DocumentOpened += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(axDrawingControl1_DocumentOpened);&lt;/strong&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;If you wonder about the axDrawingControl1_DocumentOpened() method, then it is automatically generated by Visual Studio, if you just press ‘Tab’ twice after typing ‘axDrawingControl1.DocumentOpened’. So, you don’t have to worry about going through a documentation to find a method signature.&lt;/p&gt;
-
-&lt;p&gt;Now, you can add code that lists Visio shapes to that event handler.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; axDrawingControl1_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; axDrawingControl1.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;    {&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;        lstShapes.Items.Add(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The code looks basically similar to the same for a Visio add-in, with the only exception that instead of referencing Globals, you just point to your Visio control and its Window.Application.&lt;/p&gt;
-
-&lt;p&gt;As a result after compiling the application you should see something like this.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_16.png&quot; width=&quot;897&quot; height=&quot;509&quot; /&gt;&lt;/p&gt;
-
-&lt;h2&gt;Embedding Visio in a WPF Application&lt;/h2&gt;
-
-&lt;p&gt;That Visio control that we added into a Windows Forms application is, in fact, an ActiveX control, that might be pretty evident because it is located in the COM Components tab. However, WPF does not support ActiveX controls directly. But there is always a workaround.&lt;/p&gt;
-
-&lt;p&gt;You can place a WindowsFormHost control onto your WPF window and that control can host any Windows Forms control. Pretty convenient.&lt;/p&gt;
-
-&lt;p&gt;Thus, just add WindowsFormHost to the Toolbox. It is located in the WPF Components tab.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_17.png&quot; width=&quot;673&quot; height=&quot;483&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;And then just place this control onto a form.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;WindowsFormsHost&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;host&amp;quot;&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Next steps, however, are bit less obvious. We have to add a Visio control, but we can’t just drag-n-drop it, like we did before. Visual Studio WPF designer just does not support ActiveX objects. So, we have to add a control programmatically, but first we have to add all the necessary references.&lt;/p&gt;
-
-&lt;p&gt;Go to the Solution Explorer, right-click on ‘References’ and press ‘Add Reference’, then switch to the COM tab and find Microsoft Visio Type Library.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_18.png&quot; width=&quot;817&quot; height=&quot;609&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This will add a reference to the DLL containing classes related to Visio. However, it doesn’t contain the control itself. So, we have to add yet another reference that can be a bit tricky. Basically, we should look for AxInterop.Microsoft.Office.Interop.VisOcx.dll. There is a &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ms742735.aspx&quot; target=&quot;_blank&quot;&gt;tutorial&lt;/a&gt; saying to create a separate project for Windows Forms Control Library where you have to drag-n-drop that Visio ActiveX control and then reference that project. It’s one way to go. The other way is just to directly reference that DLL from an old project. Please, note those AxIntertop DLL are automatically created by Visual Studio once you drop a control.&lt;/p&gt;
-
-&lt;p&gt;So you can add a reference to a DLL created in the Windows Forms project. So, open the Add Reference open and go to the Browse tab and navigate to the ‘bin/Debug/’ folder of the Windows Forms project and choose AxInterop.Microsoft.Office.Interop.VisOcx.dll.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_19.png&quot; width=&quot;817&quot; height=&quot;609&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Okay, the preparatory steps are done. We can finally add a Visio control. This time, however, it’s done solely programmatically.&lt;/p&gt;
-
-&lt;p&gt;First of all, import the necessary namespaces:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Then, add a Visio control to the WindowsFormHost:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;partial&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; MainWindow : Window&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; AxDrawingControl visioControl = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxDrawingControl();&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; MainWindow()&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;    {&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;        InitializeComponent();&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.host.Child = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;    }&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We mark the control as a field of our class, so that it can be accessed from its methods.&lt;/p&gt;
-
-&lt;p&gt;The next steps are pretty obvious we set a source of a diagram, add event handlers, populate a ListBox, etc. However, it is advisable to set event handlers not in the constructor, but in the Window_Loaded event when the Visio control is known to be fully loaded.&lt;/p&gt;
-
-&lt;p&gt;So we set the event of Loaded.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;Window&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;x:Class&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;VisioWpf.MainWindow&amp;quot;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;        &lt;span class=&quot;attr&quot;&gt;xmlns&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&amp;quot;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;xmlns:x&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;http://schemas.microsoft.com/winfx/2006/xaml&amp;quot;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;        &lt;span class=&quot;attr&quot;&gt;Title&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;MainWindow&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Height&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;650&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Width&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;525&amp;quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Loaded&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;Window_Loaded&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;And handle it:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Window_Loaded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RoutedEventArgs e)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.DocumentOpened += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Then, for filling in a ListBox we can use fancy WPF binding:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;    lstShapes.ItemsSource = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, &quot;Courier New&quot;, courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   1:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;lstShapes&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   2:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox.ItemTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   3:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DataTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   4:  &lt;/span&gt;            &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Orientation&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;Horizontal&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   5:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;{Binding Path=Text}&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   6:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot; (&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   7:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;{Binding Path=Name}&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;   8:  &lt;/span&gt;                &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;TextBlock&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Text&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;=&amp;quot;)&amp;quot;&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;/&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;   9:  &lt;/span&gt;            &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;StackPanel&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  10:  &lt;/span&gt;        &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;DataTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;lnum&quot;&gt;  11:  &lt;/span&gt;    &lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox.ItemTemplate&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;lnum&quot;&gt;  12:  &lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;html&quot;&gt;ListBox&lt;/span&gt;&lt;span class=&quot;kwrd&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h1&gt;Embedding Visio in a Web Application&lt;/h1&gt;
-
-&lt;p&gt;Yes, it is also possible to embed Visio in a web application, or more precisely in a browser application. I believe those of you are pretty much familiar with WPF can guess that it is done with WPF Browser Applications (XBAP). That’s right.&lt;/p&gt;
-
-&lt;p&gt;I need to give a quick remark that there are some other ways of using Visio on the web. Of course, you can use a free Visio Web Viewer control that, however, has a somewhat limited API. You can even embed a fully-fledged Visio control in an HTML page and try to interact with it via JavaScript, however your UI capabilities will be limited.&lt;/p&gt;
-
-&lt;p&gt;So, the best way to go is to create a WPF Browser Application (XBAP). There is one important consideration though. Since, embedded Visio is an ActiveX control, an XBAP application containing it will require running in the full trust mode that grants access to your machine to a browser application. This mode is enabled by default in Internet Explorer for intranet websites, which are a common location for such applications. In order to use it on the Web you can either alter your IE security settings, so that it allows running XBAP application in full trust for every website, which is obviously not secure, or just to add your website to the trusted zone.&lt;/p&gt;
-
-&lt;p&gt;Marking a WPF Browser application as a full trust one is the first thing you should do after creating a project. Right-click on your project in the Solution Explorer, press ‘Properties’ and go to ‘Security’ and set ‘This is a full trust application’.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: inline; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_20.png&quot; width=&quot;896&quot; height=&quot;422&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&amp;#160;&lt;/p&gt;
-
-&lt;p&gt;I won’t show you the source code here, because it is exactly the same as for a regular WPF application, except for some points where instead of Window you are using Page. You can still find the source code in the ZIP file I provide below.&lt;/p&gt;
-
-&lt;p&gt;Anyway, you should see something like that.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_21.png&quot; width=&quot;877&quot; height=&quot;548&quot; /&gt;&lt;/p&gt;
-
-&lt;h1&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;There are multiple reasons for extending Visio functionality. Also there are many ways of doing that. Although writing a Visio add-in often seems to be a reasonable idea, it is not always the case because of its limited UI capabilities. At the same time, it can be easily sorted out by writing a standalone desktop application that can be created with both Windows Forms and with powerful Windows Presentation Foundation.&lt;/p&gt;
-
-&lt;p&gt;Furthermore, if you want to ease deployment of your application and making it available to users immediately, you should consider an option of creating it as a browser application with XBAP.&lt;/p&gt;
-
-&lt;h1&gt;Next Chapters&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx&quot; target=&quot;_blank&quot;&gt;Analysing Parent-Child Relations in Visio&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot;&gt;Understanding Visio Event Model&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;This is only the first article of the series. Next articles will focus more on the Visio object model that allows analysing diagrams and creating new ones programmatically. The Visio API is the same, no matter which you decide to create your application with, so those chapters will be useful for any case.&lt;/p&gt;
-
-&lt;p&gt;Stay tuned!&lt;/p&gt;
-
-&lt;h1&gt;Download Source Code&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;/files/Visio.zip&quot;&gt;Visio.zip (496.48 kb)&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Mon, 05 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://mikeborozdin.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</link>
-        <guid isPermaLink="true">http://mikeborozdin.com/post/developing-applications-for-visio-with-visual-studio-(windows-forms-wpf-xbap)</guid>
         
         
       </item>
