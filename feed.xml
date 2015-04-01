@@ -6,8 +6,8 @@
 </description>
     <link>http://mikeborozdin.com/</link>
     <atom:link href="http://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 01 Apr 2015 10:06:45 +0000</pubDate>
-    <lastBuildDate>Wed, 01 Apr 2015 10:06:45 +0000</lastBuildDate>
+    <pubDate>Wed, 01 Apr 2015 10:07:06 +0000</pubDate>
+    <lastBuildDate>Wed, 01 Apr 2015 10:07:06 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -80,7 +80,7 @@ Error: connect ECONNREFUSED
 
 &lt;h2 id=&quot;fail-fast&quot;&gt;Fail Fast&lt;/h2&gt;
 
-&lt;p&gt;Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dive into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.&lt;/p&gt;
+&lt;p&gt;Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dwell into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.&lt;/p&gt;
 
 &lt;p&gt;All we want to see is a nice message saying that a certain argument is not what a function expects. That can be implemented with a fairly simple piece of code:&lt;/p&gt;
 
