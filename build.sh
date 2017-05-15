@@ -36,4 +36,5 @@ git config user.email "mike.borozdin@gmail.com"
 git config user.name "Mike Borozdin"
 git add -A .
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push origin master > /dev/null 2>&1
+git push origin master
+# git push origin master > /dev/null 2>&1
