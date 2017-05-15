@@ -13,3 +13,4 @@ While I might have personal preferences of tools, I’ve been using a big variet
 Regarding my personal interests and hobbies, I’m very passionate about music and travelling – I’m fortunate to have lived in four different countries and be able explore different cultures.
 
 Feel free to [drop me a line](mailto:mike.borozdin@gmail.com) or follow me on [Twitter](http://www.twitter.com/mikeborozdin).
+
