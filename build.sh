@@ -27,13 +27,13 @@ git clone https://${GH_TOKEN}@github.com/mikeborozdin/mikeborozdin.github.io.git
 echo "copy generated HTML site to master branch"
 
 # copy generated HTML site to `master' branch
-# cp -R _site/* ../mikeborozdin.github.io.master
+cp -R _site/* ../mikeborozdin.github.io.master
 
 # commit and push generated content to `master' branch
 # since repository was cloned in write mode with token auth - we can push there
-cd ../mikeborozdin.github.io.master
-git config user.email "mike.borozdin@gmail.com"
-git config user.name "Mike Borozdin"
-git add -A .
-git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet origin master > /dev/null 2>&1
+# cd ../mikeborozdin.github.io.master
+# git config user.email "mike.borozdin@gmail.com"
+# git config user.name "Mike Borozdin"
+# git add -A .
+# git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
+# git push --quiet origin master > /dev/null 2>&1
