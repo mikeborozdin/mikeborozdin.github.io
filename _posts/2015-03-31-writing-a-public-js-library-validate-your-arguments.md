@@ -82,7 +82,7 @@ public class CustomerPrinter {
 Fail Fast
 ----
 
-Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dwell into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.
+Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dive into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.
 
 All we want to see is a nice message saying that a certain argument is not what a function expects. That can be implemented with a fairly simple piece of code:
 
