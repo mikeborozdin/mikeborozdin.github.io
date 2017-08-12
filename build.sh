@@ -22,7 +22,7 @@ rm -rf ../mikeborozdin.github.io.master
 echo "Cloning a git repo"
 
 #clone `master' branch of the repository using encrypted GH_TOKEN for authentification
-git clone https://${GH_TOKEN}@github.com/mikeborozdin/mikeborozdin.github.io.git ../mikeborozdin.github.io.master
+git clone https://mikeborozdin:${GH_TOKEN}@github.com/mikeborozdin/mikeborozdin.github.io.git ../mikeborozdin.github.io.master
 
 # copy generated HTML site to `master' branch
 cp -R _site/* ../mikeborozdin.github.io.master
