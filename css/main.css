@@ -27,6 +27,10 @@ body {
     font-size: 1em
 }
 
+#description {
+    font-size: 0.62em
+}
+
 h1 {
     color: #014E82;
     font-size: 1em
