@@ -1,8 +1,6 @@
 # Site settings
 title: Mike Borozdin's Blog
 email: mike.borozdin@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
-  Mike Borozdin's Blog about software engineering
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://mikeborozdin.com" # the base hostname & protocol for your site
 twitter_username: mikeborozdin
