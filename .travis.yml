@@ -7,4 +7,4 @@ rvm:
 - 2.1.2
 env:
   global:
-    secure: kgPYF/7cSxxz5cI1RWyA+rq84Ta3yW1iA7mqhJqV/vLS+AF4wbRyIBBnSjm5196wyVMrmgoZuICxlVo6igTkhEYxmSmRjc/TTGAXfwD6r07ty6elIc8ZIDs4EJA1NIshU3BSX6cU7S2I3uRXLnFKcOe1+A6Ms3X3t86MShstYG4=
+    secure: mlq7fybiNMHmfghVQHF/z8Xc5qns2AHtY9a6TC/4H/bj4LylKi9nL5p3o+QcO0jWRj8HSI/N3vFIuEYngkgDcHLBXdK1KW4RNxnRNg7DxhRc36enn47pFbWeRtvtRWpVeskdXOfhzqCUlI9GhTa26q4uCYcBC0JnMe7VFbKUQxM=
