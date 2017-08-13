@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Split User Stories Ruthelessly - And Get Value Earlier"
+title: "Split User Stories Ruthlessly - And Get Value Earlier"
 comments: true
 ---
 
