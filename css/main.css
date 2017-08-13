@@ -205,3 +205,12 @@ a {
 	margin: 10px;
 }
 
+blockquote {
+  font-style: italic;
+  color: gray;
+  font-size: 1.1em;
+}
+
+img {
+  max-width: 100%;
+}
