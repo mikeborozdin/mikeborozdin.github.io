@@ -2,13 +2,138 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mike Borozdin&#39;s Blog</title>
-    <description>Mike Borozdin&#39;s Blog about software engineering
+    <description>software engineering, product management &amp; agile
 </description>
     <link>http://mikeborozdin.com/</link>
     <atom:link href="http://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 12 Aug 2017 20:04:52 +0000</pubDate>
-    <lastBuildDate>Sat, 12 Aug 2017 20:04:52 +0000</lastBuildDate>
+    <pubDate>Sun, 13 Aug 2017 12:18:34 +0000</pubDate>
+    <lastBuildDate>Sun, 13 Aug 2017 12:18:34 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Split User Stories Ruthelessly - And Get Value Earlier</title>
+        <description>&lt;p&gt;Why do you need to split user stories?&lt;/p&gt;
+
+&lt;p&gt;Often, you hear that it is important to split user stories. You read articles that say it should be possible to complete a user story within a single sprint, ideally within a few days. That’s entirely accurate. &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But the main benefit of splitting user stories is that you will deliver value faster!&lt;!-- more --&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Let’s take a look at an example. Say, we are developing a time tracking tool. Its main purpose is to analyse time spent on different projects. &lt;/p&gt;
+
+&lt;p&gt;Let’s also assume that we already have a prioritised backlog that looks like this:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enter timesheets&lt;/li&gt;
+  &lt;li&gt;Approve timesheets&lt;/li&gt;
+  &lt;li&gt;View time spent by project&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At the first glance, the backlog looks reasonable. It appears to be prioritised and the user stories look small enough. But the devil is in the details. When you look at the the first story - &lt;code&gt;‘Enter timesheets’&lt;/code&gt;, you’ll see the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;As a developer
+I want to be able to log time spent on projects
+So that the company could analyse time spent on different projects
+
+**Acceptance criteria**
+
+* Users select a project and enter hours spent for each day
+* Users can add more lines for other projects
+	* Users can delete lines for projects
+	* If a user presses [delete] on an item with hours, 
+		there has to be a confirmation pop-up
+* There should be an area where a user can see total time spent per day
+	* We want a user to avoid making mistakes. If time soent is less or more than 
+	8 hours per day it has to be coloured in red. 
+	If it’s 8 hours plus/minus one hour, it should be coloured in green.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There’s also a mockup attached.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/mockup.png&quot; alt=&quot;Mockup&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Well, that’s escalated quickly! A simple story has turned out into a collection of business rules!&lt;/p&gt;
+
+&lt;p&gt;It may seem that each rule is small enough and can be easily implemented. But don’t give in to that temptation!&lt;/p&gt;
+
+&lt;p&gt;Each rule is small enough, but in total they all will make up to a substantial amount of time to develop. That will, in turn, require a good amount of testing, as well.&lt;/p&gt;
+
+&lt;h1 id=&quot;think-of-product-goal&quot;&gt;Think of Product Goal&lt;/h1&gt;
+
+&lt;p&gt;So, let’s stop and think. What’s the proposition behind your product? It is analysis of time spent on different projects. There is even a user story for that. So, why don’t we go to that user story as fast as possible?!&lt;/p&gt;
+
+&lt;h1 id=&quot;consider-main-goal-of-user-story-split-story-to-achive-that-goal-faster&quot;&gt;Consider Main Goal of User Story. Split Story to Achive That Goal Faster&lt;/h1&gt;
+
+&lt;p&gt;And what is the main premise of the ‘Enter timesheets’ story? Well, that’s an ability to enter timesheets! So, let’s focus on that activity and try to move other bits into separate user stories. &lt;/p&gt;
+
+&lt;p&gt;If we look at the acceptance criteria, we’ll see that most of it is not about entering timesheets, but related functionality. For example, we want to have a variable number of activities (lines) per week. Then, we would like to see nice visual cues, if hours entered look wrong.&lt;/p&gt;
+
+&lt;p&gt;Those are great ideas, but do they help us to achive the overacrching product goal? No. So, let’s focus on what is really important. And split the user story into:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enter timesheets (3 activities per week)&lt;/li&gt;
+  &lt;li&gt;Visual cues when the hours entered doesn’t look right&lt;/li&gt;
+  &lt;li&gt;Have more than 3 activities per week&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;re-prioritise-backlog&quot;&gt;Re-prioritise Backlog&lt;/h1&gt;
+
+&lt;p&gt;Now, we should go back to our backlog and re-prioritise it. We want to put the last two stories to the bottom of the backlog. At the end your backlog should look like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enter timesheets (3 activities per week)&lt;/li&gt;
+  &lt;li&gt;Approve timesheets&lt;/li&gt;
+  &lt;li&gt;View time spent by project&lt;/li&gt;
+  &lt;li&gt;Visual cues when the hours entered doesn’t look right&lt;/li&gt;
+  &lt;li&gt;Have more than 3 activities per week&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Always re-prioritise the backlog after splitting user stories. Otherwise, you would do the same things in the initial order and wouldn’t move towards your product goals fast enough.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Splitting user stories allows you to prioritise what is really important. And achieve the product goals faster. &lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You’ll probably have to repeat this exercise for ‘Approve Timesheets’ and ‘View time spent by project’. But I guess you’ve got the idea. You’ll end up with the &lt;strong&gt;Prioritise - Split - Prioritise cycle&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/prioritise-split-cycle.png&quot; alt=&quot;Prioritise-Split Cycle&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Another good way to look at is to revisit the famous picture of the iterative Mona Lisa (pictures below are credit of Jeff Patton - the inventor of User Story Maps) &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Incremental Mona Lisa&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/incremental-mona-lisa.jpg&quot; alt=&quot;Incremental Mona Lisa&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Iterative Mona Lisa&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/iterative-mona-lisa.jpg&quot; alt=&quot;Iterative Mona Lisa&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Indeed, you don’t want to spend time painting the perfect top-left corner of the picture (the original ‘Enter Timesheets’ story). Instead, you want to sketch out the whole piece. That will already give users and stakeholders something to play with. Such early deliver will allow you to get feedback from users and learn from that.&lt;/p&gt;
+
+&lt;h1 id=&quot;additional-reading&quot;&gt;Additional Reading&lt;/h1&gt;
+&lt;p&gt;I’ve focused on the benefits of splitting user stories here. But if you want to know more about techniques for splitting user stories and prioritising backlogs, then I would suggest the following reading:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://agileforall.com/patterns-for-splitting-user-stories/&quot;&gt;Patterns for Splitting User Stories&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://jpattonassociates.com/the-new-backlog/&quot;&gt;The New User Story Backlog is a Map&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;User Story Mapping is a fantastic technique for understand how to achieve a user’s goals fast&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.impactmapping.org/delivering.html&quot;&gt;Impact Mapping&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Impact Mapping is especially good at understand what you &lt;strong&gt;don’t need&lt;/strong&gt; to do in order to achieve your goals&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 13 Aug 2017 00:00:00 +0000</pubDate>
+        <link>http://mikeborozdin.com/post/split-user-stories-get-value-early</link>
+        <guid isPermaLink="true">http://mikeborozdin.com/post/split-user-stories-get-value-early</guid>
+        
+        
+      </item>
     
       <item>
         <title>Writing a JavaScript Public Library? Validate Your Arguments</title>
@@ -447,174 +572,6 @@ Error: connect ECONNREFUSED
         <pubDate>Wed, 07 Sep 2011 00:00:00 +0000</pubDate>
         <link>http://mikeborozdin.com/post/understanding-visio-event-model</link>
         <guid isPermaLink="true">http://mikeborozdin.com/post/understanding-visio-event-model</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Analysing Parent-Child Relations in Visio</title>
-        <description>&lt;p&gt;This is the second part of the &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;Developing for Visio series&lt;/a&gt;. Today, we’ll speak about how to analyse programmatically parent-child relationships in Visio diagrams. Often, especially in block diagrams there are boxes that contain other boxes.&lt;/p&gt;  &lt;p&gt;&lt;img style=&quot;display: block; float: none; margin-left: auto; margin-right: auto&quot; title=&quot;image&quot; alt=&quot;image&quot; src=&quot;/images/image_22.png&quot; width=&quot;240&quot; height=&quot;107&quot; /&gt;&lt;/p&gt;  &lt;p&gt;However, during iterating through shapes in a Visio diagram such a relationship is not preserved.&lt;!-- more --&gt;&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(shape.Text);&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This piece of code will output three shape names, as if the diagram was flat. If you read carefully the Visio object model, you can find that the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class contains two properties that might be of interest for us. These properties are &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Parent&lt;/span&gt; and &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ContainingShape&lt;/span&gt;. However, if you read documentation on them or try writing some code, you will realise they work only if shapes in a diagram are grouped. Indeed, grouping shapes when drawing Visio diagram isn’t a bad idea. But how often do you really group your shapes? How many diagram do you have with grouped shapes? I guess not many.&lt;/p&gt;
-
-&lt;p&gt;Thus, we have to find another way of analysing parent-child relationships in Visio diagrams. Fortunately, there is a property, &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff767509.aspx&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SpatialNeighbors&lt;/span&gt;&lt;/a&gt;, of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class that returns a collection of shapes that are in a given relation to a specified shape. Yes, this property does accept parameters. Actually, its signature is the following:&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection Shape.SpatialNeighbors[short relation, double tolerance, short flags[, object resultRoot]]&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;relation &lt;/span&gt;specifies in which relation shapes should be to a specified one. Its value can be any of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff766208.aspx&quot; target=&quot;_blank&quot;&gt;VisSpatialRelationCode&lt;/a&gt;. &lt;/span&gt;At this moment we are only interested in two of them. The first one is &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialContainedIn &lt;/span&gt;that will return a shape that a the parent to a given one. For instance, if we run it for the “Financial Department” shape in the diagram above it will return “Acme Ltd”. The second property is &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff766208.aspx&quot; target=&quot;_blank&quot;&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialContain&lt;/span&gt;&lt;/a&gt;, it will return all the children of a specified shape, so if we pass “Acme Ltd”, then we will get “Financial Department” and “Marketing Department”.&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;tolerance &lt;/span&gt;specifies a distance between a given shape and shapes we are looking for. This parameter is useful if we want to find adjacent shapes, however if are looking for only child or parent shapes, we can leave it as zero.&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;flags&lt;/span&gt; sets properties of a returned result set, such as which shapes to return, in which order, etc. Its value can be one of the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff765950.aspx&quot; target=&quot;_blank&quot;&gt;VisSpatialRelationFlags&lt;/a&gt;&lt;/span&gt;. Normally, I just set &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;visSpatialFrontToBack&lt;/span&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;resultRoot&lt;/span&gt;, &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff767509.aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt; says the following about it ‘If you don&#39;t specify ResultRoot, this property returns a &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection&lt;/span&gt; object that represents the shapes that meet certain criteria in relation to the specified shape. If you specify ResultRoot, this property returns a &lt;strong&gt;Selection&lt;/strong&gt; object that represents all the shapes in the &lt;strong&gt;&lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt;&lt;/strong&gt; object specified by ResultRoot that meet certain criteria in relation to the specified shape. For example, specify ResultRoot to find all shapes within a group that are near a specified shape.’ I normally leave this parameter blank.&lt;/p&gt;
-
-&lt;p&gt;The only thing that I haven’t mentioned about &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.SpatialNeighbors&lt;/span&gt; is that it retuns an object of class &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff768737.aspx&quot; target=&quot;_blank&quot;&gt;Selection&lt;/a&gt;&lt;/span&gt;. If you just want to get a parent of a shape, then you can simply use &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection.PrimaryItem&lt;/span&gt;. Otherwise, when looking for children shapes you can simply iterate through &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection.&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;Okay, it’s time to write some code. We are going to create a simply application that displays a list of available shapes, like in the previous chapter, however this time it will preserve a shape hierarchy. I won’t cover the basics on how to create a Visio add-in or an application hosting a Visio control, since it was already covered in the &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;previous chapter&lt;/a&gt;. In fact, I’ll just create a WPF application with an embedded Vision control.&lt;/p&gt;
-
-&lt;p&gt;Since, the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape&lt;/span&gt; class has no notion of parent or child, the first thing we should do is to create a wrapper around that class that will have the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Children&lt;/span&gt; property.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;using&lt;/span&gt; Visio = Microsoft.Office.Interop.Visio;&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; ShapeWrapper&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Visio.Shape Shape { get; set; }&lt;/pre&gt;
-
-  &lt;pre&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt; children = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt;();&lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt; Children { get { &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.children; } }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; ShapeWrapper(Visio.Shape shape)&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-
-  &lt;pre&gt;        Shape = shape;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Good. Now, we should put down some code that will parse a diagram and preserve parent-child relations.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//a list of already parsed shapes that are children to some other shapes&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;    List&amp;lt;Visio.Shape&amp;gt; addedShapes = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;Visio.Shape&amp;gt;();&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//a list of wrappers that we are building&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;    List&amp;lt;ShapeWrapper&amp;gt; shapeWrappers = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; List&amp;lt;ShapeWrapper&amp;gt;();&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-
-  &lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!addedShapes.Contains(shape))&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
-
-  &lt;pre&gt;            ShapeWrapper shapeWrapper = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; ShapeWrapper(shape);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;            shapeWrappers.Add(shapeWrapper);&lt;/pre&gt;
-
-  &lt;pre&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;rem&quot;&gt;//here we are trying to retrieve all the children of a current shape&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre&gt;            FindChildren(shapeWrapper, addedShapes);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
-
-  &lt;pre&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;rem&quot;&gt;//just some WPF binding&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    treeShapes.ItemsSource = shapeWrappers;&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;There are might be two confusing points about this piece of code. The first one is the mystical &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt; method, and the second on is the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt; collection. &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt;is given below, as for &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt;, when we are iterating through all the shapes in a diagram we can encounter shapes that have been already added to a certain &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ShapeWrapper &lt;/span&gt;in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;shapeWrappers&lt;/span&gt; during the execution of the the &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;FindChildren()&lt;/span&gt; method and it is much easier to add them to &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;addedShapes&lt;/span&gt; and check afterwards rather than check recursively in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;shapeWrappers&lt;/span&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; FindChildren(ShapeWrapper shapeWrapper, List&amp;lt;Visio.Shape&amp;gt; addedShapes)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    Visio.Selection children = shapeWrapper.Shape.SpatialNeighbors[(&lt;span class=&quot;kwrd&quot;&gt;short&lt;/span&gt;)Visio.VisSpatialRelationCodes.visSpatialContain, 0,&lt;/pre&gt;
-
-  &lt;pre&gt;                (&lt;span class=&quot;kwrd&quot;&gt;short&lt;/span&gt;)Visio.VisSpatialRelationFlags.visSpatialFrontToBack];&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape child &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; children)&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-
-  &lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!addedShapes.Contains(child))&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
-
-  &lt;pre&gt;            &lt;span class=&quot;rem&quot;&gt;//MessageBox.Show(child.Text);&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;            ShapeWrapper childWrapper = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; ShapeWrapper(child);&lt;/pre&gt;
-
-  &lt;pre&gt;            shapeWrapper.Children.Add(childWrapper);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&amp;#160;&lt;/pre&gt;
-
-  &lt;pre&gt;            FindChildren(childWrapper, addedShapes);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
-
-  &lt;pre&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;So here in the code above we use the aforementioned &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.SpatialNeighbors&lt;/span&gt;.&lt;/p&gt;
-
-&lt;p&gt;After compiling the application you should see a diagram and a hierarchical list on the right.&lt;/p&gt;
-
-&lt;p&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_23.png&quot; width=&quot;740&quot; height=&quot;766&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;This time we feature the architecture of Windows 2000 that I found on a &lt;a href=&quot;http://en.wikipedia.org/wiki/Block_diagram&quot; target=&quot;_blank&quot;&gt;Wikipedia page&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h1&gt;Source Code&lt;/h1&gt;
-
-&lt;p&gt;I don’t provide the rest of the code related to XAML and Visio initialisation, instead you can download it here.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/files/VisioParentChild.zip&quot;&gt;VisioParentChild.zip (108.69 kb)&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Tue, 06 Sep 2011 00:00:00 +0000</pubDate>
-        <link>http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</link>
-        <guid isPermaLink="true">http://mikeborozdin.com/post/analysing-parent-child-relations-in-visio</guid>
         
         
       </item>
