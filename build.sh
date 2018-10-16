@@ -9,6 +9,8 @@ fi
 # enable error reporting to the console
 set -e
 
+rm -rf _site/
+
 echo "Building a Jekyll site"
 
 # build site with jekyll, by default to `_site' folder
@@ -34,4 +36,4 @@ git config user.email "mike.borozdin@gmail.com"
 git config user.name "Mike Borozdin"
 git add -A .
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet origin --force master > /dev/null 2>&1
+git push --quiet origin master > /dev/null 2>&1
