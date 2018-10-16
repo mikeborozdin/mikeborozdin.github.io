@@ -9,8 +9,6 @@ fi
 # enable error reporting to the console
 set -e
 
-rm -rf _site/
-
 echo "Building a Jekyll site"
 
 # build site with jekyll, by default to `_site' folder
