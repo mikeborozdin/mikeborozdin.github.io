@@ -6,9 +6,259 @@
 </description>
     <link>https://mikeborozdin.com/</link>
     <atom:link href="https://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 16 Oct 2018 15:33:13 +0000</pubDate>
-    <lastBuildDate>Tue, 16 Oct 2018 15:33:13 +0000</lastBuildDate>
+    <pubDate>Tue, 16 Oct 2018 15:40:09 +0000</pubDate>
+    <lastBuildDate>Tue, 16 Oct 2018 15:40:09 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Value Hypothesis and KPIs</title>
+        <description>&lt;p&gt;This post talks about setting a value hypothesis and related KPIs. It’s part of &lt;a href=&quot;/product-management-in-the-open&quot;&gt;the ‘Product Management in the Open’ series&lt;/a&gt;. The goal of the series is describe the process of product managing a mobile app - Best in Town / Best in Edinburgh. Please, &lt;a href=&quot;/product-management-in-the-open/idea&quot;&gt;check this page to read more about the app itself&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;This post describes my thinking back in the beginning of 2017. Not everything I did at that time was correct and I also try to reflect on some of the mistakes here.&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;value-hypothesis&quot;&gt;Value Hypothesis&lt;/h1&gt;
+&lt;p&gt;Okay, so we’ve got a product idea. But how do we know if it’s a good idea?&lt;/p&gt;
+
+&lt;p&gt;Actually, what we’ve got is called a &lt;em&gt;value hypothesis&lt;/em&gt; in the Lean Startup terminology. We just have a hypothesis that people will like the idea of an app that rates meals &amp;amp; drinks as opposed to entire venues.&lt;/p&gt;
+
+&lt;h1 id=&quot;build-measure-learn-loop&quot;&gt;Build-Measure-Learn Loop&lt;/h1&gt;
+
+&lt;p&gt;Any hypothesis has to be validated. That takes to another concept from the Lean Startup - ‘&lt;em&gt;Build-Measure-Learn&lt;/em&gt;’ loop.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/product-management-in-the-open/value-hypothesis/build-measure-learn.jpg&quot; alt=&quot;Build-Measure-Learn Loop&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We come up with an idea&lt;/li&gt;
+  &lt;li&gt;We define a hypothesis to validate it&lt;/li&gt;
+  &lt;li&gt;We identify the KPIs that allow us to test the hypothesis&lt;/li&gt;
+  &lt;li&gt;We build a very minimal product to validate it&lt;/li&gt;
+  &lt;li&gt;And finally we can either confirm or deny our hypothesis
+    &lt;ul&gt;
+      &lt;li&gt;Next blog posts though will tell that the process of validating a hypothesis is not as straightforward as it sounds here&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;critical-action&quot;&gt;Critical Action&lt;/h1&gt;
+
+&lt;p&gt;So our hypothesis is that people will use Best in Town. Or in other words, they will use a mobile app that shows rates meals &amp;amp; drinks, instead of entire places. &lt;/p&gt;
+
+&lt;p&gt;But what does it really mean ‘to use a product’? Does it mean that people download it? Open it? Or do something else?&lt;/p&gt;
+
+&lt;p&gt;As we said before, users must get a value out of the product. And that means more than just installing an app or launching it. It means performing &lt;em&gt;a critical action&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;A classic example of a critical action is playing a song in a music player app. Indeed, if people open the music player app, but don’t play a song, it means they don’t get a value out of it. Of course, there could be a case when the value users get is different from what the creators perceived. For example, people use the music player app to read lyrics instead of playing songs. And if we can spot that trend, we can change our app, so that it focuses on songs lyrics. Such a change in direction is called &lt;em&gt;pivoting&lt;/em&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;When it comes to Best in Edinburgh, &lt;em&gt;the critical action is looking at the place&lt;/em&gt;. In other words, someone has chosen a category, for example, ‘Best wine’ and opened any place on the map. That shows that they are looking at the best places to go.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;could-there-be-another-critical-action&quot;&gt;Could There Be Another Critical Action?&lt;/h2&gt;
+&lt;p&gt;If we define a critical action as an the main action that gives a value, then we can take it even further. We can say that a critical action is an act of physically getting to a place after looking it up on Best in Town. &lt;/p&gt;
+
+&lt;p&gt;That would be the best indicator if people are finding the app valuable. However, it will be quite challenging to measure that in the context of a Minimum Viable Product (MVP).&lt;/p&gt;
+
+&lt;h1 id=&quot;kpi---retention&quot;&gt;KPI - Retention&lt;/h1&gt;
+&lt;p&gt;So, we’ve established the critical action - opening a place. But is it enough to measure? Let’s say all, people who’ve downloaded the app, opened the place - would it tell us that users find it useful? What if they only do it once? What if people only use the app once after installing it? Then, perhaps they don’t find the app that useful, after all.&lt;/p&gt;
+
+&lt;h2 id=&quot;engagement-apps-vs-transactional-ones&quot;&gt;Engagement Apps vs Transactional Ones&lt;/h2&gt;
+&lt;p&gt;To be completely fair, the last statement could be debated. In theory, there can be an app that solves a user’s needs once and for all. In that case, it’ll be unwise to expect people to come back to the same app again.&lt;/p&gt;
+
+&lt;p&gt;Also, there can be products that are transactional in nature - people use them to buy something or order a taxi. Of course, a good retention would be absolutely invaluable for that kind of apps, too. But it may not be the top KPI for them. Instead, a better KPI could be a percentage of people who complete a transaction versus just browsing. &lt;/p&gt;
+
+&lt;p&gt;I believe Best in Edinburgh / Best in Town falls into a different category of apps - ‘engagement apps’ (for the lack of a better word). They meant to be constantly provider a value to a user, albeit not necessarily on daily basis. &lt;/p&gt;
+
+&lt;h2 id=&quot;different-kinds-of-retention-and-usage-patterns&quot;&gt;Different Kinds of Retention and Usage Patterns&lt;/h2&gt;
+&lt;p&gt;So, what we are looking for is recurring users who keep coming back. We’re looking for user retention. And when it comes to retention there are three different types of it - Daily, Weekly, and Monthly.&lt;/p&gt;
+
+&lt;p&gt;In order to choose a retention type we need to understand the usage patterns of the app. It might be tempting to think that people will use your app every day. But that’s very often not the case. There are successful apps that have good retention apps but not used daily. And if the app is not meant for an everyday use, then there’s not much point of looking at daily retention rate. Monthly retention may show a more accurate picture.&lt;/p&gt;
+
+&lt;p&gt;Best in Edinburgh fails into that category. It’s not going to be used daily by the same people. There’s  &lt;a href=&quot;https://www.quantcast.com/measure/yelp.com#/engagementCard&quot;&gt;a research by QuantCast about Yelp&lt;/a&gt; (a similar app/website) that shows that only 25% of users come to it more than once a month. &lt;/p&gt;
+
+&lt;p&gt;Plus, there’s also an anecdotal evidence about myself and my friends. We do use Yelp/TripAdvisor/Google Maps for finding new places, but we don’t do it daily.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;So, monthly retention is our KPI&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;setting-kpi-retention-goals&quot;&gt;Setting KPI (Retention) Goals&lt;/h2&gt;
+&lt;p&gt;But which retention are we looking to get - 100%, 50%, 25%? &lt;/p&gt;
+
+&lt;p&gt;At the time when I was setting that goal - early 2016 - I did research on the average monthly retention rate for mobile apps. And I discovered the following.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://info.localytics.com/blog/mobile-apps-whats-a-good-retention-rate&quot;&gt;The Localytics report&lt;/a&gt; that said only 36% people, who downloaded an app, used it a month later. Please, note that if you open that report now, it’ll show higher retention figures that at that time when I was doing this research. Luckily, I copied this chart back then.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/product-management-in-the-open/value-hypothesis/localytics-retention-2016.jpg&quot; alt=&quot;Localytics Report&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I also discovered &lt;a href=&quot;https://andrewchen.co/new-data-shows-why-losing-80-of-your-mobile-users-is-normal-and-that-the-best-apps-do-much-better/&quot;&gt;a seminal post by Andrew Chen - ‘New data shows losing 80% of mobile users is normal, and why the best apps do better’&lt;/a&gt; where he quotes figures that says that on average only 10% of users are still with an app 30 days later. That data is better for top 100 apps - 25%.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;So based on that, we’ll set out goal to have M1 retention rate of 20%&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;conclusion-and-next-steps-taken-in-early-2017&quot;&gt;Conclusion and Next Steps (taken in Early 2017)&lt;/h1&gt;
+&lt;p&gt;So, based on the following research and thoughts we conclude the following.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Hypothesis:&lt;/strong&gt; People like the idea behind Best in Town / Best in Edinburgh&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Hypothesis validation:&lt;/strong&gt; 20% of people who installed an app will come back to perform a critical action a month later&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Critical action:&lt;/strong&gt; opening a place&lt;/p&gt;
+
+&lt;h2 id=&quot;next-steps&quot;&gt;Next Steps&lt;/h2&gt;
+
+&lt;p&gt;We’ve determined our hypothesis and how we’re going to measure it. So, the next step would be to build an MVP, as minimal as possible, and get it to users.&lt;/p&gt;
+
+&lt;p&gt;I’ll describe what will be included in the MPV in the next blog posts, which are coming out soon.&lt;/p&gt;
+
+&lt;h1 id=&quot;reflections-and-possible-mistakes&quot;&gt;Reflections and Possible Mistakes&lt;/h1&gt;
+&lt;p&gt;Writing this in Autumn 2018 I can spot the mistake I made when I setting the goals.&lt;/p&gt;
+
+&lt;p&gt;If you look at &lt;a href=&quot;../idea#product-vision-board&quot;&gt;the Product Vision Board&lt;/a&gt;, you’ll see that the app serves two categories of users - Edinburgh locals and visitors. However, when I set the KPI to monthly retention I ignored the visitors group. If we have tourists and business visitors using the app, chances are they won’t come back to the app a month later, because they won’t be in Edinburgh. As a result, we won’t learn from them and they will even negatively skew the statistics.&lt;/p&gt;
+
+&lt;p&gt;Looking back, that’s one of the mistakes I’ve made. I didn’t know who my target audience would be. I catered for two - local population and visitors. But the KPIs were targeted only to the local population.&lt;/p&gt;
+
+&lt;h1 id=&quot;additional-resources&quot;&gt;Additional Resources&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://info.localytics.com/blog/mobile-apps-whats-a-good-retention-rate&quot;&gt;Mobile Apps: What’s A Good Retention Rate?&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://andrewchen.co/new-data-shows-why-losing-80-of-your-mobile-users-is-normal-and-that-the-best-apps-do-much-better/&quot;&gt;New data shows losing 80% of mobile users is normal, and why the best apps do better&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://clevertap.com/blog/aarrr-metrics-vs-rarra-framework/&quot;&gt;AARRR vs. RARRA: Which is Better? - great post why it’s more important to focus on retention, as opposed to acquisition&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/product-breakdown/product-management-analytics-what-metrics-should-you-be-measuring-241609b1950d&quot;&gt;Product Management &amp;amp; Analytics: what metrics should you be measuring?&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;This post introduces a concept of engagement and transactional apps&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/product-management-in-the-open/value-hypothesis-and-kpis</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/value-hypothesis-and-kpis</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Idea</title>
+        <description>&lt;h1 id=&quot;elevator-pitch&quot;&gt;Elevator Pitch&lt;/h1&gt;
+
+&lt;p&gt;A mobile app that helps to find places that do you favourite meal or drink the best. Unlike existing products (Google Maps, TripAdvisor, Yelp), you see ratings for meals &amp;amp; drinks, as opposed to the whole place.&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Choose what you’re interested in&lt;/th&gt;
+      &lt;th&gt;See places with ratings around you&lt;/th&gt;
+      &lt;th&gt;Get more info about place&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/images/product-management-in-the-open/idea/choose-category.png&quot; alt=&quot;Mockup&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/images/product-management-in-the-open/idea/ratings-on-map.png&quot; alt=&quot;Mockup&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/images/product-management-in-the-open/idea/place.png&quot; alt=&quot;Mockup&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;product-vision-board&quot;&gt;Product Vision Board&lt;/h1&gt;
+
+&lt;p&gt;Additionally, I’ve created a Product Canvas that helps to define various aspects about the products - target groups, needs, etc. That’s based on &lt;a href=&quot;https://www.romanpichler.com/blog/the-product-canvas/&quot;&gt;the blog post by Roman Pichler&lt;/a&gt;.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Vision&lt;/strong&gt;
+    &lt;/td&gt;
+    &lt;td colspan=&quot;3&quot;&gt;
+      Help to find best things in town (brownies, coffee, wine, dry cleaners)
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Target Groups:&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Visitors who come into town and search for the best wine&lt;/li&gt;
+        &lt;li&gt;People about town who always want to know where the best coffee is&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Needs:&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Finding the best thing around me right now&lt;/li&gt;
+        &lt;li&gt;Finding the best thing (brownie, coffee) in town&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Product&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Mobile app&lt;/li&gt;
+        &lt;li&gt;Unlike other apps it allows searching places by a thing (brownie, coffee, wine)&lt;/li&gt;
+        &lt;li&gt;
+          When I search for ‘brownie’, I’ll see places list by the quality of brownies, 
+          not by the overall quality
+        &lt;/li&gt;
+        &lt;li&gt;Current products (Yelp, TripAdvisor, FourSquare) only show the overall rating&lt;/li&gt;
+        &lt;ul&gt;
+          &lt;li&gt;But what does it mean for a cafe to be rated 4 stars?&lt;/li&gt;
+          &lt;li&gt;Does it mean that it’s got a 4 star coffee? Or a brownie? Or just a cozy interior?&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+    &lt;td&gt;
+      &lt;strong&gt;Business Goals&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Gain Product Management experience&lt;/li&gt;
+        &lt;li&gt;Generate revenue&lt;/li&gt;
+        &lt;li&gt;Sold it to the current incumbents (Yelp, Google, TripAdvisor, Facebook)&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+</description>
+        <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/product-management-in-the-open/idea</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/idea</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Lean Startup and Inspiration</title>
+        <description>&lt;p&gt;This is the first article in the series about working on a mobile application - Best in Town / Best in Edinburgh - and applying the Lean Startup methodology and other good product management techniques. &lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;p&gt;A few words about myself. I come from a Software Engineering background, but I’ve always had a keen interest in Product Management. I’ve had a chance to be a Product Owner on a few different projects - it was very exciting. And I learnt how to translate a product vision to a roadmap and then to an actual deliverable. However, I didn’t have a chance to do ideation, market research, set up goals and metrics, experiment, pivot, and so on. So, one of the ideas behind my endeavour is to try to do that.&lt;/p&gt;
+
+&lt;h1 id=&quot;how-it-all-started&quot;&gt;How it all Started&lt;/h1&gt;
+
+&lt;p&gt;I was sitting in a new cafe&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; in a trendy part of Edinburgh, UK and reading the ‘Lean Startup’ by Eric Ries. I was enjoying the vibe in the cafe and the winter sun outside, but I wasn’t impressed with either the coffee or cakes which were on offer. The place was busy though. And TripAdvisor and Yelp both showed a relatively good rating. &lt;/p&gt;
+
+&lt;p&gt;The last fact led me to a thought - what is a rating on TripAdvisor, Yelp, and the other usual suspects? As a rating you get a single number - 4.1 stars, but what does it really mean? Does it mean that a place has a good coffee? Or maybe the brownies there are delicious? Or could it be a nice atmosphere and staff? Or is it a combination of all those factors?&lt;/p&gt;
+
+&lt;p&gt;Hmm… but what if you are really interested in finding places that do coffee the best? Or any other favourite thing of yours? Or say, for example, you have friends over from abroad and want to surprise them with the best craft beer in town? How do you find it?&lt;/p&gt;
+
+&lt;p&gt;Say, you’re looking for a bar with amazing wine. You search for ‘wine’, but the existing apps will only throw at you a number of French restaurants. Granted, they would have great wine, but it’s not something you’re looking for. You just care about the quality of wine, nothing else.&lt;/p&gt;
+
+&lt;p&gt;Enter, Best in Edinburgh (or Best in Town it was known in those days). In Best in Town you can search for specific things - wine, craft beer, coffee, and it’ll show you ratings for those things only. So, if one bar has 5 stars for wine, but only 4 for cocktails, the app will tell you about it!&lt;/p&gt;
+
+&lt;p&gt;You can read more about &lt;a href=&quot;../idea&quot;&gt;the idea itself here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;The cafe closed shut at some point that year. It was replaced by another one - Brill Jewellery &amp;amp; Coffee. Yes, it was a both a jewellery shop and a cafe. Nothing to be surprised about though. It was in in Stockbridge, Edinburgh - the most fashionable part of town. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sun, 14 Oct 2018 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/product-management-in-the-open/lean-startup-and-inspiration</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/lean-startup-and-inspiration</guid>
+        
+        
+      </item>
     
       <item>
         <title>Split User Stories Ruthlessly - And Get Value Earlier</title>
@@ -282,296 +532,6 @@ Error: connect ECONNREFUSED
         <pubDate>Sun, 20 Jan 2013 00:00:00 +0000</pubDate>
         <link>https://mikeborozdin.com/post/my-agile-journey</link>
         <guid isPermaLink="true">https://mikeborozdin.com/post/my-agile-journey</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Handling the Double-Click Event with the Visio API</title>
-        <description>&lt;p&gt;I have already covered the Visio event model in &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;one of the previous posts&lt;/a&gt;. Unfortunately, not every event can be handled in that easy way. For instance, the double-click event requires a totally different approach.&lt;/p&gt;
-&lt;p&gt;In order to handle the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;double-click&lt;/span&gt; on a shape you have to use &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet &lt;/span&gt;&lt;!-- more --&gt;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt; &lt;/span&gt;that was briefly mentioned &lt;a href=&quot;http://www.mikeborozdin.com/post/Reading-and-Writing-Visio-Shape-Information-with-C.aspx&quot; target=&quot;_blank&quot;&gt;before&lt;/a&gt;. The &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet&lt;/span&gt; contains the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;EventDblClick&lt;/span&gt; property. We can handle it if we assign the VBA code that executes &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;QUEUEMARKEREVENT&lt;/span&gt; function that can pass the control back to C#. Then, we just handle the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;MarkerEvent&lt;/span&gt; in Visio.&lt;/p&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;div class=&quot;csharpcode&quot;&gt;
-&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;partial&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; Form1 : Form&lt;/pre&gt;
-&lt;pre&gt;{&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; Form1()&lt;/pre&gt;
-&lt;pre&gt;    {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        InitializeComponent();&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//don&#39;t forget to add this line in order to be able to hande the double-click event&lt;/span&gt;&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.MarkerEvent +=&amp;nbsp;&lt;/pre&gt;
-&lt;pre&gt;&lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_MarkerEventEventHandler(Application_MarkerEvent);&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.DocumentOpened +=&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEventHandler(visioControl_DocumentOpened);&lt;/pre&gt;
-&lt;pre&gt;    }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_MarkerEvent(Visio.Application app, &lt;span class=&quot;kwrd&quot;&gt;int&lt;/span&gt; SequenceNum, &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; ContextString)&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//make sure that it is a double-click&lt;/span&gt;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (ContextString != &lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt; &amp;amp;&amp;amp; ContextString.Contains(&lt;span class=&quot;str&quot;&gt;&quot;/cmd=DoubleClick&quot;&lt;/span&gt;))&lt;/pre&gt;
-&lt;pre&gt;        {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; sourceTag = &lt;span class=&quot;str&quot;&gt;&quot;/source=&quot;&lt;/span&gt;;&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;            MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&quot;DoubleClick at ShapeID: &quot;&lt;/span&gt; + ContextString.Substring(ContextString.IndexOf(sourceTag) +&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;sourceTag.Length));&lt;/pre&gt;
-&lt;pre&gt;        }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_DocumentOpened(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, AxMicrosoft.Office.Interop.VisOcx.EVisOcx_DocumentOpenedEvent e)&lt;/pre&gt;
-&lt;pre&gt;    {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//iterate through all the shapes and assign a handler for the DoubleClick event&lt;/span&gt;&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.ActivePage.Shapes)&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
-&lt;pre&gt;            shape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;EventDblClick&quot;&lt;/span&gt;].Formula = &lt;span class=&quot;str&quot;&gt;&quot;=QUEUEMARKEREVENT(\&quot;/cmd=DoubleClick /source=&quot;&lt;/span&gt; + shape.ID + &lt;span class=&quot;str&quot;&gt;&quot;\&quot;)&quot;&lt;/span&gt;;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
-&lt;pre&gt;    }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; openToolStripMenuItem_Click(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EventArgs e)&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (openDiagramDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        {&lt;/pre&gt;
-&lt;pre&gt;            &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Src = openDiagramDialog.FileName;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        }&lt;/pre&gt;
-&lt;pre&gt;    }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;&amp;nbsp;&lt;/p&gt;
-&lt;p&gt;As you can see when executing VBA&amp;rsquo;s &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;QUEUEMARKEREVENT()&lt;/span&gt; we can use an arbitrary string as its argument where we can pass any value. In the example above, we pass &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;&amp;lsquo;cmd=DoubleClick&amp;rsquo;&lt;/span&gt; as a code for the event and &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;&amp;lsquo;/source=&amp;rsquo;&lt;/span&gt; for passing a shape ID, so that we know which shape was double-clicked.&lt;/p&gt;
-&lt;h2&gt;Project Files&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;/files/VisioShapeDoubleClick1.zip&quot;&gt;VisioShapeDoubleClick1.zip (103.40 kb)&lt;/a&gt;&lt;/p&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;p&gt;Please, refer to these pages to get additional information on:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff765486.aspx&quot; target=&quot;_blank&quot;&gt;Application.MarkerEvent Event&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/gg144579.aspx&quot; target=&quot;_blank&quot;&gt;ShapeSheet&lt;/a&gt; &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://msdn.microsoft.com/en-us/library/aa140366(office.10).aspx&quot; target=&quot;_blank&quot;&gt;Using the QueueMarkerEvent Add-on in Visio Solutions&lt;/a&gt; &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Tue, 22 Nov 2011 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/handling-the-double-click-event-with-the-visio-api</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/handling-the-double-click-event-with-the-visio-api</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Reading and Writing Visio Shape Information with C#</title>
-        <description>&lt;p&gt;Often, you want to either to read or put some additional information regarding shapes in your diagram. For instance, you have an application for drawing a layout of your office. Obviously, every piece of equipment or furniture your have has some information, such as its name, code and any other information related to facility management. There are two ways of reading/writing such kind of information. The first one is to make use of Visio custom properties, while the second one is to store that kind of information in a database. The former is relatively simple, as it doesn&amp;rsquo;t require to have any additional layer, such as database. At the same time, the latter is more versatile, as it allows integrating Visio application with other business application by querying a database. In the tutorial we cover the first option, that is using custom properties of Visio. &lt;!-- more --&gt;&lt;/p&gt;
-&lt;p&gt;When drawing diagrams in Visio you often can assign custom properties to shapes by right-clicking and choosing &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Properties&lt;/span&gt;&lt;span style=&quot;font-family: Georgia;&quot;&gt;. For instance, during a creation of an &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Office Layout&lt;/span&gt; diagram you can see the following dialog.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img style=&quot;display: block; float: none; margin-left: auto; margin-right: auto;&quot; title=&quot;image&quot; src=&quot;/images/image_25.png&quot; alt=&quot;image&quot; width=&quot;838&quot; height=&quot;524&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;The dialog prompts to enter such information as&amp;nbsp; length, depth, ID, name, product number and any other information that makes sense for furniture and office equipment.&lt;/p&gt;
-&lt;p&gt;For sure, the Visio API provides tools for reading and writing such pieces of information. In the &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;previous tutorial&lt;/a&gt; I briefly mentioned that every &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Shape&lt;/span&gt; object holds a property of the type of &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Cell&lt;/span&gt; that keeps shape&amp;rsquo;s properties, as well as additional properties. In order to access one of them you should refer to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Shape.Cell[&amp;lsquo;PropertyName&amp;rsquo;].&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;Usually, property names slightly differ from those ones displayed in the user-friendly Visio dialog. It doesn&amp;rsquo;t impose a serious problem, however, because their names can be looked up in the &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;ShapeSheet Data Window&lt;/span&gt;. The window is accessible on right-clicking a shape and choosing &amp;lsquo;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Show ShapeSheet&amp;rsquo;&lt;/span&gt;. If you can&amp;rsquo;t see that window, then you must enable the Developer mode, which can be done by going to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;File-&amp;gt;Options-&amp;gt;Advanced&lt;/span&gt; and ticking &amp;lsquo;&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Run in developer mode&amp;rsquo;&lt;/span&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;img style=&quot;display: inline;&quot; title=&quot;image&quot; src=&quot;/images/image_26.png&quot; alt=&quot;image&quot; width=&quot;841&quot; height=&quot;526&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;The window shows a whole cell of available properties including some general ones linked to a shape appearance and a position in a diagram to more customised one located in the &amp;lsquo;Shape Data&amp;rsquo; section where you can spot properties like &amp;lsquo;Prop.Department&amp;rsquo;, &amp;lsquo;Prop.Name&amp;rsquo; and so on.&lt;/p&gt;
-&lt;p&gt;We will create a simple application that will display a few properties in a form on selecting a shape. Modification of those properties will be also preserved. Moreover, we will allow user to save a modified diagram.&lt;/p&gt;
-&lt;p&gt;&lt;img style=&quot;display: inline;&quot; title=&quot;image&quot; src=&quot;/images/image_27.png&quot; alt=&quot;image&quot; width=&quot;817&quot; height=&quot;510&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;The basics of creating applications for Visio are given &lt;a href=&quot;http://www.mikeborozdin.com/post/Developing-Applications-for-Visio-with-Visual-Studio-(Windows-Forms-WPF-XBAP).aspx&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;, while &lt;a href=&quot;http://www.mikeborozdin.com/post/Understanding-Visio-Event-Model.aspx&quot; target=&quot;_blank&quot;&gt;another tutorial&lt;/a&gt; explains how to track if a shape has been selected in a diagram, as well as how to handle some other events.&lt;/p&gt;
-&lt;p&gt;So, when handling the SelectionChanged event we must extract and display values of custom properties we are interested in.&lt;/p&gt;
-&lt;div class=&quot;csharpcode&quot;&gt;
-&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_SelectionChanged(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_SelectionChangedEvent e)&lt;/pre&gt;
-&lt;pre&gt;{&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    Visio.Shape selectedShape = &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Selection.PrimaryItem;&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;rem&quot;&gt;//we bind only if we have selected a shape, not in case if we have deselected it&lt;/span&gt;&lt;/pre&gt;
-&lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (selectedShape != &lt;span class=&quot;kwrd&quot;&gt;null&lt;/span&gt;)&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-&lt;pre&gt;        Binding bindingId = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        bindingId.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.ID&quot;&lt;/span&gt;];&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//we update a source, in our case, a Prop.ID everytime we type in something in a textbox&lt;/span&gt;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        bindingId.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;rem&quot;&gt;//we specify a converter that removes trailing and leading quotes when displaying values&lt;/span&gt;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;rem&quot;&gt;//and enquotes values when saving them&lt;/span&gt;&lt;/pre&gt;
-&lt;pre&gt;        bindingId.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        tbId.SetBinding(TextBox.TextProperty, bindingId);&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        Binding bindingName = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
-&lt;pre&gt;        bindingName.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.Name&quot;&lt;/span&gt;];&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        bindingName.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
-&lt;pre&gt;        bindingName.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        tbName.SetBinding(TextBox.TextProperty, bindingName);&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        Binding bindingDepartment = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Binding(&lt;span class=&quot;str&quot;&gt;&quot;Formula&quot;&lt;/span&gt;);&lt;/pre&gt;
-&lt;pre&gt;        bindingDepartment.Source = selectedShape.Cells[&lt;span class=&quot;str&quot;&gt;&quot;Prop.Department&quot;&lt;/span&gt;];&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        bindingDepartment.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;&lt;/pre&gt;
-&lt;pre&gt;        bindingDepartment.Converter = &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; VisioCellFormulaConverter();&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        tbDepartment.SetBinding(TextBox.TextProperty, bindingDepartment);&lt;/pre&gt;
-&lt;pre&gt;    }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;!-- .csharpcode, .csharpcode pre { 	font-size: small; 	color: black; 	font-family: consolas, &quot;Courier New&quot;, courier, monospace; 	background-color: #ffffff; 	/*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt  { 	background-color: #f4f4f4; 	width: 100%; 	margin: 0em; } .csharpcode .lnum { color: #606060; } --&gt;
-&lt;p&gt;Okay, it is clear that we have a WPF application because of having bindings. However, they do not make things any more complicated. Basically, we refer to a selected shape by pointing to &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Window.Selection.PrimaryItem&lt;/span&gt;. Well, in case there are multiple items in a selection we display information only on the first one. Then, provided we have three different text boxes for three different properties we specify bindings for those properties (&lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.ID&lt;/span&gt;, &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.Name&lt;/span&gt;, and &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Prop.Department&lt;/span&gt;). Each &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Cell&lt;/span&gt; object contains a property, &lt;span style=&quot;font-family: &#39;Courier New&#39;;&quot;&gt;Formula&lt;/span&gt;, that has a corresponding value, so we put in as a binding path. Since, that property, Formula, is surrounded by quotes, we remove them when showing data and put them back by using a converter called VisioCellFormulaConverter.&lt;/p&gt;
-&lt;div class=&quot;csharpcode&quot;&gt;
-&lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;class&lt;/span&gt; VisioCellFormulaConverter : IValueConverter&lt;/pre&gt;
-&lt;pre&gt;{&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; Convert(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;, Type targetType, &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; parameter, System.Globalization.CultureInfo culture)&lt;/pre&gt;
-&lt;pre&gt;    {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; result;&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (!&lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt;.IsNullOrEmpty(&lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString()))&lt;/pre&gt;
-&lt;pre&gt;        {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;            &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt; sValue = &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString();&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;            result = sValue.Substring(1, sValue.Length - 2);&lt;/pre&gt;
-&lt;pre&gt;        }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;else&lt;/span&gt;&lt;/pre&gt;
-&lt;pre&gt;        {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;            result = &lt;span class=&quot;kwrd&quot;&gt;string&lt;/span&gt;.Empty;&lt;/pre&gt;
-&lt;pre&gt;        }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre&gt;        &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; result;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
-&lt;pre&gt;&amp;nbsp;&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; ConvertBack(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;, Type targetType, &lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; parameter, System.Globalization.CultureInfo culture)&lt;/pre&gt;
-&lt;pre&gt;    {&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;        &lt;span class=&quot;kwrd&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;str&quot;&gt;&quot;\&quot;&quot;&lt;/span&gt; + &lt;span class=&quot;kwrd&quot;&gt;value&lt;/span&gt;.ToString() + &lt;span class=&quot;str&quot;&gt;&quot;\&quot;&quot;&lt;/span&gt;;&lt;/pre&gt;
-&lt;pre&gt;    }&lt;/pre&gt;
-&lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;You can find the rest of the source code, as well, as the sample diagram here.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;/files/VisioShapeProperties.zip&quot;&gt;VisioShapeProperties.zip (484.76 kb)&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Wed, 21 Sep 2011 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/reading-and-writing-visio-shape-information-with-c</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/reading-and-writing-visio-shape-information-with-c</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Understanding Visio Event Model</title>
-        <description>&lt;p&gt;In the previous chapters we have already seen an important Visio event, DocumentOpened, which is triggered each time you open a new diagram. However, the Visio API supports tons of other events and some of them are necessary for building sophisticated applications around Visio. Provided you have an application with an embedded Visio control and users can use the application to modify diagrams. Obviously, you want to keep track of such changes and, say, record them in a database. Visio events allows you to receive notifications every time such a change occurs. &lt;!-- more --&gt;&lt;/p&gt;  &lt;h1&gt;SelectionChanged&lt;/h1&gt;  &lt;p&gt;However, we postpone fancy diagram editing to a later stage. Instead we’ll start with a simple yet rather important event that fires when a user selects or deselects shape in a diagram.&lt;/p&gt;  &lt;p&gt;The event is called &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SelectionChanged&lt;/span&gt; and you write down the following code in order to handle it:&lt;/p&gt;  &lt;div class=&quot;csharpcode&quot;&gt;   &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Window_Loaded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, RoutedEventArgs e)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.SelectionChanged += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_SelectionChangedEventHandler(visioControl_SelectionChanged);&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;While the handler itself may look in the following way:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_SelectionChanged(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_SelectionChangedEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;You have selected &amp;quot;&lt;/span&gt; + e.window.Selection.Count.ToString() + &lt;span class=&quot;str&quot;&gt;&amp;quot; shape(s)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;Which are/is&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;            &lt;/pre&gt;
-
-  &lt;pre&gt;    &lt;span class=&quot;kwrd&quot;&gt;foreach&lt;/span&gt; (Visio.Shape shape &lt;span class=&quot;kwrd&quot;&gt;in&lt;/span&gt; e.window.Selection)&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    {&lt;/pre&gt;
-
-  &lt;pre&gt;        MessageBox.Show(shape.Text + &lt;span class=&quot;str&quot;&gt;&amp;quot; (&amp;quot;&lt;/span&gt; + shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;)&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    }&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Here we receive a parameter &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;e&lt;/span&gt; of type &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;EvisOcx_SelectionChangedEvent&lt;/span&gt; that allows as to get access to a current object of class &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Selection&lt;/span&gt; that was already mentioned in the &lt;a href=&quot;http://www.mikeborozdin.com/post/Analysing-Parent-Child-Relations-in-Visio.aspx&quot; target=&quot;_blank&quot;&gt;previous tutorial&lt;/a&gt;. As a result we can always get a number of selected shapes and iterate through them. It is clear that is a user drops a selection that object will contain no shapes at all.&lt;/p&gt;
-
-&lt;h1&gt;ShapeAdded&lt;/h1&gt;
-
-&lt;p&gt;This event is triggered by adding new shapes into a diagram. Although it hasn’t been shown yet, but it is possible incorporate a Visio window for adding shapes in your application.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;/images/image_24.png&quot;&gt;&lt;img style=&quot;background-image: none; border-right-width: 0px; padding-left: 0px; padding-right: 0px; display: block; float: none; border-top-width: 0px; border-bottom-width: 0px; margin-left: auto; border-left-width: 0px; margin-right: auto; padding-top: 0px&quot; title=&quot;image&quot; border=&quot;0&quot; alt=&quot;image&quot; src=&quot;/images/image_thumb_2.png&quot; width=&quot;249&quot; height=&quot;420&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Moreover, this is not the only trigger for the event. Every time you paste something into a diagram including already present the event is fired. So, you can try it now without having to draw that shapes window.&lt;/p&gt;
-
-&lt;pre class=&quot;csharpcode&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.ShapeAdded += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_ShapeAddedEventHandler(visioControl_ShapeAdded);&lt;/pre&gt;
-
-&lt;p&gt;I wrote the following event handler that simply outputs a name of a newly added or pasted shape:&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_ShapeAdded(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_ShapeAddedEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(&lt;span class=&quot;str&quot;&gt;&amp;quot;You have added a new shape which is &amp;quot;&lt;/span&gt; + e.shape.Name);&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;As with &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;SelectionChanged &lt;/span&gt;the second parameter of the handler contains useful information about the event, in particular you can access a newly added shape.&lt;/p&gt;
-
-&lt;h1&gt;Detecting Shape Movements, Resizing, and etc.&lt;/h1&gt;
-
-&lt;p&gt;The Visio API doesn’t have an event, like ShapeMoved or ShapeResized. Instead, there is an event called CellChanged that consumes almost every event related to changing the way a shape looks. Each shape has a property, Cell, that contains data about a shape’s size, fill colour, line colour, coordinates, and etc. This data is represented as as spread sheet, where &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Cell.Name&lt;/span&gt; refers to a property name (e.g. Width), while &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Cell.Formula&lt;/span&gt; holds its values. You can find more information about that on &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/ff768297.aspx&quot; target=&quot;_blank&quot;&gt;MSDN&lt;/a&gt;. Obviously, when moving a shape around a diagram this property changes. Moreover, the event can fire a few times depending on how many properties have been changed.&lt;/p&gt;
-
-&lt;p&gt;If we want to detect a movement we are interested only in &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;PinX&lt;/span&gt; and &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;PinY&lt;/span&gt; that represent the centre of rotation of a shape.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.CellChanged += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_CellChangedEventHandler(Application_CellChanged);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_CellChanged(Visio.Cell cell)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    &lt;span class=&quot;kwrd&quot;&gt;if&lt;/span&gt; (cell.Name == &lt;span class=&quot;str&quot;&gt;&amp;quot;PinX&amp;quot;&lt;/span&gt; || cell.Name == &lt;span class=&quot;str&quot;&gt;&amp;quot;PinY&amp;quot;&lt;/span&gt;)&lt;/pre&gt;
-
-  &lt;pre&gt;    {&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;        MessageBox.Show(cell.Shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot; has been moved&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;    }&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Moreover, it is also possible to check which shape has been really moved by accessing &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;cell.Shape&lt;/span&gt;.&lt;/p&gt;
-
-&lt;h1&gt;Shape Caption Change&lt;/h1&gt;
-
-&lt;p&gt;Often, it is useful to track when a user changes a shape caption (or &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;Shape.Text&lt;/span&gt; in the API terminology). There is a convenient event, &lt;span style=&quot;font-family: &amp;#39;Courier New&amp;#39;&quot;&gt;ShapeExitedTextEdit&lt;/span&gt;, that, as the title suggests, fires when a user exists a textbox for editing a caption.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.ShapeExitedTextEdit += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; EVisOcx_ShapeExitedTextEditEventHandler(visioControl_ShapeExitedTextEdit);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; visioControl_ShapeExitedTextEdit(&lt;span class=&quot;kwrd&quot;&gt;object&lt;/span&gt; sender, EVisOcx_ShapeExitedTextEditEvent e)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(e.shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot;&#39;s text has been chaged&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h1&gt;BeforeShapeDelete&lt;/h1&gt;
-
-&lt;p&gt;Finally, if you feel you some shape in your diagram is not needed anymore, you can easily delete it and most importantly handle that event.&lt;/p&gt;
-
-&lt;div class=&quot;csharpcode&quot;&gt;
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;this&lt;/span&gt;.visioControl.Window.Application.BeforeShapeDelete += &lt;span class=&quot;kwrd&quot;&gt;new&lt;/span&gt; Visio.EApplication_BeforeShapeDeleteEventHandler(Application_BeforeShapeDelete);&lt;/pre&gt;
-
-  &lt;pre&gt;&lt;span class=&quot;rem&quot;&gt;//...&lt;/span&gt;&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;&lt;span class=&quot;kwrd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kwrd&quot;&gt;void&lt;/span&gt; Application_BeforeShapeDelete(Visio.Shape shape)&lt;/pre&gt;
-
-  &lt;pre&gt;{&lt;/pre&gt;
-
-  &lt;pre class=&quot;alt&quot;&gt;    MessageBox.Show(shape.Name + &lt;span class=&quot;str&quot;&gt;&amp;quot; has been deleted&amp;quot;&lt;/span&gt;);&lt;/pre&gt;
-
-  &lt;pre&gt;}&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h1&gt;Source Code&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;/files/VisioEventModelTutorial.zip&quot;&gt;VisioEventModelTutorial.zip (76.63 kb)&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;The Visio event model allows you to build rich interaction between your application and a hosted Visio control. You can freely allow users to edit diagrams in your application and the application itself will be notified about every change.&lt;/p&gt;
-</description>
-        <pubDate>Wed, 07 Sep 2011 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/understanding-visio-event-model</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/understanding-visio-event-model</guid>
         
         
       </item>
