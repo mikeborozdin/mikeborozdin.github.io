@@ -133,6 +133,36 @@ a {
     color: #014E82
 }
 
+.footnotes {
+  color: gray;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+thead {
+  font-style: bold;
+  font-size: 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.center-image {
+    margin: 0 auto;
+    display: block;
+}
+
+.breadcrumbs {
+  margin-top: 20px;
+  font-style: italic;
+}
+
 @media screen and (min-width:768px) {
     body {
         font-size: 1.4em;
