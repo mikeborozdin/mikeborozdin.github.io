@@ -11,6 +11,8 @@ set -e
 
 echo "Building a Jekyll site"
 
+rm -rf _site/
+
 # build site with jekyll, by default to `_site' folder
 bundle exec jekyll build
 
@@ -33,5 +35,6 @@ cd ../mikeborozdin.github.io.master
 git config user.email "mike.borozdin@gmail.com"
 git config user.name "Mike Borozdin"
 git add -A .
+git status
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
 git push --quiet origin master > /dev/null 2>&1
