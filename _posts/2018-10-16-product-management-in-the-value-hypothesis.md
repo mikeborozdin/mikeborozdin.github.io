@@ -101,7 +101,7 @@ Next Steps
 
 We've determined our hypothesis and how we're going to measure it. So, the next step would be to build an MVP, as minimal as possible, and get it to users.
 
-I'll describe what will be included in the MPV in the next blog posts, which are coming out soon.
+I'll describe what will be included in the MVP in the next blog posts, which are coming out soon.
 
 Reflections and Possible Mistakes
 ====

@@ -33,12 +33,12 @@ body {
 
 h1 {
     color: #014E82;
-    font-size: 1em
+    font-size: 0.9em
 }
 
 h2 {
     color: #014E82;
-    font-size: 1em
+    font-size: 0.8em
 }
 
 #header a {
@@ -205,10 +205,6 @@ thead {
         top: 50px
     }
 
-    h1 {
-        font-size: 1.25em
-    }
-
     .menuItem {
         display: inline
     }
@@ -221,7 +217,7 @@ thead {
         display: inline;
     }
 
-    .hideen {
+    .hidden {
         display: block;
     }
 }
