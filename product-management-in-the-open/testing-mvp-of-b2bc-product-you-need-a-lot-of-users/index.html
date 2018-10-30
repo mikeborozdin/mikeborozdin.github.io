@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Testing MVP of B2C Product? You Need a Lot of Users</title>
+  <meta name="description" content="You have an idea for a B2C product, for a mobile app even. But you’re worried about bugs &amp; bad reviews on app store. So, you only release it for a very l...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!--[if lt IE 9]>
+  		<script src="/js/css3-mediaqueries.js></script>
+  	<![endif]-->
+
+  <link rel="canonical" href="https://mikeborozdin.com/product-management-in-the-open/testing-mvp-of-b2bc-product-you-need-a-lot-of-users">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="https://mikeborozdin.com/feed.xml" />
+
+  <script type="text/javascript" src="/js/toggle-menu.js"></script>
+
+</head>
+
+<body>
+
+  <div id="header">
+  <div id="banner">
+    <div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+    <div id="description"><a href="/">software engineering, product management & agile</a></div>
+  </div>
+
+  <a href="javascript:toggleMenu();" id="menuButton">Menu</a>
+
+  <ul id="menu" class="hidden">
+    <li><a href="/" class="menuItem">Home</a></li>
+    <li><a href="/product-management-in-the-open/" class="menuItem">Product Management in the Open</a></li>
+    <li><a href="/all-posts/" class="menuItem">All posts</a></li>
+    <li><a href="/talks/" class="menuItem">Talks</a></li>
+    <li><a href="/about/" class="menuItem">About me</a></li>
+    <li>
+      <a href="http://www.twitter.com/mikeborozdin">
+        <span id="twitterText">Twitter</span>
+        <span id="twitterImage"><img src="/images/twitter.png" /></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+  <div id="content">
+    <div class="post">
+
+  <div class="breadcrumbs">
+    <a href="/product-management-in-the-open">Product Management in the Open</a> / Testing MVP of B2C Product? You Need a Lot of Users
+  </div>
+
+  <header class="post-header">
+    <h1>Product Management in the Open - Testing MVP of B2C Product? You Need a Lot of Users</h1>
+  </header>
+
+  <article class="post-content">
+    <p>You have an idea for a B2C product, for a mobile app even. But you’re worried about bugs &amp; bad reviews on app store. So, you only release it for a very limited audience. That’s probably wrong… <!-- more --></p>
+
+<p><img src="/images/product-management-in-the-open/mvp/large-vs-small.jpg" alt="Small vs Large Audience" class="center-image" /> </p>
+
+<h1 id="executive-summary">Executive Summary</h1>
+<ul>
+  <li>B2C (business-to-consumer) products may require a large test audience to validate your idea
+    <ul>
+      <li>Well, at least a few hundred users</li>
+    </ul>
+  </li>
+  <li>Test audience should be large enough to meet your KPIs
+    <ul>
+      <li>Is it even mathematically possible to target 20% retention rate, if you audience is limited to 20 users?</li>
+    </ul>
+  </li>
+  <li>Don’t fear bad reviews for a mobile app
+    <ul>
+      <li>You need a huge number of installs to get any reviews</li>
+    </ul>
+  </li>
+  <li>This article is part of the <a href="../">Product Management in the Open Series</a></li>
+</ul>
+
+<h1 id="intro">Intro</h1>
+<p>As I described previously I came up with <a href="../idea">an idea</a>, <a href="../value-hypothesis-and-kpis">a value hypothesis, KPIs</a>. Now it was time to confirm or discard that hypothesis. There are numerous ways of doing that, but I opted out for a mobile app as an MVP. That would be something tangible users could play with, while I would be gathering data on their usage.</p>
+
+<p>However, mobile app development has certain barriers to entry. Unlike a website which you can just launch and make available to the whole world, a mobile app has to go through an approval process before it appears on an app store. All that sounded daunting when I quickly wanted to validate my idea. I was also worried about negative reviews because of bugs or less than ideal user experience. After all, mobile users are a few taps away from giving your app a 1 star rating. And that could really kill an early app idea, if people immediately see poor reviews. Or… so I thought at that time.</p>
+
+<p>Luckily, I had a dozen of friends who were were also into food &amp; drinks (my target group). So I had an audience I could test my app with. </p>
+
+<p>As a result, I embarked on scoping features, content, platform and building an actual MVP (I’ll talk about it in a upcoming blog post). I also figured out a way to have a private distribution for both iOS and Android. (Unfortunately, my friends didn’t use a single platform, so I had to target both of them).
+Anyway, after some time, I had an MVP for my limited audience. </p>
+
+<h1 id="field-testing">Field Testing</h1>
+<p>And I even organised a field testing session among a group of foodies. We spent a night wandering around town in search of the best wine and craft beer thanks to Best in Town.</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/images/product-management-in-the-open/mvp/happy-users.jpg" alt="Happy users" /></td>
+      <td><img src="/images/product-management-in-the-open/mvp/phones.jpg" alt="And their phones... and beer" /></td>
+    </tr>
+    <tr>
+      <td>Happy users</td>
+      <td>And their phones… and beer</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The idea and the app got a positive reception and it was great to observe people using your app.</p>
+
+<p>I even got a few e-mails after from a few friends of friends. They gave me detailed feedback on the app and some new ideas.</p>
+
+<h1 id="but-do-you-get-enough-data-to-validate-hypothesis">But Do You Get Enough Data to Validate Hypothesis?</h1>
+<p>But as the time went on my analytics system (Google Analytics at the time) registered very little activity. At that time I managed to sign up around 20+ users to the app. And if we look at <a href="../value-hypothesis-and-kpis">the KPI we have set for validating the hypothesis it was a Monthly Retention</a>. The hypothesis would be validated, if we achieved a 20% monthly retention rate.</p>
+
+<p>Okay, so we had around 20 people and 20% of them would be what 0.8 person? That hardly looks good from the point of view of statistical significance.</p>
+
+<blockquote>
+  <p>Your test audience should be large enough to make your KPIs statistically significant.</p>
+</blockquote>
+
+<h1 id="issues-with-releasing-b2c-mobile-apps-to-small-audience">Issues with Releasing B2C Mobile Apps to Small Audience</h1>
+
+<p>So this leads to the following points when it comes to releasing an B2C product to really small audiences. By the way, you may still have a limited launch - think of when Gmail was by invitation only. But probably, they released it to more than 20 people.</p>
+
+<ul>
+  <li><strong>You won’t get enough quantitative data to validate your hypothesis.</strong> B2C (business-to-consumer) apps require scale. As we said before, the average monthly retention is about 20-35%. Even if your app in its first iteration does produce the 20% monthly retention you’ll need a few hundred users to ensure the number is significant enough. It is also highly likely that you may need a few iterations before your app hits any reasonable retention rates. And that requires a constant stream of users coming to the app. Think about if your first monthly retention rate is 10%, you’ll lose 90% of your audience. And for your next experiment you’ll have to acquire a new user base.</li>
+  <li><strong>You accidentally exclude one of your target audiences.</strong> In <a href="../idea#product-vision-board">the Product Canvas</a> I set that we had two target audiences - locals and tourists. But by releasing an app to my friends, I totally excluded the tourists group out of my tests.</li>
+  <li><strong>Friend bias.</strong> If you release an app to friends and friends of friends then you may get positive feedback at first. And people will be generally impressed with your work. But that does not mean they will use your app in the future or they have the problem you’re trying to solve. And yeah, if you have a small audience you shouldn’t get too excited about sudden upticks you spot in your analytics system. It could be that your friends are just talking about you and showing your app to your other mates. And… your other mates won’t be able to get an app, because it’s not an an app store.</li>
+  <li><strong>You also limit your chances to present an app to random people.</strong> In case, of Best in Town, it was difficult to sign up random people. I would often talk to people recently opened their own cafe. I could’ve shown them Best in Town, but it would be a painful process of getting them onto the app during to the limitation of restricted audiences on iOS &amp; Android.</li>
+</ul>
+
+<h1 id="qualitative-analysis-is-still-possible-after-general-release">Qualitative Analysis is Still Possible After General Release</h1>
+<p>Some people may say ‘But what about the benefits of qualitative analysis’? It is useful indeed, but releasing an app for a general audience, does not exclude qualitative analysis.</p>
+
+<p>I launched the app among the people I knew. We also did field testing together. Of course, it gave me lots of insightful information. I concur it was great to see how people were using the app. That really helped to spot various usability issues.</p>
+
+<p>However, releasing an app to everyone does not exclude qualitative analysis. You can still have sessions in person with users to see how they use an app, while at the same time you gather quantitative data from all other users you acquired through app stores. </p>
+
+<h1 id="false-fear-of-bad-reviews">False Fear of Bad Reviews</h1>
+<p>Jumping a bit forward the app is now on the market - both on Apple App Store and Google Play Store. There are close to 1,000 downloads in total. And there haven’t been any rating below 4 stars. There is <a href="https://www.quora.com/Whats-the-approximate-ratio-of-downloads-to-total-number-of-ratings-for-iPhone-apps">the data that suggests</a> that a ratio of rating per download can vary from 1 to 75 to 1 to 600 (1 rating per 600 downloads. </p>
+
+<p>So, clearly there was nothing to fear.</p>
+
+<h1 id="going-forward">Going Forward</h1>
+<p>It’s not enough to have 20 installs if you are working on a mass market B2C app. So, I decided to release the app on app stores and spent money on advertising to acquire users. I’ll talk about that in the future posts.</p>
+
+  </article>
+
+  <div class="postFooter">
+    <p>Mike Borozdin</p>
+    <p>30 October 2018</p>
+  </div>
+
+  <div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'mikeborozdin'; // required: replace example with your forum shortname
+
+               /*  * *  DON'T  EDIT BELOW  THIS LINE  * *  */ (function () {
+        var dsq = document.createElement('script'); dsq.type =
+          'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+  </div>
+
+</div>
+
+    <div id="footer">
+  <p>
+    The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way. My
+    personal
+    thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present
+    standpoint.
+  </p>
+  <p>&copy; 2018 Mike Borozdin</p>
+</div>
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-4764679-1', 'auto');
+
+  if (document.cookie.indexOf('excludeGa=1') === -1) {
+    ga('send', 'pageview');
+  }
+
+</script>
+  </div>
+
+</body>
+
+</html>
