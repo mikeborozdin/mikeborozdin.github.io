@@ -12,6 +12,7 @@ Upcoming Talks
 Past Talks
 ----
 
+* TypeScript @ [Time To React](https://www.meetup.com/meetup-group-timetoreact/)
 * JavaScript and AngularJS on an ATM @ [EdinburghJS](https://twitter.com/edinburghjs)
 * A Code Review Is More Useful Than You Think @ [TechMeetup Edinburgh](http://techmeetup.co.uk)
 * Practical Functional Programming in JavaScript @ [EdinburghJS](https://twitter.com/edinburghjs)

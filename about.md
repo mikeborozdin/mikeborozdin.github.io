@@ -4,7 +4,7 @@ title: About Me
 permalink: /about/
 ---
 ![Mike Borozdin](/images/about/photo.jpeg){: .photo}
-Hi! My name is Mike Borozdin. I'm a technical architect and engineer with a strong customer and product focus. My firm belief is that technology is a key component of a successful business. 
+Hi! My name is Mike Borozdin. I'm a software engineer with a strong customer and product focus. My firm belief is that technology is a key component of a successful business. 
 
 I'm also passionate about empowering other people and evangelising technologies, products, and processes. I always seek an opportunity to share my knowledge either at work or a conference or through my blog.
 
