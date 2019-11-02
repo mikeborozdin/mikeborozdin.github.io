@@ -3,5 +3,6 @@ script: ./build.sh
 branches:
   only:
   - jekyll
+dist: precise  
 rvm:
-- 2.1.9
+- 2.1.2
