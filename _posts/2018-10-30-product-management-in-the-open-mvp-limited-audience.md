@@ -46,7 +46,7 @@ But Do You Get Enough Data to Validate Hypothesis?
 ====
 But as the time went on my analytics system (Google Analytics at the time) registered very little activity. At that time I managed to sign up around 20+ users to the app. And if we look at [the KPI we have set for validating the hypothesis it was a Monthly Retention](../value-hypothesis-and-kpis). The hypothesis would be validated, if we achieved a 20% monthly retention rate.
 
-Okay, so we had around 20 people and 20% of them would be what 0.8 person? That hardly looks good from the point of view of statistical significance.
+Okay, so we had around 20 people and 20% of them would be what 4 persons? That hardly looks good from the point of view of statistical significance.
 
 >Your test audience should be large enough to make your KPIs statistically significant.
 
