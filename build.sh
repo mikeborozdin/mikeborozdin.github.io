@@ -37,4 +37,4 @@ git config user.name "Mike Borozdin"
 git add -A .
 git status
 git commit -a -m "Travis #$TRAVIS_BUILD_NUMBER"
-git push --quiet origin master > /dev/null 2>&1
+git push origin master
