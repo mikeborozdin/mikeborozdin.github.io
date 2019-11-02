@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Gradually move to TypeScript?"
+title: "Gradual move to TypeScript. Running JavaScript and TypeScript side-by-side"
 comments: true
 ---
 
