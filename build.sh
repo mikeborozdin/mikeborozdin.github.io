@@ -9,6 +9,8 @@ fi
 # enable error reporting to the console
 set -e
 
+python --version
+
 echo "Building a Jekyll site"
 
 rm -rf _site/
