@@ -115,7 +115,7 @@ Next step would be to `tsconfig.json` to the root folder of the project to confi
 After this we can write our TypeScript component
 
 **src/js-component/ts-component/ts-component.tsx**
-{% highlight bash javascript %}
+{% highlight bash typescript %}
 import React from 'react';
 
 interface Props {
@@ -134,7 +134,7 @@ export default TsComponent;
 Now, if we try to import it from a JavaScript component:
 
 **src/js-component/js-component.tsx**
-{% highlight bash javascript %}
+{% highlight bash typescript %}
 import React from 'react';
 import TsComponent from './ts-component/ts-component';
 
