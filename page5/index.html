@@ -51,6 +51,17 @@
   <div id="content">
     
 <div>
+	<h1><a href="/post/visual-studio-2010-ctp-performance-tip">Visual Studio 2010 CTP Performance Tip</a></h1>
+	Visual Studio 2010 CTP has been available for some time already. So, I guess many of you have already used a chance to give a new version of the famous IDE a try. If you haven&rsquo;t downloaded it, well I think it&rsquo;s quite sensible thing to get it. It&rsquo;s likely to be released at the end of the next year, so you will have a plenty of time to learn all the new features and become a real guru of .NET 4.0 and Visual Studio 2010.
+Anyway, the current CTP is shipped as a Virtual PC image that means you cannot expect it run ultra fast. Moreover, the Virtual PC image is packaged with a lot of things that you may need when experiencing the new IDE, I mean they included Team Foundation Server, SQL Server 2008 Enterprise, Office 2007 and Windows Sharepoint Services that are running by default. Wow, that&rsquo;s a lot and it consumes a lot of memory. But sometimes you don&rsquo;t need those things at all, for instance, you just want to learn the new features of C# 4.0. Thus, it&rsquo;s sensible to get rid of unnecessary services, you can always enable them later. So, go to <strong>Start &ndash;&gt; Administrative Tools &ndash;&gt; Services</strong> and simply stop and disable automatic running of the services you don&rsquo;t need.
+Personally, I disabled TFS, SQL Server, WSS, IIS, Tablet Input services. Eventually the memory consumption of my virtual machine dropped from about 1 GB to less than 500 MBs.
+
+
+<a href="/post/visual-studio-2010-ctp-performance-tip" class="more">More...</a>
+	<div class="postFooter">5 December 2008</div>
+</div>
+
+<div>
 	<h1><a href="/post/microsoft-student-partners-(msp)-meeting">Microsoft Student Partners (MSP) Meeting</a></h1>
 	Well, it’s been a very long time since I posted anything. That’s certainly wrong. I must correct myself ;-)!  Anyway, I want to tell you that I had a great opportunity to visit a meeting of Microsoft Student Partners from Russia in my city. I must admit it was an incredible event. I met so many people who are really passionate about technology. They are eager to tell people about great technologies, as well! It’s a great think that we can gather all together and get to know each other :)! I must thank Microsoft for that :)!
 
@@ -142,14 +153,6 @@ In this particular tutorial I'll show you how to create a very simple, but rathe
 	<div class="postFooter">30 August 2008</div>
 </div>
 
-<div>
-	<h1><a href="/post/aspnet-myths-busted">ASP.NET Myths Busted</a></h1>
-	<img style="border-right-width: 0px; margin: 0px 5px 0px 0px; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" src="/images/WindowsLiveWriter/ASP.NETMisconceptions_104D6/busted_5.gif" border="0" alt="busted" width="155" height="97" align="left" /> Having read a great variety of forum and blog posts, I met a lot of misconceptions about ASP.NET that definitely made people to turn away from ASP.NET. I won't argue whether ASP.NET is better than PHP (or Ruby on Rails) or not, instead I'll try to bust those myths. 
-
-<a href="/post/aspnet-myths-busted" class="more">More...</a>
-	<div class="postFooter">27 August 2008</div>
-</div>
-
 
 <div id="postPaging">
 	
@@ -168,7 +171,7 @@ In this particular tutorial I'll show you how to create a very simple, but rathe
     thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present
     standpoint.
   </p>
-  <p>&copy; 2019 Mike Borozdin</p>
+  <p>&copy; 2020 Mike Borozdin</p>
 </div>
 
 <script>

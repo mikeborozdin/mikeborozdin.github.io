@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Shallow rendering & React Hooks. And why shallow rendering is good</title>
+  <meta name="description" content="Now you can use shallow rendering for testing React components with hooks. And a few words on why shallow rendering is good.">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!--[if lt IE 9]>
+  		<script src="/js/css3-mediaqueries.js></script>
+  	<![endif]-->
+
+  <link rel="canonical" href="https://mikeborozdin.com/post/test-react-hooks-with-shallow">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="https://mikeborozdin.com/feed.xml" />
+
+  <script type="text/javascript" src="/js/toggle-menu.js"></script>
+
+</head>
+
+<body>
+
+  <div id="header">
+  <div id="banner">
+    <div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+    <div id="description"><a href="/">software engineering, product management & agile</a></div>
+  </div>
+
+  <a href="javascript:toggleMenu();" id="menuButton">Menu</a>
+
+  <ul id="menu" class="hidden">
+    <li><a href="/" class="menuItem">Home</a></li>
+    <li><a href="/all-posts/" class="menuItem">All posts</a></li>
+    <li><a href="/talks/" class="menuItem">Talks</a></li>
+    <li><a href="/about/" class="menuItem">About me</a></li>
+    <li>
+      <a href="http://www.twitter.com/mikeborozdin">
+        <span id="twitterText">Twitter</span>
+        <span id="twitterImage"><img src="/images/twitter.png" /></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+  <div id="content">
+    <div class="post">
+
+  <header class="post-header">
+    <h1>Shallow rendering & React Hooks. And why shallow rendering is good</h1>
+  </header>
+
+  <article class="post-content">
+    <p>Now you can use shallow rendering for testing React components with hooks. And a few words on why shallow rendering is good.</p>
+
+<!-- more -->
+
+<h1 id="shallow-rendering--react-hooks">Shallow Rendering &amp; React Hooks</h1>
+
+<p>Up until recently it was tricky to use shallow rendering and libraries like <code>enzyme</code> for testing React components that relied on hooks like <code>useEffect()</code> and <code>useLayoutEffect()</code>. So I’ve released a library - <a href="https://github.com/mikeborozdin/jest-react-hooks-shallow">jest-react-hooks-shallow</a> - that brings those hooks to shallow rendering. </p>
+
+<p>All you need to do is to download the library:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">npm <span class="nb">install</span> <span class="nt">--save-dev</span> jest-react-hooks-shallow
+<span class="c"># or</span>
+yarn add <span class="nt">--dev</span> jest-react-hooks-shallow</code></pre></div>
+
+<p>and add these lines to your Jest setup file (specified by <code>setupFilesAfterEnv</code>):</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="nx">enableHooks</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">jest-react-hooks-shallow</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// pass an instance of jest to `enableHooks()`</span>
+<span class="nx">enableHooks</span><span class="p">(</span><span class="nx">jest</span><span class="p">);</span></code></pre></div>
+
+<p>And voilà - <code>useEffect()</code> and <code>useLayoutEffect()</code> will work with shallow rendering. From this moment on your test don’t need to know anything about <code>useEffect()</code>. After all, it’s a mere implementation detail.</p>
+
+<h1 id="testing">Testing</h1>
+
+<p>So if you have a component like this:</p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="kd">const</span> <span class="nx">ComponentWithHooks</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">text</span><span class="p">,</span> <span class="nx">setText</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">buttonClicked</span><span class="p">,</span> <span class="nx">setButtonClicked</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">setText</span><span class="p">(</span>
+    <span class="s2">`Button clicked: </span><span class="p">${</span><span class="nx">buttonClicked</span><span class="p">.</span><span class="nx">toString</span><span class="p">()}</span><span class="s2">`</span><span class="p">),</span> 
+    <span class="p">[</span><span class="nx">buttonClicked</span><span class="p">]</span>
+  <span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">text</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">setButtonClicked</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="si">}</span><span class="p">&gt;</span>Click me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span></code></pre></div>
+
+<p>You can easily test it with code like this:</p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Renders default message and updates it on clicking a button</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">App</span> <span class="p">/&gt;);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">text</span><span class="p">()).</span><span class="nx">toContain</span><span class="p">(</span><span class="dl">'</span><span class="s1">Button clicked: false</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">text</span><span class="p">()).</span><span class="nx">toContain</span><span class="p">(</span><span class="dl">'</span><span class="s1">Button clicked: true</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<p>Please note, that those tests didn’t have to import anything else. They simply don’t know that a component calls <code>useEffect()</code>. Yet, it’s being called when you invoke <code>shallow()</code>.</p>
+
+<p>That said, often you want to test that a specific function has been called on some event. For example, you’re calling a Redux action creator or a Mobx action. If you’re using React Hooks, chances are you’ll pass that function as a callback to <code>useEffect()</code>.</p>
+
+<p>No problems! You can easily test it with simple Jest mocks.</p>
+
+<p>Say, we have a component like this:</p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">someAction</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./some-action</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">ComponentWithHooks</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">text</span><span class="p">,</span> <span class="nx">setText</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">buttonClicked</span><span class="p">,</span> <span class="nx">setButtonClicked</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+  <span class="nx">useEffect</span><span class="p">(</span><span class="nx">someAction</span><span class="p">,</span> <span class="p">[</span><span class="nx">buttonClicked</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">text</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">setButtonClicked</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="si">}</span><span class="p">&gt;</span>Click me<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Calls `myAction()` on the first render and on clicking the button`</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">App</span> <span class="p">/&gt;);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">toHaveBeenCalledTimes</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+
+  <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">callback</span><span class="p">).</span><span class="nx">toHaveBeenCalledTimes</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<p>You can find out more about <code>jest-react-hooks-shallow</code> <a href="https://github.com/mikeborozdin/jest-react-hooks-shallow">on its Github page</a>.</p>
+
+<h1 id="why-shallow-rendering">Why shallow rendering?</h1>
+
+<p>Some people may say why bring React Hooks to enzyme when there’s a trend to use full rendering with libraries like <code>react-testing-library</code>. I’ve even sparked an interesting discussion on that when I posted about <code>jest-react-hooks-shallow</code> on <a href="https://www.reddit.com/r/javascript/comments/ffcunb/now_you_can_use_shallow_rendering_for_testing/">Reddit</a>. You may check these two sub-threads: <a href="https://www.reddit.com/r/javascript/comments/ffcunb/now_you_can_use_shallow_rendering_for_testing/fjxwyhx/">one</a> and <a href="https://www.reddit.com/r/javascript/comments/ffcunb/now_you_can_use_shallow_rendering_for_testing/fjxubeh/">two</a>.</p>
+
+<p>So there are a few good reasons for doing shallow rendering:</p>
+
+<h2 id="no-unexpected-side-effects">No unexpected side-effects</h2>
+
+<p>Let’s say you have the following component hierarchy:</p>
+
+<p><code>
+ComponentA -&gt; ComponentB -&gt; ComponentC (makes an HTTP request)
+</code></p>
+
+<p>And you’re writing a unit test for <code>ComponentA</code>. If you render the entire component tree, you tests may not work as expected because of the HTTP request made by <code>ComponentC</code>.</p>
+
+<p>So you either have to mock component <code>B</code> - and that would be very similar to doing shallow rendering. Or you would have to mock component <code>C</code> or provide a stub backend. But the last two options are hardly ideal because they break encapsulation. Your component <code>A</code> has no knowledge of component <code>C</code> or any HTTP requests, why would a test for that component require that knowledge?</p>
+
+<h2 id="test-driven-development">Test-driven development</h2>
+
+<p>Shallow rendering also assists with test-driven development. Let’s take a previous example, but imagine that component <code>A</code> doesn’t exist, but you have to write, because you need to wrap component <code>B</code> in another component. So it’ll be far easier to write tests first for a new component that renders the existing ones, when you don’t have to render the entire tree.</p>
+
+<h2 id="re-usable-architecture">Re-usable architecture</h2>
+
+<p>If you have comprehensive unit tests for your components that don’t rely rendering the whole tree, it’ll be easier make such components re-usable and even extract them to stand-alone libraries.</p>
+
+<h1 id="a-few-misconceptions-about-shallow-rendering">A few misconceptions about shallow rendering</h1>
+
+<p>There are two popular misconceptions about shallow rendering:</p>
+
+<ul>
+  <li>It forces you to test implementation details</li>
+  <li>It doesn’t test from a user point of view</li>
+</ul>
+
+<p>First of all, it is absolutely true that it is bad to test implementation details and you should test from a user’s point of view.</p>
+
+<p>But shallow rendering does not force use to test implementation details. And it does allow you to test from a user’s point of view.</p>
+
+<p>There’s a famous example of reading and setting React state in unit tests. This is wrong. You don’t have to that and you can easily test without it.</p>
+
+<p>Also, testing that your component renders specific child components or passes specific properties is <strong>testing</strong> implementation details, it is actually testing its behaviour. After all, that’s what your component does - it renders certain elements on certain conditions and passes data to other components.</p>
+
+<p>Let’s have a look at a few examples on how you can test components that have different behaviour:</p>
+
+<ul>
+  <li>If your component’s purpose to render a piece of text, it’s totally acceptable to test that piece of text is displayed.</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>My message<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">);</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">Renders message</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">MyComponent</span> <span class="p">/&gt;);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">text</span><span class="p">()).</span><span class="nx">toContain</span><span class="p">(</span><span class="dl">'</span><span class="s1">My message</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<ul>
+  <li>If your component displays a child component when a certain property is <code>true</code>, then you need to test that it renders that component when the property is <code>true</code> and it doesn’t when it is <code>false</code></li>
+</ul>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">displayChild</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="p">&lt;&gt;</span>
+    <span class="si">{</span><span class="nx">displayChild</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="p">/&gt;</span><span class="si">}</span>
+  <span class="p">&lt;/&gt;</span>
+<span class="p">);</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">Renders `ChildComponent` when necessary</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">expect</span><span class="p">(</span>
+    <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">MyComponent</span> <span class="na">displayChild=</span><span class="si">{</span><span class="kc">false</span><span class="si">}</span> <span class="p">/&gt;)</span>
+    <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="p">.</span><span class="nx">toHaveLength</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="nx">expect</span><span class="p">(</span>
+    <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">MyComponent</span> <span class="na">displayChild=</span><span class="si">{</span><span class="kc">true</span><span class="si">}</span> <span class="p">/&gt;)</span>
+    <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="p">.</span><span class="nx">toHaveLength</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<ul>
+  <li>If a component renders a button and hides another a child component when the button is pressed, then we should simulate pressing on a button and checking that a child component is not there.</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">cost</span> <span class="p">[</span><span class="nx">displayChild</span><span class="p">,</span> <span class="nx">setDisplayChild</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;&gt;</span>
+      <span class="si">{</span><span class="nx">displayChild</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="p">/&gt;</span><span class="si">}</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">setDisplayChild</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="si">}</span><span class="p">&gt;</span>Hide child<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hides `ChildComponent` after pressing on the button</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">MyComponent</span> <span class="p">/&gt;);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">)).</span><span class="nx">toHaveLength</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">)).</span><span class="nx">toHaveLength</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">});</span></code></pre></div>
+
+<p>The last example perfectly illustrates how you can test components from a user point of view and still use shallow rendering.</p>
+
+<ul>
+  <li>If your component passes a certain value to a child component, it’s okay to test for that:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="kd">const</span> <span class="nx">MyComponent</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">cost</span> <span class="p">[</span><span class="nx">accepted</span><span class="p">,</span> <span class="nx">setAccepted</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">setAccepted</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="si">}</span><span class="p">&gt;</span>Accept<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">ChildComponent</span> <span class="na">accepted=</span><span class="si">{</span><span class="nx">accepted</span><span class="si">}</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">Passes `accepted` to `ChildComponent` on pressing the button</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">shallow</span><span class="p">(&lt;</span><span class="nc">MyComponent</span> <span class="p">/&gt;);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="dl">'</span><span class="s1">accepted</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBeFalse</span><span class="p">();</span>
+
+  <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="dl">'</span><span class="s1">button</span><span class="dl">'</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">ChildComponent</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="dl">'</span><span class="s1">accepted</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBeTrue</span><span class="p">();</span>
+<span class="p">});</span></code></pre></div>
+
+<h1 id="dont-forget-about-end-to-end-tests">Don’t forget about end-to-end tests</h1>
+
+<p>Finally, if you really want to test from a user’s standpoint, then make sure that you have a few end-to-tests. They could be time consuming to write and run. But at they can tests the whole system end-to-end including the backend.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+<ul>
+  <li>Now you can use shallow rendering and <code>enzyme</code> for testing React components with hooks
+    <ul>
+      <li>Check <a href="https://github.com/mikeborozdin/jest-react-hooks-shallow">jest-react-hooks-shallow</a> for that</li>
+    </ul>
+  </li>
+  <li>Shallow rendering has a number of advantages</li>
+  <li>It does not force you to write bad tests</li>
+  <li>You can test from a user’s point of view with shallow rendering</li>
+  <li>Don’t forget about end-to-end testing</li>
+</ul>
+
+  </article>
+
+  <div class="postFooter">
+    <p>Mike Borozdin</p>
+    <p>15 March 2020</p>
+  </div>
+
+  <div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'mikeborozdin'; // required: replace example with your forum shortname
+
+               /*  * *  DON'T  EDIT BELOW  THIS LINE  * *  */ (function () {
+        var dsq = document.createElement('script'); dsq.type =
+          'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+  </div>
+
+</div>
+
+    <div id="footer">
+  <p>
+    The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way. My
+    personal
+    thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present
+    standpoint.
+  </p>
+  <p>&copy; 2020 Mike Borozdin</p>
+</div>
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-4764679-1', 'auto');
+
+  if (document.cookie.indexOf('excludeGa=1') === -1) {
+    ga('send', 'pageview');
+  }
+
+</script>
+  </div>
+
+</body>
+
+</html>
