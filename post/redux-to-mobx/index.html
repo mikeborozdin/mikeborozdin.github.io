@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Moving from Redux to MobX - reducing boilerplate</title>
+  <meta name="description" content="MobX is a statement management library. Unlike Redux it doesn’t require a lot of boilerplate code. In this post we’ll talk how you can benefit from using Mob...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!--[if lt IE 9]>
+  		<script src="/js/css3-mediaqueries.js></script>
+  	<![endif]-->
+
+  <link rel="canonical" href="https://mikeborozdin.com/post/redux-to-mobx">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="https://mikeborozdin.com/feed.xml" />
+
+  <script type="text/javascript" src="/js/toggle-menu.js"></script>
+
+</head>
+
+<body>
+
+  <div id="header">
+  <div id="banner">
+    <div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+    <div id="description"><a href="/">software engineering, product management & agile</a></div>
+  </div>
+
+  <a href="javascript:toggleMenu();" id="menuButton">Menu</a>
+
+  <ul id="menu" class="hidden">
+    <li><a href="/" class="menuItem">Home</a></li>
+    <li><a href="/all-posts/" class="menuItem">All posts</a></li>
+    <li><a href="/talks/" class="menuItem">Talks</a></li>
+    <li><a href="/about/" class="menuItem">About me</a></li>
+    <li>
+      <a href="http://www.twitter.com/mikeborozdin">
+        <span id="twitterText">Twitter</span>
+        <span id="twitterImage"><img src="/images/twitter.png" /></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+  <div id="content">
+    <div class="post">
+
+  <header class="post-header">
+    <h1>Moving from Redux to MobX - reducing boilerplate</h1>
+  </header>
+
+  <article class="post-content">
+    <p>MobX is a statement management library. Unlike Redux it doesn’t require a lot of boilerplate code. In this post we’ll talk how you can benefit from using MobX vs Redux.</p>
+
+<!-- more -->
+
+<h1 id="video-version">Video version</h1>
+
+<p>There’s a video version of this article that I originally recorded for <a href="https://www.meetup.com/React-Native-London/">the React Native London</a>. If you prefer to read text, just scroll below.</p>
+
+<div style="display: flex; justify-content: center;">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/3Gt-Cxjld3g" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<h1 id="problem-with-redux">Problem with Redux</h1>
+
+<p>Redux is great for extracting application state and business logic out of components. However, you end up with a lot of boilerplate. Your code will be scattered around many different place. Think of a typical user action - usually, you have to write an action definition, an action creator, and finally a reducer. Now, imagine you have a bug in that action - you’ll have to trace it in at least two different places - an action creator and a reducer.</p>
+
+<p>This tweet by Ben Lesh - a member of the RxJS core team - perfectly summarises that.</p>
+
+<div style="display: flex; justify-content: center;">
+  <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Redux: You know EXACTLY where your state is.<br /><br />...You just don&#39;t know where the code that manages your state is.</p>&mdash; Ben Lesh (@BenLesh) <a href="https://twitter.com/BenLesh/status/1241525265228017670?ref_src=twsrc%5Etfw">March 22, 2020</a></blockquote> <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<h1 id="enter-mobx">Enter MobX</h1>
+
+<p><a href="https://mobx.js.org/">MobX</a> allows you to manage your state in a far more concise way. It’s a fairly simple library that you can get started with in almost no time. It’s got more than 400k+ weekly downloads on NPM. And many companies, including mine, use it in production.</p>
+
+<p>Unlike, Redux, it’s not afraid to mutate state. In fact, it’s based on <a href="https://en.wikipedia.org/wiki/Observer_pattern">the observer pattern</a> which is all about mutations and reactions to them.</p>
+
+<p>Instead of doing a theoretical introduction of MobX, I’ll use an example. We’ll build a simple application first with Redux and then’ll we’ll move it to Mobx, while gradually explaining its concepts.</p>
+
+<h1 id="sample-app">Sample app</h1>
+
+<p>The sample app is a classis todo app:</p>
+
+<ul>
+  <li>You can see a list of todo items</li>
+  <li>You can add new ones</li>
+  <li>And all of that will be done via the API calls
+    <ul>
+      <li>That’s to make comparison between Redux and MobX more interesting</li>
+      <li>After all, in real world we get and save data via APIs most of the time</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/images/redux-vs-mobx/todo-app.jpg" alt="todo app screenshot" class="center-image" /></p>
+
+<h1 id="app-code-with-redux">App code with Redux</h1>
+
+<p>First of all, the Redux app needs action creators.</p>
+
+<p>There’ll be two action creators:</p>
+
+<ul>
+  <li><code>addTodo()</code></li>
+  <li><code>getTodos()</code></li>
+</ul>
+
+<p>Since we need to send API requests, there’ll be a bit of complexity - we’ll have to return a function an <code>async</code> function from the action creators.</p>
+
+<p><strong><code>store/action-creators.js</code></strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">GET_TODOS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./constants</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">addTodo</span> <span class="o">=</span> <span class="p">(</span><span class="nx">todo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">async</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">post</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">body</span><span class="p">:</span> <span class="nx">todo</span>
+    <span class="p">});</span>
+
+    <span class="nx">dispatch</span><span class="p">(</span><span class="nx">getTodos</span><span class="p">());</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">getTodos</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">async</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">todos</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+    <span class="nx">dispatch</span><span class="p">({</span>
+      <span class="na">type</span><span class="p">:</span> <span class="nx">GET_TODOS</span><span class="p">,</span>
+      <span class="nx">todos</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+<span class="p">};</span></code></pre></div>
+
+<p>Then we need to add reducers that will set the initial state and modify it once the actions are dispatched.</p>
+
+<p><strong><code>store/reducers.js</code></strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">ADD_TODO</span><span class="p">,</span> <span class="nx">GET_TODOS</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./constants</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">initialState</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">todos</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span> <span class="o">=</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">action</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="na">ADD_TODO</span><span class="p">:</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+        <span class="na">todos</span><span class="p">:</span> <span class="p">[...</span><span class="nx">state</span><span class="p">.</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">action</span><span class="p">.</span><span class="nx">todo</span><span class="p">]</span>
+      <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="na">GET_TODOS</span><span class="p">:</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="p">...</span><span class="nx">state</span><span class="p">,</span>
+        <span class="na">todos</span><span class="p">:</span> <span class="nx">action</span><span class="p">.</span><span class="nx">todos</span>
+      <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="nl">default</span><span class="p">:</span>
+      <span class="k">return</span> <span class="nx">state</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span></code></pre></div>
+
+<p>We need to throw a few constants in the mix, so that the reducers module doesn’t depend on the action creator one and vice versa.</p>
+
+<p><strong><code>store/constants.js</code></strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">export</span> <span class="k">default</span> <span class="nx">todos</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">ADD_TODO</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ADD_TODO</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">GET_TODOS</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">GET_TODOS</span><span class="dl">'</span><span class="p">;</span></code></pre></div>
+
+<p>Finally, we need to wire it app together and call <code>createStore()</code>.</p>
+
+<p><strong><code>store/store.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="p">{</span> <span class="nx">applyMiddleware</span><span class="p">,</span> <span class="nx">createStore</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">thunkMiddleware</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">redux-thunk</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">todos</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./reducers</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">createStore</span><span class="p">(</span><span class="nx">todos</span><span class="p">,</span> <span class="nx">applyMiddleware</span><span class="p">(</span><span class="nx">thunkMiddleware</span><span class="p">));</span></code></pre></div>
+
+<h2 id="redux-store-so-far">Redux store so far</h2>
+
+<p>It feels like we had to write a lot of code for such a small application, doesn’t it?</p>
+
+<h2 id="redux-wiring">Redux wiring</h2>
+
+<p>As the final step we have to inject the store into the application context:</p>
+
+<p><strong><code>index.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">ReactDOM</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-dom</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">store</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./store/store</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./App</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="p">&lt;</span><span class="nc">React</span><span class="p">.</span><span class="nc">StrictMode</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Provider</span> <span class="na">store=</span><span class="si">{</span><span class="nx">store</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">App</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">Provider</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">React</span><span class="p">.</span><span class="nc">StrictMode</span><span class="p">&gt;,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
+
+<h2 id="components">Components</h2>
+
+<p>What about the components. We left them till the end, but they are not particularly complicated:</p>
+
+<p><strong><code>Todos/Todos.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useEffect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">connect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getTodos</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../store/action-creators</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./Todo.css</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Todos</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">todos</span><span class="p">,</span> <span class="nx">getTodos</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">getTodos</span><span class="p">()</span> <span class="p">},</span> <span class="p">[</span><span class="nx">getTodos</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className=</span><span class="s1">'list'</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">key=</span><span class="si">{</span><span class="nx">index</span><span class="si">}</span> <span class="na">className=</span><span class="s1">'todo'</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">todo</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">))</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">mapStateToProps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">todos</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">todos</span>
+<span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">mapDispatchToProps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">getTodos</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">getTodos</span><span class="p">())</span> <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="nx">mapStateToProps</span><span class="p">,</span> <span class="nx">mapDispatchToProps</span><span class="p">)(</span><span class="nx">Todos</span><span class="p">);</span></code></pre></div>
+
+<p><strong><code>Todos/Todos.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">connect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-redux</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">addTodo</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">../store/action-creators</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./NewTodo.css</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">NewTodo</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">addTodo</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">todo</span><span class="p">,</span> <span class="nx">setTodo</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">input</span>
+        <span class="na">type=</span><span class="s1">'text'</span>
+        <span class="na">onChange=</span><span class="si">{</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">setTodo</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="si">}</span>
+        <span class="na">placeholder=</span><span class="s1">'New todo item...'</span>
+        <span class="na">className=</span><span class="s1">'new-todo'</span> <span class="p">/&gt;</span>
+
+      <span class="p">&lt;</span><span class="nt">button</span>
+        <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">)</span><span class="si">}</span>
+        <span class="na">className=</span><span class="s1">'new-todo-button'</span><span class="p">&gt;</span>
+        Add a new todo
+        <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">mapDispatchToProps</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">addTodo</span><span class="p">:</span> <span class="p">(</span><span class="nx">todo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">))</span>
+<span class="p">});</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">connect</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">mapDispatchToProps</span><span class="p">)(</span><span class="nx">NewTodo</span><span class="p">);</span></code></pre></div>
+
+<h1 id="enter-mobx-1">Enter MobX</h1>
+
+<p>Now, remember a very verbose Redux store we wrote? Let’s see how we re-write it in MobX.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">observable</span><span class="p">,</span> <span class="nx">action</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">mobx</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">TodoStore</span> <span class="p">{</span>
+  <span class="p">@</span><span class="nd">observable</span>
+  <span class="nx">todos</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="p">@</span><span class="nd">action</span>
+  <span class="k">async</span> <span class="nx">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">post</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">body</span><span class="p">:</span> <span class="nx">todo</span>
+    <span class="p">});</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">getTodos</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="p">@</span><span class="nd">action</span>
+  <span class="k">async</span> <span class="nx">getTodos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">);</span>
+
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">todos</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">todos</span> <span class="o">=</span> <span class="nx">todos</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+
+<p>And that’s it! Those mere 25 lines of code replace Redux’s action creators, reducers, and the other bits!</p>
+
+<p>Now, we have a very concise store that both has an application state and business logic, yet doesn’t mix them together. Indeed, MobX stores are a great answer to the question - ‘Where do I put my business logic and HTTP calls in React?’. Also, MobX stores are extremely easy to unit test.</p>
+
+<p>Okay, but how is it possible? Let’s dive into the code.</p>
+
+<h2 id="mobx-observables">MobX observables</h2>
+
+<p>First of all, we declare an array that will hold todo items and mark it as an <code>observable</code>:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">@</span><span class="nd">observable</span>
+<span class="nx">todos</span> <span class="o">=</span> <span class="p">[]</span></code></pre></div>
+
+<p>What does the <code>@observable</code> annotation mean? It means that all the changes to the array will be monitored and all the <code>observers</code> will be notified? What are the observers? Usually, they are React components that reference <code>observables</code>. And they are re-rendered if corresponding <code>observables</code> change. We’ll have a look at it below.</p>
+
+<p>Now, having declared the data, we need to declare operations that can be performed on it. And, in our case, there are two:</p>
+
+<ul>
+  <li>Adding a new item</li>
+  <li>Getting todos</li>
+</ul>
+
+<p>And you can see that they are declared as class methods and have the <code>@action</code> annotation:</p>
+
+<p><strong><code>store/store.js</code></strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">@</span><span class="nd">action</span>
+<span class="k">async</span> <span class="nx">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">post</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">todo</span>
+  <span class="p">});</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">getTodos</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="p">@</span><span class="nd">action</span>
+<span class="k">async</span> <span class="nx">getTodos</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">http://localhost:9999/todos</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">todos</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">todos</span> <span class="o">=</span> <span class="nx">todos</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Both <code>addTodo()</code> and <code>getTodos()</code> are just regular functions that make HTTP calls and update some data. The only two special things are:</p>
+
+<ul>
+  <li>They have the <code>@action</code> annotation</li>
+  <li>The data they modify - <code>this.todos</code> is marked as <code>@observable</code>.</li>
+</ul>
+
+<p>Why does the methods need to be annotated with <code>@action?</code></p>
+
+<p>First of all, it’s a nice convention that clearly marks methods that modify observable data. Secondly, MobX does performance optimisation if observable data is mutated in an action. Finally, MobX has a strict mode that would throw an exception if observables are modified outside of the actions.</p>
+
+<p>Finally, you need to change the root of your application to this:</p>
+
+<p><strong><code>index.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">ReactDOM</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-dom</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">mobx-react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">TodoStore</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./store/store</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./App</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">ReactDOM</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span>
+  <span class="p">&lt;</span><span class="nc">React</span><span class="p">.</span><span class="nc">StrictMode</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">Provider</span> <span class="na">todoStore=</span><span class="si">{</span><span class="k">new</span> <span class="nx">TodoStore</span><span class="p">()</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">App</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">Provider</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">React</span><span class="p">.</span><span class="nc">StrictMode</span><span class="p">&gt;,</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">root</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
+
+<p>It’s almost exactly the same as the one for Redux. The only difference is that we import <code>Provider</code> from a different module.</p>
+
+<h1 id="components-in-mobx---observers">Components in MobX - <code>observers</code></h1>
+
+<p>Okay, we have re-written the store in MobX. It does look much more concise than the one in Redux. But what about the components? Will they need much re-write?</p>
+
+<p>Luckily, no! Let’s examine the <code>Todos</code> component that is now MobX enabled:</p>
+
+<p><strong><code>Todos/Todos.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useEffect</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">observer</span><span class="p">,</span> <span class="nx">inject</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">mobx-react</span><span class="dl">'</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./Todo.css</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">Todos</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">todoStore</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">todoStore</span><span class="p">.</span><span class="nx">getTodos</span><span class="p">()</span> <span class="p">},</span> <span class="p">[</span><span class="nx">todoStore</span><span class="p">]);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className=</span><span class="s1">'list'</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="nx">todoStore</span><span class="p">.</span><span class="nx">todos</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">todo</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">key=</span><span class="si">{</span><span class="nx">index</span><span class="si">}</span> <span class="na">className=</span><span class="s1">'todo'</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">todo</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">))</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">inject</span><span class="p">(({</span> <span class="nx">todoStore</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="nx">todoStore</span> <span class="p">}))(</span><span class="nx">observer</span><span class="p">(</span><span class="nx">Todos</span><span class="p">));</span></code></pre></div>
+
+<p>As you can see the component stayed largely unchanged. Similarly, to the Redux version it receives a property, but this time the property contains a MobX store that have a list of todos. It doesn’t need need the <code>mapStateToProps()</code>. Instead, of <code>connect()</code> we have <code>inject()</code> that, as the name suggests, injects the data store into the component.</p>
+
+<p>The most crucial thing that the component is wrapped inside the <code>observer()</code> function. As mentioned before, components wrapped inside <code>observer()</code> will be re-rendered once <code>observable</code> change. </p>
+
+<p>Will all <code>observer</code> components re-render if any <code>observable</code> changes?</p>
+
+<p>No! MobX is smart enough only to trigger re-rendering of the components read <code>observables</code> that get changed. For example, if you have a component that reads from the <code>observable</code> called <code>todos</code>, but it the the <code>@observable employees</code> that gets changed, then your component will not be re-rendered.</p>
+
+<h2 id="what-about-components-that-modify-data">What about components that modify data?</h2>
+
+<p>Easy!</p>
+
+<p><strong><code>NewTodo/NewTodo.jsx</code></strong></p>
+
+<div class="highlight"><pre><code class="language-jsx" data-lang="jsx"><span class="k">import</span> <span class="nx">React</span><span class="p">,</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">inject</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">mobx-react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="dl">'</span><span class="s1">./NewTodo.css</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">NewTodo</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">todoStore</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">todo</span><span class="p">,</span> <span class="nx">setTodo</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">input</span>
+        <span class="na">type=</span><span class="s1">'text'</span>
+        <span class="na">onChange=</span><span class="si">{</span><span class="nx">e</span> <span class="o">=&gt;</span> <span class="nx">setTodo</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span><span class="si">}</span>
+        <span class="na">placeholder=</span><span class="s1">'New todo item...'</span>
+        <span class="na">className=</span><span class="s1">'new-todo'</span> <span class="p">/&gt;</span>
+
+      <span class="p">&lt;</span><span class="nt">button</span>
+        <span class="na">onClick=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">todoStore</span><span class="p">.</span><span class="nx">addTodo</span><span class="p">(</span><span class="nx">todo</span><span class="p">)</span><span class="si">}</span>
+        <span class="na">className=</span><span class="s1">'new-todo-button'</span><span class="p">&gt;</span>
+        Add a new todo
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">inject</span><span class="p">(({</span> <span class="nx">todoStore</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="nx">todoStore</span> <span class="p">}))(</span><span class="nx">NewTodo</span><span class="p">);</span></code></pre></div>
+
+<p>Once again, it’s very similar to its Redux version. And unlike the <code>Todos</code> component we don’t need to wrap it inside <code>observer</code>. Indeed, <code>NewTodo</code> doesn’t need to be rendered when <code>todos</code> change. We just need to inject the store with <code>inject()</code>. </p>
+
+<h1 id="source-code">Source code</h1>
+
+<p>The source code of both the Redux and the MobX version is available on <a href="https://github.com/mikeborozdin/todo-app-mobx-vs-redux">Github</a>. It also includes the API server. So you can all run it.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+<ul>
+  <li>MobX is a great and mature solution for state management of React applications</li>
+  <li>You’ll have almost zero boilerplate in comparison to Redux</li>
+  <li>MobX stores are great place for business logic and HTTP requests</li>
+  <li><a href="https://mobx.js.org/">Give it a try</a></li>
+  <li>Have questions? There might be a few answers below</li>
+</ul>
+
+<h1 id="qa">Q&amp;A</h1>
+
+<ul>
+  <li><strong>What about hooks?</strong>
+    <ul>
+      <li>The example above shows that MobX works nicely with React hooks such as <code>useEffect()</code> and <code>useState()</code></li>
+    </ul>
+  </li>
+  <li><strong>But React Redux also has <code>useSelector()</code> and <code>useDispatch()</code>?</strong>
+    <ul>
+      <li>So does MobX React have <code>useObserver()</code> and <code>useStores()</code> that you can use instead of <code>observer()</code> and <code>inject()</code>.</li>
+      <li>Personally, I prefer the HoCs - <code>observer()</code> and <code>inject()</code> because they make it easier to unit test components. But that could be a matter of taste.</li>
+    </ul>
+  </li>
+  <li><strong>Can you have more than one store?</strong>
+    <ul>
+      <li>Easily! You can have as many stores as you want.</li>
+      <li>I recommend having a store per feature</li>
+      <li>We have around 15 stores on the product I’m working on</li>
+    </ul>
+  </li>
+  <li><strong>Does it come with debug tools?</strong>
+    <ul>
+      <li>MobX comes with a great <a href="https://mobx.js.org/best/trace.html">trace module</a></li>
+      <li>Plus, you can use the standard React devtools to understand why components got re-rendered</li>
+    </ul>
+  </li>
+  <li><strong>Do you have to use ES decorators?</strong>
+    <ul>
+      <li>No. Each ES decorator has a corresponding function which allows to wrap your variables/class properties and components</li>
+    </ul>
+  </li>
+  <li><strong>Does MobX work with any kind of component?</strong>
+    <ul>
+      <li>You can mark ‘fat’ and simple functional components as <code>observer</code></li>
+      <li>But you cannot do that with <code>PureComponents</code></li>
+    </ul>
+  </li>
+</ul>
+
+  </article>
+
+  <div class="postFooter">
+    <p>Mike Borozdin (<a href="https://twitter.com/mikeborozdin">Twitter)</a></p>
+    <!-- <p>Mike Borozdin <a href="https://twitter.com/mikeborozdin"><img src="/images/twitter-blue.png" /></a></p> -->
+    <p>2 April 2020</p>
+  </div>
+
+  <div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'mikeborozdin'; // required: replace example with your forum shortname
+
+               /*  * *  DON'T  EDIT BELOW  THIS LINE  * *  */ (function () {
+        var dsq = document.createElement('script'); dsq.type =
+          'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+  </div>
+
+</div>
+
+
+    <div id="footer">
+  <p>
+    The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way. My
+    personal
+    thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present
+    standpoint.
+  </p>
+  <p>&copy; 2020 Mike Borozdin</p>
+</div>
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-4764679-1', 'auto');
+
+  if (document.cookie.indexOf('excludeGa=1') === -1) {
+    ga('send', 'pageview');
+  }
+
+</script>
+  </div>
+
+</body>
+
+</html>
