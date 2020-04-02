@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Moving from Redux to MobX - reducing boilerplate"
+title: "Move from Redux to MobX - reduce boilerplate"
 comments: true
 ---
 
