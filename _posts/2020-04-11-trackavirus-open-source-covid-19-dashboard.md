@@ -6,7 +6,7 @@ comments: true
 
 We live in desperate times. And more than ever we need to make decisions based on hard data and collaborate with each other.
 
-So in the spirit of that, I've released an open source [COVID-19 Dashboard](http://localhost:4000/post/trackavirus-open-source-covid-19-dashboard/). 
+So in the spirit of that, I've released an open source [COVID-19 Dashboard](https://www.trackavirus.app/). 
 <!-- more -->
 
 * **[You can play with it here.](https://www.trackavirus.app/)**
