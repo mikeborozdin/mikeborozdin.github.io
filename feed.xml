@@ -6,8 +6,8 @@
 </description>
     <link>https://mikeborozdin.com/</link>
     <atom:link href="https://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 11 Apr 2020 17:04:51 +0000</pubDate>
-    <lastBuildDate>Sat, 11 Apr 2020 17:04:51 +0000</lastBuildDate>
+    <pubDate>Sat, 11 Apr 2020 17:05:41 +0000</pubDate>
+    <lastBuildDate>Sat, 11 Apr 2020 17:05:41 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -33,6 +33,7 @@
   &lt;li&gt;Ability to see daily changes in a number of cases and deaths&lt;/li&gt;
   &lt;li&gt;Snapshot of the data across the whole world&lt;/li&gt;
   &lt;li&gt;And the ambition is to provide the most comprehensive COVID-19 dashboard, so your code contributions are more than welcome :-)&lt;/li&gt;
+  &lt;li&gt;Data by the John Hopkins university&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/trackavirus/screenshot.png&quot; alt=&quot;screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
