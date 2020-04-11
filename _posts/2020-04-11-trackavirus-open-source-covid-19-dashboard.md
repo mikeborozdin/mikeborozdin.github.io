@@ -19,6 +19,7 @@ Its key features are:
 * Ability to see daily changes in a number of cases and deaths
 * Snapshot of the data across the whole world
 * And the ambition is to provide the most comprehensive COVID-19 dashboard, so your code contributions are more than welcome :-)
+* Data by the John Hopkins university
 
 ![screenshot](/images/trackavirus/screenshot.png){: .center-image }
 
