@@ -6,9 +6,106 @@
 </description>
     <link>https://mikeborozdin.com/</link>
     <atom:link href="https://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 02 Apr 2020 17:30:39 +0000</pubDate>
-    <lastBuildDate>Thu, 02 Apr 2020 17:30:39 +0000</lastBuildDate>
+    <pubDate>Sat, 11 Apr 2020 17:03:09 +0000</pubDate>
+    <lastBuildDate>Sat, 11 Apr 2020 17:03:09 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Track a Virus: Open Source COVID-19 Dashboard</title>
+        <description>&lt;p&gt;Track a Virus: COVID-19 Dashboard
+&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;p&gt;We live in desperate times. And more than ever we need to make decisions based on hard data and collaborate with each other.&lt;/p&gt;
+
+&lt;p&gt;So in the spirit of that, I’ve released an open source &lt;a href=&quot;http://localhost:4000/post/trackavirus-open-source-covid-19-dashboard/&quot;&gt;COVID-19 Dashboard&lt;/a&gt;. &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://www.trackavirus.app/&quot;&gt;You can play with it here.&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus&quot;&gt;And see its source code on GitHub.&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;It’s written with React, TypeScript, and MobX&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Its key features are:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Comparison between different countries&lt;/li&gt;
+  &lt;li&gt;Ability to see daily changes in a number of cases and deaths&lt;/li&gt;
+  &lt;li&gt;Snapshot of the data across the whole world&lt;/li&gt;
+  &lt;li&gt;And the ambition is to provide the most comprehensive COVID-19 dashboard, so your code contributions are more than welcome :-)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/trackavirus/screenshot.png&quot; alt=&quot;screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;country-comparison&quot;&gt;Country comparison&lt;/h1&gt;
+
+&lt;p&gt;You can easily compare countries and see that while China flattened the curve in February a number of infections keeps going up.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/trackavirus/daily-cases-country-comparison.png&quot; alt=&quot;number of cases screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;daily-increase&quot;&gt;Daily increase&lt;/h1&gt;
+
+&lt;p&gt;The dashboard also gives positive news and says that the peak of the epidemic has passed in Italy.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/trackavirus/daily-increase-one-country.png&quot; alt=&quot;daily increase screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;world-snapshot&quot;&gt;World snapshot&lt;/h1&gt;
+
+&lt;p&gt;Finally, you can see a quick snapshot of the data aggregated across the entire world.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/trackavirus/world-snapshot.png&quot; alt=&quot;daily increase screenshot&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;why-another-dashboard&quot;&gt;Why another dashboard?&lt;/h1&gt;
+
+&lt;p&gt;You may wonder why another dashboard. It is true, there are a number of dashboards available. In particular, &lt;a href=&quot;https://dev.to/trekhleb/i-ve-open-sourced-a-simple-coronavirus-covid-19-dashboard-react-chart-js-bootstraptable-4i49&quot;&gt;the one by Oleksii Trekhleb&lt;/a&gt; looks similar. There are a few key aspects about this one:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Focus on trends, country comparisons, and aggregated global data
+    &lt;ul&gt;
+      &lt;li&gt;From the day 1 the dashboard includes daily increases for a number of cases and deaths&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus/projects/1&quot;&gt;There is a whole roadmap of the new features&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;There are plans to add a &lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus/issues/19&quot;&gt;growth rate&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus/issues/11&quot;&gt;Mortality figures&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;(https://github.com/mikeborozdin/track-a-virus/projects/1)&quot;&gt;and so on&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Our tech stack and architecture enables developers easily build new features:
+    &lt;ul&gt;
+      &lt;li&gt;React, TypeScript, Chart.js - is a fairly standard stack&lt;/li&gt;
+      &lt;li&gt;I’ve focused on the code quality to make sure it’s easy to navigate around the code and add new functionality&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;I’ve also &lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus/blob/master/CONTRIBUTING.md&quot;&gt;provided contribution guidelines&lt;/a&gt; that explains the architecture for people who wants to help with the project
+    &lt;ul&gt;
+      &lt;li&gt;It provides a whole tutorial on how to write a new dashboard component&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;of-course-it-is-not-perfect&quot;&gt;Of course, it is not perfect&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;There are a number of thing which needs to be fixed or added&lt;/li&gt;
+  &lt;li&gt;For example, the percentage increase chart above may not accurately represents the trends. But there’s already a plan to add a &lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus/issues/19&quot;&gt;growth rate&lt;/a&gt; which could be better it.&lt;/li&gt;
+  &lt;li&gt;That’s just the beginning and more features are coming out next week. &lt;/li&gt;
+  &lt;li&gt;And development can go faster if you join the project :-).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;lets-try-to-flatten-the-curve-together&quot;&gt;Let’s try to flatten the curve together&lt;/h1&gt;
+
+&lt;p&gt;Interested? &lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus&quot;&gt;Let’s work on it together&lt;/a&gt;!&lt;/p&gt;
+</description>
+        <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/post/trackavirus-open-source-covid-19-dashboard</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/post/trackavirus-open-source-covid-19-dashboard</guid>
+        
+        
+      </item>
     
       <item>
         <title>Move from Redux to MobX - reduce boilerplate</title>
@@ -1574,23 +1671,6 @@ Error: connect ECONNREFUSED
         <pubDate>Tue, 31 Mar 2015 00:00:00 +0000</pubDate>
         <link>https://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</link>
         <guid isPermaLink="true">https://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Practical Functional Programming in JavaScript</title>
-        <description>&lt;p&gt;JavaScript is a multi-paradigm language with rich functional programming capabilities. Functional programming does not have to be difficult or hugely theoretical. Quite the opposite &amp;ndash; it can help you to solve the most common programming challenges in a more concise and elegant fashion.&lt;/p&gt;  
-
-&lt;p&gt;In this video I focus on working with arrays in JavaScript. Normally, when dealing with arrays a developer would write a for loop and mutate a variable or two. However, JavaScript already comes with functions, such as, &lt;code&gt;every()&lt;/code&gt;, &lt;code&gt;filter()&lt;/code&gt;, &lt;code&gt;map()&lt;/code&gt;, &lt;code&gt;reduce()&lt;/code&gt;, etc. that help you to write better code for array operations. &lt;!-- more --&gt;.
-
-&lt;p&gt;I also demonstrate how you can combine those functions together in order to encapsulate complex data operations . We analyse performance of some operations and show how certain issues can be solved by using 3rd party libraries, such as &lt;a href=&quot;http://danieltao.com/lazy.js/&quot;&gt;lazy.js&lt;/a&gt; and &lt;a href=&quot;https://github.com/facebook/immutable-js&quot;&gt;Immutable.js&lt;/a&gt; Finally, I illustrate how functional programming can become only better in EcmaScript 6.&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/hWWr2fex2Tc&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
-</description>
-        <pubDate>Sun, 16 Nov 2014 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/practical-functional-programming-in-javascript</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/practical-functional-programming-in-javascript</guid>
         
         
       </item>

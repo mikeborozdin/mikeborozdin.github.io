@@ -51,6 +51,15 @@
   <div id="content">
     
 <div>
+	<h1><a href="/post/wpf-datagrid-checkbox-single-click-checkingunchecking">WPF DataGrid CheckBox Single Click Checking/Unchecking</a></h1>
+	WPF DataGrid has a very annoying behaviour of forcing users to click twice on a checkbox in order to check or uncheck it. There are a number of solutions proposing handling mouse preview events and switching a DataGrid into the edit mode manually. The problem with such solutions is that the require writing quite a lot of extra code that seems to be an overkill for such a minor, yet irritating problem. I propose a better option, to use a <span style="font-family: 'Courier New';">DataGridTemplateColumn</span> instead of <span style="font-family: 'Courier New';">DataGridCheckBoxColumn</span>.
+Indeed, you can easily place a CheckBox inside a DataGridTemplateColumn, bind it to a corresponding property and it will be checkable/uncheckable with a single click. 
+
+<a href="/post/wpf-datagrid-checkbox-single-click-checkingunchecking" class="more">More...</a>
+	<div class="postFooter">13 June 2011</div>
+</div>
+
+<div>
 	<h1><a href="/post/copying-databases-with-sql-server-express-management-studio">Copying Databases with SQL Server Express Management Studio</a></h1>
 	Often you need to make a full copy of a database, for example, if you you want to change something and see how it goes without ruining a production database. And if you happen to use SQL Server Express edition you are not so fortunate because famous Copy Database Wizard does not seem to be unavailable in&nbsp; SQL Server Express Management Studio. There is a simply solution, however. It is using the backup and restore features. 
 
@@ -134,17 +143,6 @@ However when working with EntityDataSource sometimes I feel like I using plain o
 
 <a href="/post/put-entitydatasource-attributes-to-code-behind" class="more">More...</a>
 	<div class="postFooter">23 March 2009</div>
-</div>
-
-<div>
-	<h1><a href="/post/css-class-names-instead-of-aspnet-client-ids">CSS Class Names Instead of ASP.NET Client IDs</a></h1>
-	In ASP.NET the client IDs of controls are often really unpredictable. When you need to add some JavaScript code that works with rendered controls you have to know their IDs. But usually an ID looks like something like this: &ldquo;ctl00_contentBody_txtStreet&rdquo;. There are several methods for overcoming that diffic
-<script src="http://www.mikeborozdin.com/editors/tiny_mce3/themes/advanced/langs/en.js" type="text/javascript"></script>
-ulty explained <a href="http://www.west-wind.com/WebLog/posts/4605.aspx" target="_blank">here</a>. However they require writing additional code or even creating your own controls inherited from the original ones.
-But there is one simply but yet dirty way of addressing HTML elements rendered by ASP.NET. 
-
-<a href="/post/css-class-names-instead-of-aspnet-client-ids" class="more">More...</a>
-	<div class="postFooter">26 February 2009</div>
 </div>
 
 
