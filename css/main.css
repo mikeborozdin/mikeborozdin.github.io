@@ -96,7 +96,8 @@ a:hover {
 
 .postFooter {
     text-align: right;
-    font-style: italic
+    font-style: italic;
+    margin-bottom: 3rem;
 }
 
 .postFooter p {
