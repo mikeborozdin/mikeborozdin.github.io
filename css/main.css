@@ -166,6 +166,11 @@ thead {
   font-style: italic;
 }
 
+.photo {
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
 @media screen and (min-width:768px) {
     body {
         font-size: 1.4em;
@@ -223,15 +228,15 @@ thead {
     .hidden {
         display: block;
     }
+
+    .photo {
+      float: left;
+      margin: 10px;
+    }
 }
 
 #postPaging {
 	text-align: center;
-}
-
-.photo {
-	float: left;
-	margin: 10px;
 }
 
 blockquote {
