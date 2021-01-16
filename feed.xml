@@ -6,9 +6,136 @@
 </description>
     <link>https://mikeborozdin.com/</link>
     <atom:link href="https://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 05 Aug 2020 21:29:59 +0000</pubDate>
-    <lastBuildDate>Wed, 05 Aug 2020 21:29:59 +0000</lastBuildDate>
+    <pubDate>Sat, 16 Jan 2021 13:14:55 +0000</pubDate>
+    <lastBuildDate>Sat, 16 Jan 2021 13:14:55 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>On being effective tech lead</title>
+        <description>&lt;p&gt;Tech Lead / Lead Developer / (Whatever it is called in your company) is a very interesting role that combines technical
+work and leadership.&lt;/p&gt;
+
+&lt;p&gt;I’ve been in that role at a few different companies and I’d like to share my thoughts on what you can do to be effective in that role.&lt;/p&gt;
+
+&lt;p&gt;Equally, this article may also help you to decide if you want to try the role.
+&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;your-main-goal-is-to-enable-your-team&quot;&gt;Your main goal is to enable your team&lt;/h1&gt;
+
+&lt;p&gt;Your first and foremost goal as a tech lead is to enable your team. Your team’s success is your success. &lt;/p&gt;
+
+&lt;p&gt;Yes, it was partly your technical chops that brought you into this role, but a tech lead is not the person who writes the best
+code on the team (at least not just). &lt;/p&gt;
+
+&lt;p&gt;But it is the person who enables the entire team. And that means doing whatever it takes to help your team to 
+succeed - whether it’s mentoring them technically or buying coffee - you have to do it.&lt;/p&gt;
+
+&lt;p&gt;Generally though you work on two fronts - product and technical.&lt;/p&gt;
+
+&lt;h2 id=&quot;product&quot;&gt;Product&lt;/h2&gt;
+
+&lt;p&gt;Yes, it is a role of a product manager to define a product vision, build a roadmap, and write user stories. But if user stories are missing details or the team does not know what they’ll be coding next week, it is your responsibility to step and help the team.
+Sometimes it means you’ll fill the gaps yourself and tell the team about what you’ve heard in that long product meeting last Thursday.&lt;/p&gt;
+
+&lt;p&gt;Or sometimes you have to guide the product team on how to better translate their ideas into something developers can work with. &lt;/p&gt;
+
+&lt;p&gt;Shortly, you need to make sure that your team knows not only &lt;strong&gt;how&lt;/strong&gt; to build software, but &lt;strong&gt;what&lt;/strong&gt; to build.&lt;/p&gt;
+
+&lt;h2 id=&quot;technical&quot;&gt;Technical&lt;/h2&gt;
+
+&lt;p&gt;And speaking of the question of how to build, this is where your technical expertise comes in. &lt;/p&gt;
+
+&lt;p&gt;You need to make sure that your team knows how to build those fancy features and fix pesky bugs.&lt;/p&gt;
+
+&lt;p&gt;So if someone has not worked on a certain part of the codebase, sit with them and walk them through it.&lt;/p&gt;
+
+&lt;p&gt;If someone does not know which environment to deploy and where the API keys are, help them with that. &lt;/p&gt;
+
+&lt;p&gt;If someone is stuck, drop whatever you’re doing and unblock them. &lt;/p&gt;
+
+&lt;h2 id=&quot;but-delegate-and-help-your-teammates-grow&quot;&gt;But… delegate and help your teammates grow&lt;/h2&gt;
+
+&lt;p&gt;Although you’re there to protect your team and help them focus on writing code, you shouldn’t take away all non-coding activities from them. &lt;/p&gt;
+
+&lt;p&gt;You don’t have to be the only person who onboards new team members, defines architecture, and fleshes out user stories with product managers. &lt;/p&gt;
+
+&lt;p&gt;If you do that, you’ll soon end up being a bottleneck for your team. Moreover, you’ll prevent your team members from growing professionally.&lt;/p&gt;
+
+&lt;p&gt;Instead, identify activities which your teammates are interested in and let them run with that.&lt;/p&gt;
+
+&lt;p&gt;If you happen to be their line manager, it’s double as important to do that, as it’ll help them with their career growth. And if you’re not line managing your team, you may pair up with their manager and find out what career aspirations your colleagues have and give them a chance to go in that direction.&lt;/p&gt;
+
+&lt;h1 id=&quot;communicate-to-provide-clarity&quot;&gt;Communicate to provide clarity&lt;/h1&gt;
+
+&lt;p&gt;It’s your job as a tech lead to communicate and provide clarity. The product team may need to know how long some features will take - and you will have to tell a Product Manager that feature XYZ will take longer because the team needs to do essential refactoring.&lt;/p&gt;
+
+&lt;p&gt;Equally, your team needs to know that there might be a change in a product direction in two months, hence it is worthwhile to invest time in bringing framework ABC.&lt;/p&gt;
+
+&lt;h1 id=&quot;partner-with-product&quot;&gt;Partner with product&lt;/h1&gt;
+
+&lt;p&gt;I have already mentioned working closely with product managers a few times. Here I want to stress why it is important and a few usual things you have to do.&lt;/p&gt;
+
+&lt;p&gt;First of all, you’re the main point of contact for all things technical to the product and other departments (if you are working on B2B software you may also have to interact with sales and professional services). So do expect a lot of questions from them about timelines and feasibility of their ambitious ideas.&lt;/p&gt;
+
+&lt;p&gt;But working with the product team is more than just answering their questions, it is also about being proactive. It is up to you to help them to build a roadmap. It is up to you to say that certain features are not possible without doing an essential technical work. It is up to you to say that all feature work should stop and you have to move to a different framework.&lt;/p&gt;
+
+&lt;p&gt;Equally, it is for you to say that some features are less complex than they thought before and that you can do them now.&lt;/p&gt;
+
+&lt;h2 id=&quot;but-then-again-help-your-fellow-engineers-engage-with-product&quot;&gt;But… then again help your fellow engineers engage with product&lt;/h2&gt;
+
+&lt;p&gt;Yes, you should protect engineers’ time, so don’t invite them to all the meetings. &lt;/p&gt;
+
+&lt;p&gt;But every software engineer is still interested to know which features they’ll be coding in six months’ time. Every software engineer has great ideas on how to improve the product.&lt;/p&gt;
+
+&lt;p&gt;So make that happen - make sure that the product team talks to engineers about product plans and that they all sit together to flesh out user stories.&lt;/p&gt;
+
+&lt;h1 id=&quot;trust-your-team&quot;&gt;Trust your team&lt;/h1&gt;
+
+&lt;p&gt;A tech lead should trust their team to make the best decisions. If someone wants to introduce a 3rd party library XYZ for doing ABC, then let them do it. If your colleague proposes re-designing a part of the system, let them do it, too.&lt;/p&gt;
+
+&lt;h2 id=&quot;but-be-prepared-to-ask-question-in-a-helpful-way&quot;&gt;But… be prepared to ask question in a helpful way&lt;/h2&gt;
+
+&lt;p&gt;Whether it’s choosing a 3rd party library or deciding on architecture, make sure your colleagues have considered alternatives and impact on maintainability, project timelines, performance, security, etc. Feel free to ask questions about that.&lt;/p&gt;
+
+&lt;p&gt;Equally be prepared to step in and guide your fellow developers. For instance, if you notice that some tasks are taking much longer than expected, do speak to engineers who are working on them. They may be busy trying to consider every possible edge case that may never happen or do refactoring that should be a separate task. Help your team to avoid such rabbit holes.&lt;/p&gt;
+
+&lt;h1 id=&quot;be-strategic-and-stay-technical&quot;&gt;Be strategic and stay technical&lt;/h1&gt;
+
+&lt;p&gt;As a technical lead you should look ahead and be strategic. More specifically, you should:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Collaboratively establish architecture and coding standards&lt;/li&gt;
+  &lt;li&gt;Prioritise working on technical debt&lt;/li&gt;
+  &lt;li&gt;Look into newer version of the tools you use and make sure that you keep your codebase up to date&lt;/li&gt;
+  &lt;li&gt;See what other technologies are available and how they can help your team&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And that is impossible without you staying on the bleeding edge of technology. Remember, technical lead does have ‘Technical’ in it. &lt;/p&gt;
+
+&lt;p&gt;Yes, it’s a people intensive role, but it is also about technology. And on that note…&lt;/p&gt;
+
+&lt;h1 id=&quot;be-clear-on-how-much-time-you-can-spend-coding&quot;&gt;Be clear on how much time you can spend coding&lt;/h1&gt;
+
+&lt;p&gt;A technical lead is expected to code. But how much can vary significantly week by week. Sometimes, you’ll have the luxury of spending 80% of your time coding away new features. Sometimes, it’ll be only 20% of your time.&lt;/p&gt;
+
+&lt;p&gt;What is important is to set expectations with your colleagues. No-one would mind if you say that next week you’ll be able to only commit 30% of your time to writing code. But they will certainly be less happy if you forget to mention that. And that includes both other engineers, who may wait for you to redesign an API endpoint, or product managers who expect you to finish that feature that all users want to see.&lt;/p&gt;
+
+&lt;h1 id=&quot;work-with-engineering-managers-if-youre-not-line-managing-your-team&quot;&gt;Work with engineering managers (if you’re not line managing your team)&lt;/h1&gt;
+
+&lt;p&gt;Often as a tech lead you don’t have line management responsibilities, but it is often you who knows your teammates the best and it is you who can help them to get a promotion, salary increase, bonus, more equity, etc. &lt;/p&gt;
+
+&lt;p&gt;So do spend some time with their line manager and pass on feedback. Plus, their line manager can also tell you where you can help your colleagues in their career. You may even want to establish a pattern that you speak to their line manager and pass feedback on before their 1:2:1’s.&lt;/p&gt;
+
+&lt;h1 id=&quot;finally&quot;&gt;Finally&lt;/h1&gt;
+
+&lt;p&gt;Tech lead is a great role. It allows you to write code and gain exposure to leadership, people, and product. But remember it’s not about you, but about helping you team to succeed!&lt;/p&gt;
+</description>
+        <pubDate>Sat, 16 Jan 2021 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/post/being-effective-tech-lead</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/post/being-effective-tech-lead</guid>
+        
+        
+      </item>
     
       <item>
         <title>Track a Virus: Open Source COVID-19 Dashboard</title>
@@ -1580,96 +1707,6 @@ So that the company could analyse time spent on different projects
         <pubDate>Sun, 13 Aug 2017 00:00:00 +0000</pubDate>
         <link>https://mikeborozdin.com/post/split-user-stories-get-value-early</link>
         <guid isPermaLink="true">https://mikeborozdin.com/post/split-user-stories-get-value-early</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Writing a JavaScript Public Library? Validate Your Arguments</title>
-        <description>&lt;p&gt;How many times have seen an obscure JavaScript error when using one 3rd party library or another? More likely than not, you’ve come across a message like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;TypeError: Cannot call method &#39;someMethod&#39; of undefined
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Your browser or the Node.js interpreter will tell you in which file and on which line that error has occurred. Then, you’ll start a very mundane task of examining the code of a 3rd party library, if it’s has not been minimised, of course. Eventually, you will find out that you have forgotten to provide one of the arguments required by a function.
-You may even see a more obscure error. &lt;!-- more --&gt; Let’s take the standard Node.js library for an example, more specifically, its &lt;code&gt;http&lt;/code&gt; module. It has the &lt;code&gt;request()&lt;/code&gt; function that sends an HTTP request that can be meticulously configured with an object you pass into. What if you accidentally confuse one of the object’s attributes, for example, instead of typing &lt;code&gt;hostname&lt;/code&gt; you write &lt;code&gt;url&lt;/code&gt;, e.g.&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
- &lt;span class=&quot;na&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;www.google.com&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Then, you will see an error saying exactly the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;throw er; // Unhandled &#39;error&#39; event
-Error: connect ECONNREFUSED
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Urgh, what could it mean? Has Google suddenly gone down? No, you should have read the documentation more carefully and remember that the attribute is called &lt;code&gt;hostname&lt;/code&gt;, not &lt;code&gt;url&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Okay, so, where does the problem lie? Is it a developer’s problem that they have accidentally made mistake and spent hours debugging? Let’s face, we all make mistakes. Some tools though provide better feedback than the other ones.&lt;/p&gt;
-
-&lt;h2 id=&quot;can-static-typing-really-help&quot;&gt;Can Static Typing Really Help?&lt;/h2&gt;
-
-&lt;p&gt;It might sound that I’m arriving on the idea of introducing static typing in JavaScript - this is not true. However, I believe that when we’re writing code in JavaScript we still assume certain types. In other words, if we create a multiplying function, like the one below:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;multiply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;We presume that &lt;code&gt;a&lt;/code&gt; and &lt;code&gt;b&lt;/code&gt; are numbers, not strings or objects. This idea is beautifully put by Facebook &lt;a href=&quot;https://code.facebook.com/posts/1505962329687926/flow-a-new-static-type-checker-for-javascript/&quot;&gt;in their introduction to Flow&lt;/a&gt;, a static type checking for JavaScript - &lt;em&gt;‘the design of Flow is the assumption that most JavaScript code is implicitly statically typed; even though types may not appear anywhere in the code, they are in the developer’s mind as a way to reason about the correctness of the code’&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Would even having static typing in JavaScript help? After all, you can already use TypeScript…&lt;/p&gt;
-
-&lt;p&gt;Well, partially… Statically typed languages are still prone to similar issues. Let’s take Java as an example. It can provide great feedback to a developer during a compilation. What about the run time though? How many time have you seen a &lt;code&gt;NullPointerException&lt;/code&gt; creeping out of nowhere?&lt;/p&gt;
-
-&lt;p&gt;Is Java’s &lt;code&gt;NullPointerException&lt;/code&gt; anyhow different from the problem with &lt;code&gt;undefined&lt;/code&gt; and &lt;code&gt;null&lt;/code&gt; in JavaScript? Not really. Either way, you’ll have to analyse a call stack.&lt;/p&gt;
-
-&lt;p&gt;Consider the following example:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
- &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The code is written in a statically type language, so you cannot pass an &lt;code&gt;int&lt;/code&gt; or a &lt;code&gt;String&lt;/code&gt;. What about passing a &lt;code&gt;null&lt;/code&gt; though?&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerPrinter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;That problem will not be caught when compiling the code, instead there will be a runtime exception. The code snippet above is fairly simple. Imagine calling &lt;code&gt;customer.getName()&lt;/code&gt; somewhere deep inside the method? That would be ‘fun’ to debug…&lt;/p&gt;
-
-&lt;p&gt;It’s hardly a surprise that even Java, a statically typed language, has libraries, such as Guava, one of which goals is to solve the problem by &lt;a href=&quot;http://stackoverflow.com/questions/26184322/whats-the-point-of-guava-checknotnull&quot;&gt;failing fast&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Developers, using Guava, would strive to use &lt;code&gt;Preconditions&lt;/code&gt; to fail as early as possibly and provide meaningful information if something goes wrong, e.g.:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CustomerPrinter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;printCustomerInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-   &lt;span class=&quot;nc&quot;&gt;Preconditions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;checkNotNull&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-   &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;customer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
- &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;fail-fast&quot;&gt;Fail Fast&lt;/h2&gt;
-
-&lt;p&gt;Here, we arrive on a very important point when it comes to the API design. Do fail fast. Please, do. I also beg you to provide an informative message to a user. We all use 3rd party libraries because they solve problems we don’t want to specialise in. And we don’t want to dive into the code of those libraries to find out why we see that message about some undefined value or something even more esoteric.&lt;/p&gt;
-
-&lt;p&gt;All we want to see is a nice message saying that a certain argument is not what a function expects. That can be implemented with a fairly simple piece of code:&lt;/p&gt;
-
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sendHttpRequest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;object&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;typeof&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hostname&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!==&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Param must be an object that has the `hostname` attribute&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;c1&quot;&gt;//do something useful&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-</description>
-        <pubDate>Tue, 31 Mar 2015 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/writing-a-public-js-library-validate-your-arguments</guid>
         
         
       </item>
