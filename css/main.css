@@ -209,6 +209,7 @@ thead {
 
     #content {
         width: 80%;
+        max-width: 1200px;
         position: relative;
         top: 50px
     }
