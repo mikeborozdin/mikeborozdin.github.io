@@ -119,3 +119,8 @@ So do spend some time with their line manager and pass on feedback. Plus, their 
 # Finally
 
 Tech lead is a great role. It allows you to write code and gain exposure to leadership, people, and product. But remember it’s not about you, but about helping you team to succeed!
+
+# Related posts
+
+* [Managing technical debt](/post/managing-technical-debt/)
+* [Split User Stories Ruthlessly - And Get Value Earlier](/post/split-user-stories-get-value-early/)

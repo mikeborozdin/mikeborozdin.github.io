@@ -104,3 +104,8 @@ I've focused on the benefits of splitting user stories here. But if you want to 
 	* User Story Mapping is a fantastic technique for understand how to achieve a user's goals fast
 * [Impact Mapping](https://www.impactmapping.org/delivering.html)
 	* Impact Mapping is especially good at understand what you **don't need** to do in order to achieve your goals
+
+# Related posts
+
+* [On being effective tech lead](/post/being-effective-tech-lead/)
+* [Managing technical debt](/post/managing-technical-debt/)
