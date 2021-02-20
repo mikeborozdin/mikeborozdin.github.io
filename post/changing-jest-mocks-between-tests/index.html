@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Change Jest mock per test</title>
+  <meta name="description" content="Changing implementation of Jest mocks per test can be confusing. This blog post will present a simple solution for that. You’ll see how each test can get its...">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+
+  <!--[if lt IE 9]>
+  		<script src="/js/css3-mediaqueries.js></script>
+  	<![endif]-->
+
+  <link rel="canonical" href="https://mikeborozdin.com/post/changing-jest-mocks-between-tests">
+  <link rel="alternate" type="application/rss+xml" title="Mike Borozdin's Blog" href="https://mikeborozdin.com/feed.xml" />
+
+  <script type="text/javascript" src="/js/toggle-menu.js"></script>
+
+</head>
+
+<body>
+
+  <div id="header">
+  <div id="banner">
+    <div id="logo"><a href="/">Mike Borozdin's Blog</a></div>
+    <div id="description"><a href="/">software engineering and etc.</a></div>
+  </div>
+
+  <a href="javascript:toggleMenu();" class="menuButton">&#9776;</a>
+
+  <ul id="menu" class="hidden">
+    <li><a href="/" class="menuItem">Home</a></li>
+    <li><a href="/all-posts/" class="menuItem">All posts</a></li>
+    <li><a href="/talks/" class="menuItem">Talks</a></li>
+    <li><a href="/about/" class="menuItem">About me</a></li>
+    <li>
+      <a href="http://www.twitter.com/mikeborozdin" class="menuItem">
+        <span id="twitterText">Twitter</span>
+        <span id="twitterImage"><img src="/images/twitter.png" /></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  <div id="content">
+    <div class="post">
+
+  <header class="post-header">
+    <h1>Change Jest mock per test</h1>
+  </header>
+
+  <article class="post-content">
+    <p>Changing implementation of Jest mocks per test can be confusing. This blog post will present a simple solution for that. You’ll see how each test can get its own mock for both constant values and functions. The solution doesn’t rely on using <code>require()</code>.
+<!-- more --></p>
+
+<h1 id="sample-app">Sample app</h1>
+
+<p>Let’s start with an example - we have a function - <code>sayHello(name)</code> - it prints out <code>Hi, ${name}</code>. And depending on configuration it either capitalizes the name or not.</p>
+
+<p><strong>say-hello.js</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">CAPITALIZE</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">sayHello</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">result</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Hi, </span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">CAPITALIZE</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">name</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">toUpperCase</span><span class="p">()</span> <span class="o">+</span> <span class="nx">name</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
+
+<p>And we want to test its behaviour like this:</p>
+
+<p><strong>say-hello.js</strong></p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">sayHello</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./say-hello</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">say-hello</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Capitalizes name if config requires that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, John</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">does not capitalize name if config does not require that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, john</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<p>One of those tests is bound to fail. Which one - depends on the value of `CAPITALIZE.</p>
+
+<p>Setting a value inside <code>jest.mock()</code> will not help either. It will be the same as relying on the hardcoded value - one of the tests will fail.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">CAPITALIZE</span><span class="p">:</span> <span class="kc">true</span> <span class="c1">// or false</span>
+<span class="p">}));</span></code></pre></div>
+
+<h1 id="changing-mock-of-non-default-const">Changing mock of non-default <code>const</code></h1>
+
+<p>So we need to change the mock of a non-default <code>const</code>.</p>
+
+<p>First, let’s change the way we mock the <code>config</code> module:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">__esModule</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">CAPITALIZE</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}));</span></code></pre></div>
+
+<p>We do set <code>CAPITALIZE</code> to <code>null</code>, because we’ll set its real value in the individual tests. We also have to specify <code>__esModule: true</code>, so that we could correctly import the entire module with <code>import * as config</code>.</p>
+
+<p>Next step is we need to import the module:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span></code></pre></div>
+
+<p>And finally change the mock value in each test:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">sayHello</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./say-hello</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">__esModule</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">CAPITALIZE</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}));</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">say-hello</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Capitalizes name if config requires that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">config</span><span class="p">.</span><span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, John</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">does not capitalize name if config does not require that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">config</span><span class="p">.</span><span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, john</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="how-does-it-work">How does it work?</h2>
+
+<p><code>jest.mock()</code> replaces the entire module with a factory function we provide in its second argument. So when we import that module we get a mock instead of the real module. That also means that we can import the same module in the test itself. And that will give us access to the mock which behaviour we can change.</p>
+
+<h2 id="why-import-entire-module-versus-just-the-const-we-need">Why import entire module versus just the <code>const</code> we need?</h2>
+
+<p>Why can’t we just import in this way <code>import CAPITALIZE from './config';</code>? If we import it in that way, we won’t be able to re-assign a value to it. Values are always imported as constants. </p>
+
+<h2 id="typescript">TypeScript</h2>
+
+<p>If you’re using TypeScript the line where you’re changing the mock:</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">config</span><span class="p">.</span><span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<p>will give you an error:</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Cannot</span> <span class="nx">assign</span> <span class="nx">to</span> <span class="dl">'</span><span class="s1">CAPITALIZE</span><span class="dl">'</span> <span class="nx">because</span> <span class="nx">it</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nx">read</span><span class="o">-</span><span class="nx">only</span> <span class="nx">property</span></code></pre></div>
+
+<p>That’s because TypeScript treats imports as constants and objects with read-only properties.</p>
+
+<p>We can fix that by type casting to an object with writeable properties, e.g.:</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">mockConfig</span> <span class="o">=</span> <span class="nx">config</span> <span class="k">as</span> <span class="p">{</span> <span class="na">CAPITALIZE</span><span class="p">:</span> <span class="nx">boolean</span> <span class="p">};</span>
+
+<span class="c1">// and then in a test</span>
+<span class="nx">mockConfig</span><span class="p">.</span><span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<h1 id="changing-mock-of-export-default-const">Changing mock of <code>export default const</code></h1>
+
+<p>Okay, but what if we need to change the mock of a value that is a default export of the module?</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">CAPITALIZE</span><span class="p">;</span></code></pre></div>
+
+<p>We can use the same approach, we just need to mock the <code>default</code> attribute:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">sayHello</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./say-hello</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">__esModule</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">default</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}));</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">say-hello</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Capitalizes name if config requires that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">config</span><span class="p">.</span><span class="k">default</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, John</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">does not capitalize name if config does not require that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">config</span><span class="p">.</span><span class="k">default</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, john</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="typescript-1">TypeScript</h2>
+
+<p>As with mocking a constant that is non-default export, we need to type cast the imported module into an object with writeable properties</p>
+
+<p>We can fix that by type casting to an object with writeable properties. This time though we change the <code>default</code> attribute instead of <code>CAPITALIZE</code>.</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">mockConfig</span> <span class="o">=</span> <span class="nx">config</span> <span class="k">as</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="nx">boolean</span> <span class="p">};</span>
+
+<span class="c1">// and then in a test</span>
+<span class="nx">mockConfig</span><span class="p">.</span><span class="k">default</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<h1 id="changing-mock-of-non-default-function">Changing mock of non-default function</h1>
+
+<p>What if the configuration is returned by a function instead of a constant:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">CAPITALIZE</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">CAPITALIZE</span><span class="p">;</span></code></pre></div>
+
+<p>Actually, it’ll be even more straightforward than dealing with constants, as we don’t need to import the entire module via <code>import * as entireModule</code> and as a result we won’t have to provide <code>__esModule: true</code>.</p>
+
+<p>Our test will simply looks like this:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="p">{</span> <span class="nx">sayHello</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./say-hello</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">shouldCapitalize</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">shouldCapitalize</span><span class="p">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span>
+<span class="p">}));</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="dl">'</span><span class="s1">say-hello</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">Capitalizes name if config requires that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">shouldCapitalize</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, John</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">does not capitalize name if config does not require that</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">shouldCapitalize</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">(</span><span class="dl">'</span><span class="s1">john</span><span class="dl">'</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hi, john</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span></code></pre></div>
+
+<h2 id="typescript-2">TypeScript</h2>
+
+<p>This line </p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">shouldCapitalize</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span></code></pre></div>
+
+<p>will give a TypeScript error of:</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="nx">Property</span> <span class="dl">'</span><span class="s1">mockReturnValue</span><span class="dl">'</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">exist</span> <span class="nx">on</span> <span class="nx">type</span> <span class="dl">'</span><span class="s1">() =&gt; boolean</span><span class="dl">'</span><span class="p">.</span></code></pre></div>
+
+<p>Indeed, TypeScript thinks we’ve imported a function that returns a <code>boolean</code>, not a Jest mock.</p>
+
+<p>We can correct it again with type casting to a Jest mock.</p>
+
+<div class="highlight"><pre><code class="language-typescript" data-lang="typescript"><span class="k">import</span> <span class="p">{</span> <span class="nx">shouldCapitalize</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">mockShouldCapitalize</span> <span class="o">=</span> <span class="nx">shouldCapitalize</span> <span class="k">as</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">Mock</span><span class="p">;</span>
+
+<span class="c1">// and then in a test</span>
+<span class="nx">mockConfig</span><span class="p">.</span><span class="k">default</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span></code></pre></div>
+
+<h1 id="changing-mock-of-default-function">Changing mock of default function</h1>
+
+<p>There might also be a case that we want to change the behaviour of the function that is the default export of a module.</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">const</span> <span class="nx">shouldCapitalize</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">shouldCapitalize</span><span class="p">;</span></code></pre></div>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">In</span> <span class="nx">that</span> <span class="k">case</span><span class="p">,</span> <span class="nx">we</span> <span class="nx">employ</span> <span class="nx">a</span> <span class="nx">technique</span> <span class="nx">similar</span> <span class="nx">mocking</span> <span class="k">default</span> <span class="nx">constants</span> <span class="o">-</span> <span class="nx">we</span><span class="dl">'</span><span class="s1">ll mock `default`, set `__esModule: true` and will import the entire module with `*`.
+
+import { sayHello } from </span><span class="dl">'</span><span class="p">.</span><span class="o">/</span><span class="nx">say</span><span class="o">-</span><span class="nx">hello</span><span class="dl">'</span><span class="s1">;
+import * as config from </span><span class="dl">'</span><span class="p">.</span><span class="o">/</span><span class="nx">config</span><span class="dl">'</span><span class="s1">;
+
+jest.mock(</span><span class="dl">'</span><span class="p">.</span><span class="o">/</span><span class="nx">config</span><span class="dl">'</span><span class="s1">, () =&gt; ({
+  __esModule: true,
+  default: jest.fn()
+}));
+
+describe(</span><span class="dl">'</span><span class="nx">say</span><span class="o">-</span><span class="nx">hello</span><span class="dl">'</span><span class="s1">, () =&gt; {
+  test(</span><span class="dl">'</span><span class="nx">Capitalizes</span> <span class="nx">name</span> <span class="k">if</span> <span class="nx">config</span> <span class="nx">requires</span> <span class="nx">that</span><span class="dl">'</span><span class="s1">, () =&gt; {
+    config.default.mockReturnValue(true);
+
+    expect(sayHello(</span><span class="dl">'</span><span class="nx">john</span><span class="dl">'</span><span class="s1">)).toBe(</span><span class="dl">'</span><span class="nx">Hi</span><span class="p">,</span> <span class="nx">John</span><span class="dl">'</span><span class="s1">);
+  });
+
+  test(</span><span class="dl">'</span><span class="nx">does</span> <span class="nx">not</span> <span class="nx">capitalize</span> <span class="nx">name</span> <span class="k">if</span> <span class="nx">config</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">require</span> <span class="nx">that</span><span class="dl">'</span><span class="s1">, () =&gt; {
+    config.default.mockReturnValue(false);
+
+    expect(sayHello(</span><span class="dl">'</span><span class="nx">john</span><span class="dl">'</span><span class="s1">)).toBe(</span><span class="dl">'</span><span class="nx">Hi</span><span class="p">,</span> <span class="nx">john</span><span class="dl">'</span><span class="s1">);
+  });
+});</span></code></pre></div>
+
+<h2 id="typescript-3">TypeScript</h2>
+
+<p>Similar to mocking a non default function, we need to type cast the imported module into an object with writeable properties</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">config</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./config</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">shouldCapitalizeMock</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="k">default</span> <span class="k">as</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">Mock</span><span class="p">;</span>
+
+<span class="c1">// and in a test</span>
+<span class="nx">shouldCapitalizeMock</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span></code></pre></div>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>All examples above rely on a simple premise that:</p>
+
+<ul>
+  <li><code>jest.mock()</code> mocks a specific module (unsurprisingly, huh?)</li>
+  <li>So everywhere you import it you’ll get a mock instead of a real module</li>
+  <li>And that applies to tests, as well</li>
+  <li>So import mocked modules in test and change their implementation</li>
+</ul>
+
+  </article>
+
+  <div class="postFooter">
+    <p>Mike Borozdin (<a href="https://twitter.com/mikeborozdin">Twitter)</a></p>
+    <!-- <p>Mike Borozdin <a href="https://twitter.com/mikeborozdin"><img src="/images/twitter-blue.png" /></a></p> -->
+    <p>20 February 2021</p>
+  </div>
+
+  <div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+      var disqus_shortname = 'mikeborozdin'; // required: replace example with your forum shortname
+
+               /*  * *  DON'T  EDIT BELOW  THIS LINE  * *  */ (function () {
+        var dsq = document.createElement('script'); dsq.type =
+          'text/javascript'; dsq.async = true; dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+  </div>
+
+</div>
+
+
+    <div id="footer">
+  <p>
+    The opinions expressed herein are my own personal opinions and do not represent my employer's view in any way. My
+    personal
+    thoughts tend to change, hence the articles in this blog might not provide an accurate reflection of my present
+    standpoint.
+  </p>
+  <p>&copy; 2021 Mike Borozdin</p>
+</div>
+
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-4764679-1', 'auto');
+
+  if (document.cookie.indexOf('excludeGa=1') === -1) {
+    ga('send', 'pageview');
+  }
+
+</script>
+  </div>
+
+</body>
+
+</html>

@@ -6,9 +6,402 @@
 </description>
     <link>https://mikeborozdin.com/</link>
     <atom:link href="https://mikeborozdin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 20 Feb 2021 12:49:20 +0000</pubDate>
-    <lastBuildDate>Sat, 20 Feb 2021 12:49:20 +0000</lastBuildDate>
+    <pubDate>Sat, 20 Feb 2021 12:53:45 +0000</pubDate>
+    <lastBuildDate>Sat, 20 Feb 2021 12:53:45 +0000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Change Jest mock per test</title>
+        <description>&lt;p&gt;Changing implementation of Jest mocks per test can be confusing. This blog post will present a simple solution for that. You’ll see how each test can get its own mock for both constant values and functions. The solution doesn’t rely on using &lt;code&gt;require()&lt;/code&gt;.
+&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;sample-app&quot;&gt;Sample app&lt;/h1&gt;
+
+&lt;p&gt;Let’s start with an example - we have a function - &lt;code&gt;sayHello(name)&lt;/code&gt; - it prints out &lt;code&gt;Hi, ${name}&lt;/code&gt;. And depending on configuration it either capitalizes the name or not.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;say-hello.js&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toUpperCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And we want to test its behaviour like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;say-hello.js&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Capitalizes name if config requires that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, John&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;does not capitalize name if config does not require that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;One of those tests is bound to fail. Which one - depends on the value of `CAPITALIZE.&lt;/p&gt;
+
+&lt;p&gt;Setting a value inside &lt;code&gt;jest.mock()&lt;/code&gt; will not help either. It will be the same as relying on the hardcoded value - one of the tests will fail.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// or false&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;changing-mock-of-non-default-const&quot;&gt;Changing mock of non-default &lt;code&gt;const&lt;/code&gt;&lt;/h1&gt;
+
+&lt;p&gt;So we need to change the mock of a non-default &lt;code&gt;const&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;First, let’s change the way we mock the &lt;code&gt;config&lt;/code&gt; module:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;__esModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We do set &lt;code&gt;CAPITALIZE&lt;/code&gt; to &lt;code&gt;null&lt;/code&gt;, because we’ll set its real value in the individual tests. We also have to specify &lt;code&gt;__esModule: true&lt;/code&gt;, so that we could correctly import the entire module with &lt;code&gt;import * as config&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Next step is we need to import the module:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And finally change the mock value in each test:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;__esModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Capitalizes name if config requires that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, John&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;does not capitalize name if config does not require that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;how-does-it-work&quot;&gt;How does it work?&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;jest.mock()&lt;/code&gt; replaces the entire module with a factory function we provide in its second argument. So when we import that module we get a mock instead of the real module. That also means that we can import the same module in the test itself. And that will give us access to the mock which behaviour we can change.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-import-entire-module-versus-just-the-const-we-need&quot;&gt;Why import entire module versus just the &lt;code&gt;const&lt;/code&gt; we need?&lt;/h2&gt;
+
+&lt;p&gt;Why can’t we just import in this way &lt;code&gt;import CAPITALIZE from &#39;./config&#39;;&lt;/code&gt;? If we import it in that way, we won’t be able to re-assign a value to it. Values are always imported as constants. &lt;/p&gt;
+
+&lt;h2 id=&quot;typescript&quot;&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;If you’re using TypeScript the line where you’re changing the mock:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;will give you an error:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Cannot&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;assign&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;because&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;only&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;property&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;That’s because TypeScript treats imports as constants and objects with read-only properties.&lt;/p&gt;
+
+&lt;p&gt;We can fix that by type casting to an object with writeable properties, e.g.:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mockConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// and then in a test&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;mockConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;changing-mock-of-export-default-const&quot;&gt;Changing mock of &lt;code&gt;export default const&lt;/code&gt;&lt;/h1&gt;
+
+&lt;p&gt;Okay, but what if we need to change the mock of a value that is a default export of the module?&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We can use the same approach, we just need to mock the &lt;code&gt;default&lt;/code&gt; attribute:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;__esModule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Capitalizes name if config requires that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, John&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;does not capitalize name if config does not require that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;typescript-1&quot;&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;As with mocking a constant that is non-default export, we need to type cast the imported module into an object with writeable properties&lt;/p&gt;
+
+&lt;p&gt;We can fix that by type casting to an object with writeable properties. This time though we change the &lt;code&gt;default&lt;/code&gt; attribute instead of &lt;code&gt;CAPITALIZE&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mockConfig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// and then in a test&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;mockConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;changing-mock-of-non-default-function&quot;&gt;Changing mock of non-default function&lt;/h1&gt;
+
+&lt;p&gt;What if the configuration is returned by a function instead of a constant:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;CAPITALIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Actually, it’ll be even more straightforward than dealing with constants, as we don’t need to import the entire module via &lt;code&gt;import * as entireModule&lt;/code&gt; and as a result we won’t have to provide &lt;code&gt;__esModule: true&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our test will simply looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;shouldCapitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;fn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;describe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;say-hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Capitalizes name if config requires that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mockReturnValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, John&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;does not capitalize name if config does not require that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mockReturnValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;expect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sayHello&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;toBe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;Hi, john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;typescript-2&quot;&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;This line &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mockReturnValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;will give a TypeScript error of:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;Property&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;mockReturnValue&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exist&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;() =&amp;gt; boolean&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Indeed, TypeScript thinks we’ve imported a function that returns a &lt;code&gt;boolean&lt;/code&gt;, not a Jest mock.&lt;/p&gt;
+
+&lt;p&gt;We can correct it again with type casting to a Jest mock.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-typescript&quot; data-lang=&quot;typescript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mockShouldCapitalize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// and then in a test&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;mockConfig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;changing-mock-of-default-function&quot;&gt;Changing mock of default function&lt;/h1&gt;
+
+&lt;p&gt;There might also be a case that we want to change the behaviour of the function that is the default export of a module.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;In&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;that&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;we&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;employ&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;technique&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;similar&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mocking&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;constants&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;we&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;ll mock `default`, set `__esModule: true` and will import the entire module with `*`.
+
+import { sayHello } from &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;;
+import * as config from &lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;;
+
+jest.mock(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, () =&amp;gt; ({
+  __esModule: true,
+  default: jest.fn()
+}));
+
+describe(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;say&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;hello&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, () =&amp;gt; {
+  test(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Capitalizes&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;requires&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, () =&amp;gt; {
+    config.default.mockReturnValue(true);
+
+    expect(sayHello(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;)).toBe(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;John&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;);
+  });
+
+  test(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;capitalize&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;does&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;that&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;, () =&amp;gt; {
+    config.default.mockReturnValue(false);
+
+    expect(sayHello(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;)).toBe(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;john&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;);
+  });
+});&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;typescript-3&quot;&gt;TypeScript&lt;/h2&gt;
+
+&lt;p&gt;Similar to mocking a non default function, we need to type cast the imported module into an object with writeable properties&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;./config&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;shouldCapitalizeMock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Mock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// and in a test&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;shouldCapitalizeMock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;mockReturnValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;All examples above rely on a simple premise that:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code&gt;jest.mock()&lt;/code&gt; mocks a specific module (unsurprisingly, huh?)&lt;/li&gt;
+  &lt;li&gt;So everywhere you import it you’ll get a mock instead of a real module&lt;/li&gt;
+  &lt;li&gt;And that applies to tests, as well&lt;/li&gt;
+  &lt;li&gt;So import mocked modules in test and change their implementation&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/post/changing-jest-mocks-between-tests</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/post/changing-jest-mocks-between-tests</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Managing technical debt</title>
+        <description>&lt;p&gt;Often engineering teams struggle with technical debt. They are busy with building features and fixing bugs, but that’s not going well due to a huge amount of technical debt. However, they hardly get any time to fix any of the debt.&lt;/p&gt;
+
+&lt;p&gt;In this article I’m going to share my experience on how to manage technical debt and get it fixed.&lt;!-- more --&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;what-is-technical-debt&quot;&gt;What is technical debt?&lt;/h1&gt;
+
+&lt;p&gt;First of all, what is technical debt? &lt;/p&gt;
+
+&lt;p&gt;Technical debt is something that slows us down. Technical debt is a code that you are afraid to touch and if you do you produce multiple bugs. Technical debt is a messy code that does not let you ship features fast. Technical debt is an obsolete library version that doesn’t allow us to use the latest techniques.&lt;/p&gt;
+
+&lt;p&gt;Scalability issues though are not technical debt (more on that below).&lt;/p&gt;
+
+&lt;h1 id=&quot;why-do-teams-struggle-to-address-technical-debt&quot;&gt;Why do teams struggle to address technical debt?&lt;/h1&gt;
+
+&lt;p&gt;In my experience, it happens simply because it nevers gets prioritised. And that’s usually due to the fact that software developers tend to speak of technical debt purely from a technical point of view. And a result, product managers, who drive prioritisation, don’t quite get the value of it - and that’s why work on fixing technical debt always ends up in the bottom of the backlog.&lt;/p&gt;
+
+&lt;h1 id=&quot;technical-debt-has-business-impact&quot;&gt;Technical debt has business impact&lt;/h1&gt;
+
+&lt;p&gt;But technical debt does have business impact. Technical debt means that new features will take 2x, 3x, 10x times, as longer, if it were not for technical debt. Technical debt means you’ll dedicate a lot of time fixing bugs, instead of building new features.&lt;/p&gt;
+
+&lt;p&gt;Technical debt, like financial debt, means that you’ll spend your disposable income (dev time) paying off interest (fixing long outstanding technical debt) instead of spending it on fun things (new features that customers love).&lt;/p&gt;
+
+&lt;p&gt;So when persuading product managers to prioritise technical debt, do talk about the business impact it’ll bring. And talk about the negative effect if you postpone it. Ultimately, it is all about reducing time-to-market (time to build new features) and improving product quality (fewer bugs).&lt;/p&gt;
+
+&lt;h1 id=&quot;how-to-prioritise-technical-debt&quot;&gt;How to prioritise technical debt?&lt;/h1&gt;
+
+&lt;p&gt;And speaking of prioritisation, I have observed two strategies:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Allocate a certain amount of time to technical debt. Say, a day a week&lt;/li&gt;
+  &lt;li&gt;Prioritise technical debt along with features and bug fixes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Personally, I’m not a fan of the first one. Allocating a certain amount of time seems too arbitrary. There are occasions when addressing technical debt takes more a day a week. Sometimes there are times that you have nothing to address. Plus, that may also seem as a blackbox to non-technical stakeholders. Unless they explicitly ask engineers they won’t know what technical debt is being addressed and how that benefits the product.&lt;/p&gt;
+
+&lt;h1 id=&quot;prioritise-technical-debt-along-with-features-and-bug-fixes&quot;&gt;Prioritise technical debt along with features and bug fixes&lt;/h1&gt;
+
+&lt;p&gt;Instead I prefer to prioritise technical debt along with features and bug fixes. No matter which software development methodology you use, chances are you have some sort of a backlog - a prioritised list of features and bug fixes. So just put technical debt tickets to that list and prioritise them accordingly.&lt;/p&gt;
+
+&lt;p&gt;This method has the following advantages:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It forces you to think of technical debt as atomic pieces of work&lt;/li&gt;
+  &lt;li&gt;It is tied to the roadmap (more on that below)&lt;/li&gt;
+  &lt;li&gt;It gives visibility to non-technical stakeholders&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I want to emphasise the second point - ‘it is tied to the roadmap’. If you see on the roadmap that three new features will touch an ugly part of the code, then you can accelerate development by prioritising refactoring ahead of the feature work. &lt;/p&gt;
+
+&lt;h1 id=&quot;sometimes-you-can-just-inflate-time-estimates&quot;&gt;Sometimes you can just inflate time estimates&lt;/h1&gt;
+
+&lt;p&gt;In the previous example, there are three features which depend on fixing technical debt. And it makes sense to prioritise technical debt separately. Multiple developers will work on those features, you don’t want them to depend on each other. So refactor first and let them build those features after.&lt;/p&gt;
+
+&lt;p&gt;But if the roadmap says that there’ll be only one feature that requires touching that scary piece of code, then you don’t even need to schedule any additional work. Just inform a product manager that  a feature will take longer because you need to tidy up the code first. Otherwise (without refactoring), the work will take even more time and there’ll be a lot of bugs after. &lt;/p&gt;
+
+&lt;h1 id=&quot;old-dependency-versions-can-become-technical-debt&quot;&gt;Old dependency versions can become technical debt&lt;/h1&gt;
+
+&lt;p&gt;Whatever you’re building probably depends on dozens of 3rd party libraries. And they tend to get new versions over time. 
+You need to keep an eye on new versions and prioritise upgrades.&lt;/p&gt;
+
+&lt;p&gt;Why?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;New versions can make you more productive. They may introduce new features that simplify your development. And if you don’t upgrade soon enough, your code will start to look obsolete. The dev community will eventually embrace new features of a language or a framework, but you will be still stuck with an old version and its old ways.&lt;/li&gt;
+  &lt;li&gt;The longer you stay on an older version the more painful you’re making an upgrade. If you are one major version behind an upgrade will probably be smooth-ish, but if you are two, three, four major versions behind, it’s likely to be much more painful&lt;/li&gt;
+  &lt;li&gt;Support and security vulnerabilities - you don’t want to be using a framework that is no longer supported, do you?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;you-can-even-refactor-code-as-you-go-along&quot;&gt;You can even refactor code as you go along&lt;/h1&gt;
+
+&lt;p&gt;Nothing prevents you from improving the code quality while you’re fixing bugs or building new features. &lt;/p&gt;
+
+&lt;p&gt;Think that something can be refactored into a separate module? Do it!&lt;/p&gt;
+
+&lt;p&gt;Noticed that 3rd party library, you’re calling, is 3 major versions behind? Upgrade it!&lt;/p&gt;
+
+&lt;p&gt;But… be reasonable and avoid rabbit holes. &lt;/p&gt;
+
+&lt;p&gt;Will your new feature make a mess out of the existing code? Yes? Then, take your time and do it properly.&lt;/p&gt;
+
+&lt;p&gt;Have you noticed that the function you’re calling is difficult to understand, but you don’t have to change it? Just write a ticket about it and prioritise it separately.&lt;/p&gt;
+
+&lt;p&gt;When making such decisions also think of people who’ll be reviewing your code. The more things you’re putting in your pull request, the more time it’ll take for them to review and the more things they can miss in a review.&lt;/p&gt;
+
+&lt;h1 id=&quot;scalability-issues-are-not-technical-debt&quot;&gt;Scalability issues are not technical debt&lt;/h1&gt;
+
+&lt;p&gt;If your website is meant to serve 10,000 customers a minute, but is only capable of doing 500, then it’s not technical debt, it’s a very big gap in your product functionality. It’s the same thing as building a payment feature that only accepts Visa cards, but not MasterCard.&lt;/p&gt;
+
+&lt;p&gt;Yes, there might be the same cause for technical debt and scalability issues, for instance, you cut corners somewhere. But their impact is very different. As mentioned above technical debt does have a huge business impact, but the downfall from scalability issues is far bigger.&lt;/p&gt;
+
+&lt;p&gt;And if you need to get work prioritised, you need to clearly explain why it matters. So if you know that next month you’ll be serving more customers that your app is capable of, then this precisely what you should tell all non-technical stakeholders.&lt;/p&gt;
+
+&lt;p&gt;Another way to look at it - if you pause entire development, then technical debt will not be relevant - it won’t slow down anything, as there’ll be no features to build. But if people still use the product, well, they try and they cannot, because your system cannot cope with the demand, then it’s a gap in functionality.&lt;/p&gt;
+
+&lt;h1 id=&quot;finally-build-good-relationship-with-product-managers&quot;&gt;Finally, build good relationship with product managers&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;/post/being-effective-tech-lead/&quot;&gt;I have written about it&lt;/a&gt;, the other people &lt;a href=&quot;https://domk.website/blog/2021-01-12-tech-lead-empowered-product-team.html&quot;&gt;have written about it before&lt;/a&gt;. It is vital to have a good relationship between product and engineering. Both of you need to have trust. That’s because you’ll have to ask a product manager to pause feature/bug delivery and spend time on technical debt. They, in turn, need to trust you that that time will be well spent and ultimately will benefit users.&lt;/p&gt;
+
+&lt;h1 id=&quot;related-posts&quot;&gt;Related posts&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;/post/being-effective-tech-lead/&quot;&gt;On being effective tech lead&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/post/split-user-stories-get-value-early/&quot;&gt;Split User Stories Ruthlessly - And Get Value Earlier&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 30 Jan 2021 00:00:00 +0000</pubDate>
+        <link>https://mikeborozdin.com/post/managing-technical-debt%20copy</link>
+        <guid isPermaLink="true">https://mikeborozdin.com/post/managing-technical-debt%20copy</guid>
+        
+        
+      </item>
     
       <item>
         <title>On being effective tech lead</title>
@@ -233,7 +626,7 @@ Sometimes it means you’ll fill the gaps yourself and tell the team about what 
 
 &lt;p&gt;Interested? &lt;a href=&quot;https://github.com/mikeborozdin/track-a-virus&quot;&gt;Let’s work on it together&lt;/a&gt;!&lt;/p&gt;
 </description>
-        <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+        <pubDate>Sat, 11 Apr 2020 00:00:00 +0100</pubDate>
         <link>https://mikeborozdin.com/post/trackavirus-open-source-covid-19-dashboard</link>
         <guid isPermaLink="true">https://mikeborozdin.com/post/trackavirus-open-source-covid-19-dashboard</guid>
         
@@ -698,7 +1091,7 @@ Sometimes it means you’ll fill the gaps yourself and tell the team about what 
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+        <pubDate>Thu, 02 Apr 2020 00:00:00 +0100</pubDate>
         <link>https://mikeborozdin.com/post/redux-to-mobx</link>
         <guid isPermaLink="true">https://mikeborozdin.com/post/redux-to-mobx</guid>
         
@@ -1462,7 +1855,7 @@ Anyway, after some time, I had an MVP for my limited audience. &lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+        <pubDate>Tue, 16 Oct 2018 00:00:00 +0100</pubDate>
         <link>https://mikeborozdin.com/product-management-in-the-open/value-hypothesis-and-kpis</link>
         <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/value-hypothesis-and-kpis</guid>
         
@@ -1547,180 +1940,9 @@ Anyway, after some time, I had an MVP for my limited audience. &lt;/p&gt;
   &lt;/tr&gt;
 &lt;/table&gt;
 </description>
-        <pubDate>Mon, 15 Oct 2018 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 15 Oct 2018 00:00:00 +0100</pubDate>
         <link>https://mikeborozdin.com/product-management-in-the-open/idea</link>
         <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/idea</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Lean Startup and Inspiration</title>
-        <description>&lt;p&gt;This is the first article in the series about working on a mobile application - Best in Town / Best in Edinburgh - and applying the Lean Startup methodology and other good product management techniques. &lt;!-- more --&gt;&lt;/p&gt;
-
-&lt;p&gt;A few words about myself. I come from a Software Engineering background, but I’ve always had a keen interest in Product Management. I’ve had a chance to be a Product Owner on a few different projects - it was very exciting. And I learnt how to translate a product vision to a roadmap and then to an actual deliverable. However, I didn’t have a chance to do ideation, market research, set up goals and metrics, experiment, pivot, and so on. So, one of the ideas behind my endeavour is to try to do that.&lt;/p&gt;
-
-&lt;h1 id=&quot;how-it-all-started&quot;&gt;How it all Started&lt;/h1&gt;
-
-&lt;p&gt;I was sitting in a new cafe&lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; in a trendy part of Edinburgh, UK and reading the ‘Lean Startup’ by Eric Ries. I was enjoying the vibe in the cafe and the winter sun outside, but I wasn’t impressed with either the coffee or cakes which were on offer. The place was busy though. And TripAdvisor and Yelp both showed a relatively good rating. &lt;/p&gt;
-
-&lt;p&gt;The last fact led me to a thought - what is a rating on TripAdvisor, Yelp, and the other usual suspects? As a rating you get a single number - 4.1 stars, but what does it really mean? Does it mean that a place has a good coffee? Or maybe the brownies there are delicious? Or could it be a nice atmosphere and staff? Or is it a combination of all those factors?&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/product-management-in-the-open/intro/single-rating.jpg&quot; alt=&quot;What is a rating?&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Hmm… but what if you are really interested in finding places that do coffee the best? Or any other favourite thing of yours? Or say, for example, you have friends over from abroad and want to surprise them with the best craft beer in town? How do you find it?&lt;/p&gt;
-
-&lt;p&gt;Say, you’re looking for a bar with amazing wine. You search for ‘wine’, but the existing apps will only throw at you a number of French restaurants. Granted, they would have great wine, but it’s not something you’re looking for. You just care about the quality of wine, nothing else.&lt;/p&gt;
-
-&lt;p&gt;Enter, Best in Edinburgh (or Best in Town it was known in those days). In Best in Town you can search for specific things - wine, craft beer, coffee, and it’ll show you ratings for those things only. So, if one bar has 5 stars for wine, but only 4 for cocktails, the app will tell you about it!&lt;/p&gt;
-
-&lt;p&gt;You can read more about &lt;a href=&quot;../idea&quot;&gt;the idea itself here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
-
-&lt;div class=&quot;footnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:1&quot;&gt;
-      &lt;p&gt;The cafe closed shut at some point that year. It was replaced by another one - Brill Jewellery &amp;amp; Coffee. Yes, it was a both a jewellery shop and a cafe. Nothing to be surprised about though. It was in in Stockbridge, Edinburgh - the most fashionable part of town. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Sun, 14 Oct 2018 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/product-management-in-the-open/lean-startup-and-inspiration</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/product-management-in-the-open/lean-startup-and-inspiration</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Split User Stories Ruthlessly - And Get Value Earlier</title>
-        <description>&lt;p&gt;Why do you need to split user stories?&lt;/p&gt;
-
-&lt;p&gt;Often, you hear that it is important to split user stories. You read articles that say it should be possible to complete a user story within a single sprint, ideally within a few days. That’s entirely accurate. &lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;But the main benefit of splitting user stories is that you will deliver value faster!&lt;!-- more --&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Let’s take a look at an example. Say, we are developing a time tracking tool. Its main purpose is to analyse time spent on different projects. &lt;/p&gt;
-
-&lt;p&gt;Let’s also assume that we already have a prioritised backlog that looks like this:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Enter timesheets&lt;/li&gt;
-  &lt;li&gt;Approve timesheets&lt;/li&gt;
-  &lt;li&gt;View time spent by project&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;At the first glance, the backlog looks reasonable. It appears to be prioritised and the user stories look small enough. But the devil is in the details. When you look at the the first story - &lt;code&gt;‘Enter timesheets’&lt;/code&gt;, you’ll see the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;As a developer
-I want to be able to log time spent on projects
-So that the company could analyse time spent on different projects
-
-**Acceptance criteria**
-
-* Users select a project and enter hours spent for each day
-* Users can add more lines for other projects
-	* Users can delete lines for projects
-	* If a user presses [delete] on an item with hours, 
-		there has to be a confirmation pop-up
-* There should be an area where a user can see total time spent per day
-	* We want a user to avoid making mistakes. If time soent is less or more than 
-	8 hours per day it has to be coloured in red. 
-	If it’s 8 hours plus/minus one hour, it should be coloured in green.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;There’s also a mockup attached.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/mockup.png&quot; alt=&quot;Mockup&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Well, that’s escalated quickly! A simple story has turned out into a collection of business rules!&lt;/p&gt;
-
-&lt;p&gt;It may seem that each rule is small enough and can be easily implemented. But don’t give in to that temptation!&lt;/p&gt;
-
-&lt;p&gt;Each rule is small enough, but in total they all will make up to a substantial amount of time to develop. That will, in turn, require a good amount of testing, as well.&lt;/p&gt;
-
-&lt;h1 id=&quot;think-of-product-goal&quot;&gt;Think of Product Goal&lt;/h1&gt;
-
-&lt;p&gt;So, let’s stop and think. What’s the proposition behind your product? It is analysis of time spent on different projects. There is even a user story for that. So, why don’t we go to that user story as fast as possible?!&lt;/p&gt;
-
-&lt;h1 id=&quot;consider-main-goal-of-user-story-split-story-to-achive-that-goal-faster&quot;&gt;Consider Main Goal of User Story. Split Story to Achive That Goal Faster&lt;/h1&gt;
-
-&lt;p&gt;And what is the main premise of the ‘Enter timesheets’ story? Well, that’s an ability to enter timesheets! So, let’s focus on that activity and try to move other bits into separate user stories. &lt;/p&gt;
-
-&lt;p&gt;If we look at the acceptance criteria, we’ll see that most of it is not about entering timesheets, but related functionality. For example, we want to have a variable number of activities (lines) per week. Then, we would like to see nice visual cues, if hours entered look wrong.&lt;/p&gt;
-
-&lt;p&gt;Those are great ideas, but do they help us to achive the overacrching product goal? No. So, let’s focus on what is really important. And split the user story into:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Enter timesheets (3 activities per week)&lt;/li&gt;
-  &lt;li&gt;Visual cues when the hours entered doesn’t look right&lt;/li&gt;
-  &lt;li&gt;Have more than 3 activities per week&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;re-prioritise-backlog&quot;&gt;Re-prioritise Backlog&lt;/h1&gt;
-
-&lt;p&gt;Now, we should go back to our backlog and re-prioritise it. We want to put the last two stories to the bottom of the backlog. At the end your backlog should look like:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Enter timesheets (3 activities per week)&lt;/li&gt;
-  &lt;li&gt;Approve timesheets&lt;/li&gt;
-  &lt;li&gt;View time spent by project&lt;/li&gt;
-  &lt;li&gt;Visual cues when the hours entered doesn’t look right&lt;/li&gt;
-  &lt;li&gt;Have more than 3 activities per week&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Always re-prioritise the backlog after splitting user stories. Otherwise, you would do the same things in the initial order and wouldn’t move towards your product goals fast enough.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Splitting user stories allows you to prioritise what is really important. And achieve the product goals faster. &lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;You’ll probably have to repeat this exercise for ‘Approve Timesheets’ and ‘View time spent by project’. But I guess you’ve got the idea. You’ll end up with the &lt;strong&gt;Prioritise - Split - Prioritise cycle&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/prioritise-split-cycle.png&quot; alt=&quot;Prioritise-Split Cycle&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Another good way to look at is to revisit the famous picture of the iterative Mona Lisa (pictures below are credit of Jeff Patton - the inventor of User Story Maps) &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Incremental Mona Lisa&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/incremental-mona-lisa.jpg&quot; alt=&quot;Incremental Mona Lisa&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Iterative Mona Lisa&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/2017-08-13-split-user-stories/iterative-mona-lisa.jpg&quot; alt=&quot;Iterative Mona Lisa&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Indeed, you don’t want to spend time painting the perfect top-left corner of the picture (the original ‘Enter Timesheets’ story). Instead, you want to sketch out the whole piece. That will already give users and stakeholders something to play with. Such early deliver will allow you to get feedback from users and learn from that.&lt;/p&gt;
-
-&lt;h1 id=&quot;additional-reading&quot;&gt;Additional Reading&lt;/h1&gt;
-&lt;p&gt;I’ve focused on the benefits of splitting user stories here. But if you want to know more about techniques for splitting user stories and prioritising backlogs, then I would suggest the following reading:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://agileforall.com/patterns-for-splitting-user-stories/&quot;&gt;Patterns for Splitting User Stories&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://jpattonassociates.com/the-new-backlog/&quot;&gt;The New User Story Backlog is a Map&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;User Story Mapping is a fantastic technique for understand how to achieve a user’s goals fast&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.impactmapping.org/delivering.html&quot;&gt;Impact Mapping&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Impact Mapping is especially good at understand what you &lt;strong&gt;don’t need&lt;/strong&gt; to do in order to achieve your goals&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;related-posts&quot;&gt;Related posts&lt;/h1&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;/post/being-effective-tech-lead/&quot;&gt;On being effective tech lead&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;/post/managing-technical-debt/&quot;&gt;Managing technical debt&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 13 Aug 2017 00:00:00 +0000</pubDate>
-        <link>https://mikeborozdin.com/post/split-user-stories-get-value-early</link>
-        <guid isPermaLink="true">https://mikeborozdin.com/post/split-user-stories-get-value-early</guid>
         
         
       </item>
